@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import AddSaving from "../screens/AddSaving/AddSaving";
+import { Stack } from "expo-router";
 
 export default function addSaving() {
   return (
-    // <View style={styles.container}>
     <AddSaving />
-
-    // </View>
+    // <Stack.Screen name="(tabs)" options={{ headerShown: false }} >
+    //   </ Stack.Screen>
   );
 }
 
