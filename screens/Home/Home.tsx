@@ -1,0 +1,28 @@
+import { StyleSheet } from "react-native";
+import Header from "../../components/Home/Header";
+import YearSaving from "../../components/Home/YearSaving";
+import MonthSaving from "../../components/Home/MonthSaving";
+import LastAdd from "../../components/Home/LastAdd";
+import GoalProgress from "../../components/Home/GoalProgress";
+import React from "react";
+
+export default function HomeWithGoal() {
+  return (
+    <>
+      <div style={styles.container}>Str. Główna (ze screens)</div>;
+      <Header />
+      <YearSaving />
+      <MonthSaving />
+      <LastAdd />
+      <GoalProgress />
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

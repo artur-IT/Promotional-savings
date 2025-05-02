@@ -1,17 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
+import Goal from "../../screens/Goal/Goal";
 
 export default function GoalScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Cel Screen</Text>
-    </View>
-  );
+  return <Goal />;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+// });
