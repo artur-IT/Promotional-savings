@@ -9,9 +9,6 @@ export default function HomeScreen() {
       <Link href="/addSaving" style={styles.link}>
         Dodaj oszczędność
       </Link>
-      <Link href="/about" style={styles.link}>
-        About screen
-      </Link>
     </View>
   );
 }

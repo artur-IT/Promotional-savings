@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import Header from "../../components/Home/Header";
+import Header from "../../components/Top";
 import YearSaving from "../../components/Home/YearSaving";
 import MonthSaving from "../../components/Home/MonthSaving";
 import LastAdd from "../../components/Home/LastAdd";
