@@ -1,3 +1,4 @@
+// import "nativewind/css";
 import { Link } from "expo-router";
 import { View, StyleSheet } from "react-native";
 import Home from "../../screens/Home/Home";

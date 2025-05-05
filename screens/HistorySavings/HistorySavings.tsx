@@ -1,7 +1,14 @@
-import { StyleSheet } from "react-native";
+import Header from "@/components/HistorySaving/Header";
+import HistoryCalendar from "@/components/HistorySaving/HistoryCalendar";
+import { StyleSheet, View } from "react-native";
 
 export default function HistorySavings() {
-  return <div style={styles.container}>Historia... (ze screens)</div>;
+  return (
+    <View style={styles.container}>
+      <Header />
+      <HistoryCalendar />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

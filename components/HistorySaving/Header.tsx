@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Image } from "expo-image";
 
@@ -8,9 +8,9 @@ export default function Header() {
   return (
     <>
       {/* <div style={styles.container}>Header: Logo + tytuł (z components)</div>; */}
-      <div style={styles.logo}>
+      <View style={styles.logo}>
         <Text>Historia oszczędności</Text>
-      </div>
+      </View>
     </>
   );
 }

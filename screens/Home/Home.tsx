@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Header from "../../components/Top";
 import YearSaving from "../../components/Home/YearSaving";
 import MonthSaving from "../../components/Home/MonthSaving";
@@ -9,7 +9,7 @@ import React from "react";
 export default function HomeWithGoal() {
   return (
     <>
-      <div style={styles.container}>Str. Główna (ze screens)</div>;
+      <View style={styles.container}>Str. Główna (ze screens)</View>;
       <Header />
       <YearSaving />
       <MonthSaving />

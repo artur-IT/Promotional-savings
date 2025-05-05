@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 
@@ -47,39 +47,122 @@ export default function HistoryCalendar() {
   const groupedData = groupByMonth();
 
   return (
-    <View className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold mb-4 text-center text-blue-600">Historia oszczędności</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Historia oszczędności</Text>
 
-      <View className="flex-row bg-blue-100 p-3 rounded-t-lg mb-1">
-        <Text className="flex-1 font-semibold text-blue-800">Data</Text>
-        <Text className="flex-1 font-semibold text-blue-800">Miesiąc</Text>
-        <Text className="flex-1 font-semibold text-blue-800 text-right">Kwota (PLN)</Text>
+      <View style={styles.header}>
+        <Text style={[styles.headerText, styles.flex1]}>Data</Text>
+        <Text style={[styles.headerText, styles.flex1]}>Miesiąc</Text>
+        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (PLN)</Text>
       </View>
 
-      <ScrollView className="flex-1">
+      <ScrollView style={styles.scrollView}>
         {Object.entries(groupedData).map(([month, records], monthIndex) => (
-          <View key={month} className="mb-4">
-            <View className="bg-blue-50 py-2 px-3 border-l-4 border-blue-500">
-              <Text className="font-bold text-blue-700">{month}</Text>
+          <View key={month} style={styles.monthContainer}>
+            <View style={styles.monthHeader}>
+              <Text style={styles.monthTitle}>{month}</Text>
             </View>
 
             {records.map((record, index) => (
-              <View key={record.id} className={`flex-row p-3 ${index % 2 === 0 ? "bg-gray-50" : "bg-white"} border-b border-gray-200`}>
-                <Text className="flex-1 text-gray-700">{format(record.date, "dd.MM.yyyy")}</Text>
-                <Text className="flex-1 text-gray-700">{format(record.date, "MMMM", { locale: pl })}</Text>
-                <Text className="flex-1 text-right font-medium text-green-600">{record.amount.toFixed(2)}</Text>
+              <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
+                <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
+                <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "MMMM", { locale: pl })}</Text>
+                <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.amount.toFixed(2)}</Text>
               </View>
             ))}
           </View>
         ))}
       </ScrollView>
 
-      <View className="mt-4 bg-gray-100 p-3 rounded-lg">
-        <Text className="text-center text-gray-700">
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
           Suma oszczędności:{" "}
-          <Text className="font-bold text-green-600">{savingsHistory.reduce((sum, record) => sum + record.amount, 0).toFixed(2)} PLN</Text>
+          <Text style={styles.totalAmount}>{savingsHistory.reduce((sum, record) => sum + record.amount, 0).toFixed(2)} PLN</Text>
         </Text>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
+    color: "#2563eb", // blue-600
+  },
+  header: {
+    flexDirection: "row",
+    backgroundColor: "#dbeafe", // blue-100
+    padding: 12,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    marginBottom: 4,
+  },
+  headerText: {
+    fontWeight: "600",
+    color: "#1e40af", // blue-800
+  },
+  scrollView: {
+    flex: 1,
+  },
+  monthContainer: {
+    marginBottom: 16,
+  },
+  monthHeader: {
+    backgroundColor: "#eff6ff", // blue-50
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#3b82f6", // blue-500
+  },
+  monthTitle: {
+    fontWeight: "bold",
+    color: "#1d4ed8", // blue-700
+  },
+  recordRow: {
+    flexDirection: "row",
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb", // gray-200
+  },
+  evenRow: {
+    backgroundColor: "#f9fafb", // gray-50
+  },
+  oddRow: {
+    backgroundColor: "white",
+  },
+  recordText: {
+    color: "#374151", // gray-700
+  },
+  amountText: {
+    fontWeight: "500",
+    color: "#059669", // green-600
+  },
+  footer: {
+    marginTop: 16,
+    backgroundColor: "#f3f4f6", // gray-100
+    padding: 12,
+    borderRadius: 8,
+  },
+  footerText: {
+    textAlign: "center",
+    color: "#374151", // gray-700
+  },
+  totalAmount: {
+    fontWeight: "bold",
+    color: "#059669", // green-600
+  },
+  flex1: {
+    flex: 1,
+  },
+  textRight: {
+    textAlign: "right",
+  },
+});
