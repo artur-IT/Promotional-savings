@@ -8,7 +8,7 @@ export default function GoalProgress() {
         <Text style={styles.progressNumbers}>17,8 %</Text>
         <Text style={styles.progressNumbers}>1000 zł</Text>
       </View>
-      <ProgressBar progress={0.25} width={260} height={12} color={"green"} />
+      <ProgressBar progress={0.25} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
       <Text style={styles.description}>Zbieram i beztrosko wydam je na</Text>
       <Text style={styles.goal}>Wakacje</Text>
     </View>

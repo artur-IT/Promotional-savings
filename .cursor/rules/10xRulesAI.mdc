@@ -81,7 +81,7 @@ Wybrane technologie stosowane w projeklcie:
 
 ### Guidelines for Styling
 
-- React Native Styles, nativewind + Tailwind + Tamago UI + React Native Animated
+- React Native Styles, React Native Animated
 - react-native-calendars
 - react-native-icons lub lucide-react-native
 - Light/dark mode z useHooksTS 

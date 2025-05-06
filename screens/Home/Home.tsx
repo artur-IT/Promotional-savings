@@ -1,15 +1,17 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import YearSaving from "../../components/Home/YearSaving";
 import MonthSaving from "../../components/Home/MonthSaving";
 import LastAdd from "../../components/Home/LastAdd";
 import GoalProgress from "../../components/Home/GoalProgress";
 import { Link } from "expo-router";
 
+const TopImage = require("@/assets/images/top_bg.svg");
 const PlaceholderImage = require("@/assets/images/money-bag.svg");
 
 export default function HomeWithGoal() {
   return (
     <View style={styles.container}>
+      <Image source={TopImage} style={styles.topImage} />
       <Image source={PlaceholderImage} style={styles.image} />
       <Text style={styles.slogan}>Promocyjne oszczędności</Text>
 
@@ -24,9 +26,9 @@ export default function HomeWithGoal() {
 
       <GoalProgress />
 
-      <Link href="/addSaving" style={styles.link}>
-        Dodaj oszczędność
-      </Link>
+      <TouchableHighlight onPress={() => {}} underlayColor="#DDDDDD" style={styles.link}>
+        <Link href="/addSaving">Dodaj oszczędność</Link>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -43,6 +45,12 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginLeft: 20,
     color: "#0084CE",
+  },
+  topImage: {
+    position: "absolute",
+    top: -150,
+    width: 400,
+    height: 400,
   },
   image: {
     position: "absolute",

@@ -4,7 +4,7 @@ export default function AboutScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        <h2>O co chodzi?</h2>
+        <h2>O co tu chodzi?</h2>
         <p>
           Prosta aplikacja mobilna do śledzenia oszczędności użytkownika, pozwalająca zapisywać kwoty, daty oraz kategorie na czym
           zaoszczędziłeś/aś pieniądze.
