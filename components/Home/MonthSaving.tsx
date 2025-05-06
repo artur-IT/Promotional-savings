@@ -5,7 +5,7 @@ export default function MonthSaving() {
   return (
     <View style={styles.section}>
       <View style={styles.insideText}>
-        <Text style={styles.monthValue}>150 zł</Text>
+        <Text style={styles.monthValue}>+150 zł</Text>
         <Text style={styles.monthName}>Październik</Text>
       </View>
     </View>
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    width: 170,
-    height: 170,
+    width: 190,
+    height: 190,
     borderColor: "red",
     borderStyle: "solid",
     borderWidth: 3,
@@ -39,11 +39,12 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     margin: 0,
-    fontSize: 40,
+    fontSize: 36,
   },
   monthName: {
     display: "flex",
     margin: 0,
     fontSize: 25,
+    fontWeight: "bold",
   },
 });

@@ -6,7 +6,7 @@ export default function YearSaving() {
     <>
       <View style={styles.container}>
         <View style={styles.insideText}>
-          <Text style={styles.yearValue}>150 zł</Text>
+          <Text style={styles.yearValue}>+150 zł</Text>
           <Text style={styles.infoText}>Zaoszczędzone</Text>
           <Text style={styles.year}>2025</Text>
         </View>
@@ -20,11 +20,9 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: 220,
-    borderColor: "red",
-    borderStyle: "solid",
-    borderWidth: 1,
+    width: 230,
     borderRadius: 10,
+    backgroundColor: "darkorange",
   },
   year: {
     margin: 0,
@@ -42,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     margin: 0,
     fontSize: 40,
+    fontWeight: "bold",
   },
   infoText: {
     display: "flex",

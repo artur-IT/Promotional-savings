@@ -5,10 +5,10 @@ export default function GoalProgress() {
   return (
     <View style={styles.container}>
       <View style={styles.numbers}>
-        <Text>17,8 %</Text>
-        <Text>1000 zł</Text>
+        <Text style={styles.progressNumbers}>17,8 %</Text>
+        <Text style={styles.progressNumbers}>1000 zł</Text>
       </View>
-      <ProgressBar progress={0.25} width={250} height={10} />
+      <ProgressBar progress={0.25} width={260} height={12} color={"green"} />
       <Text style={styles.description}>Zbieram i beztrosko wydam je na</Text>
       <Text style={styles.goal}>Wakacje</Text>
     </View>
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 40,
   },
   numbers: {
     width: 400,
@@ -27,6 +28,9 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  progressNumbers: {
+    fontSize: 18,
   },
   description: {
     width: 250,

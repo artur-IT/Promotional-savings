@@ -12,6 +12,7 @@ export default function HomeWithGoal() {
     <View style={styles.container}>
       <Image source={PlaceholderImage} style={styles.image} />
       <Text style={styles.slogan}>Promocyjne oszczędności</Text>
+
       <View style={styles.year}>
         <YearSaving />
       </View>
@@ -22,6 +23,7 @@ export default function HomeWithGoal() {
       </View>
 
       <GoalProgress />
+
       <Link href="/addSaving" style={styles.link}>
         Dodaj oszczędność
       </Link>
@@ -31,22 +33,23 @@ export default function HomeWithGoal() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
   },
-  link: { borderColor: "red", borderWidth: 1, padding: 10, borderRadius: 5 },
+  link: { borderColor: "red", borderWidth: 1, marginTop: 50, padding: 10, borderRadius: 5 },
   slogan: {
-    fontSize: 34,
-    marginTop: 50,
-    marginBottom: 50,
+    fontSize: 36,
+    lineHeight: 40,
+    marginTop: 30,
+    marginBottom: 30,
+    marginLeft: 20,
+    color: "#0084CE",
   },
   image: {
     position: "absolute",
     top: 190,
     width: 370,
     height: 370,
-    opacity: 0.4,
+    opacity: 0.3,
   },
   year: {
     position: "relative",
@@ -56,6 +59,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "flex-end",
-    marginTop: 30,
+    marginTop: 40,
   },
 });
