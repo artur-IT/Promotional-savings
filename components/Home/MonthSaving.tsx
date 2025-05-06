@@ -1,16 +1,14 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import React from "react";
 
 export default function MonthSaving() {
   return (
-    <>
-      <section style={styles.section}>
-        <div style={styles.insideText}>
-          <p style={styles.monthValue}>150 zł</p>
-          <p style={styles.monthName}>Październik</p>
-        </div>
-      </section>
-    </>
+    <View style={styles.section}>
+      <View style={styles.insideText}>
+        <Text style={styles.monthValue}>150 zł</Text>
+        <Text style={styles.monthName}>Październik</Text>
+      </View>
+    </View>
   );
 }
 

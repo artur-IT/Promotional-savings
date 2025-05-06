@@ -1,13 +1,24 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function LastAdd() {
-  return <div style={styles.container}>Ostatnio dodane (z components)</div>;
+  return (
+    <View style={styles.section}>
+      <Text>Ostatnio:</Text>
+      <Text>14 zł</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  section: {
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    width: 100,
+    height: 100,
+    borderColor: "red",
+    borderStyle: "solid",
+    borderWidth: 3,
+    borderRadius: "50%",
   },
 });

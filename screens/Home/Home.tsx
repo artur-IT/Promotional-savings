@@ -1,28 +1,61 @@
-import { StyleSheet, View } from "react-native";
-import Header from "../../components/Top";
+import { Image, StyleSheet, Text, View } from "react-native";
 import YearSaving from "../../components/Home/YearSaving";
 import MonthSaving from "../../components/Home/MonthSaving";
 import LastAdd from "../../components/Home/LastAdd";
 import GoalProgress from "../../components/Home/GoalProgress";
-import React from "react";
+import { Link } from "expo-router";
+
+const PlaceholderImage = require("@/assets/images/money-bag.svg");
 
 export default function HomeWithGoal() {
   return (
-    <>
-      <View style={styles.container}>Str. Główna (ze screens)</View>;
-      <Header />
-      <YearSaving />
-      <MonthSaving />
-      <LastAdd />
+    <View style={styles.container}>
+      <Image source={PlaceholderImage} style={styles.image} />
+      <Text style={styles.slogan}>Promocyjne oszczędności</Text>
+      <View style={styles.year}>
+        <YearSaving />
+      </View>
+
+      <View style={styles.circles}>
+        <MonthSaving />
+        <LastAdd />
+      </View>
+
       <GoalProgress />
-    </>
+      <Link href="/addSaving" style={styles.link}>
+        Dodaj oszczędność
+      </Link>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+  },
+  link: { borderColor: "red", borderWidth: 1, padding: 10, borderRadius: 5 },
+  slogan: {
+    fontSize: 34,
+    marginTop: 50,
+    marginBottom: 50,
+  },
+  image: {
+    position: "absolute",
+    top: 190,
+    width: 370,
+    height: 370,
+    opacity: 0.4,
+  },
+  year: {
+    position: "relative",
+    left: -90,
+  },
+  circles: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginTop: 30,
   },
 });

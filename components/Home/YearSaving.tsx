@@ -1,38 +1,30 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 export default function YearSaving() {
   return (
     <>
-      {/* <div style={styles.container}>W tym ROKU zaoszcz. (z components)</div>; */}
-      <section style={styles.section}>
-        <div style={styles.insideText}>
-          <p style={styles.yearValue}>150 zł</p>
-          <p style={styles.infoText}>Zaoszczędzone</p>
-          <p style={styles.year}>2025</p>
-        </div>
-      </section>
+      <View style={styles.container}>
+        <View style={styles.insideText}>
+          <Text style={styles.yearValue}>150 zł</Text>
+          <Text style={styles.infoText}>Zaoszczędzone</Text>
+          <Text style={styles.year}>2025</Text>
+        </View>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  section: {
     display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     width: 220,
-    height: 120,
     borderColor: "red",
     borderStyle: "solid",
     borderWidth: 1,
-    borderRadius: "10",
+    borderRadius: 10,
   },
   year: {
     margin: 0,
@@ -42,6 +34,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    marginTop: 15,
+    marginBottom: 15,
   },
   yearValue: {
     display: "flex",
