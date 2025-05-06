@@ -1,9 +1,25 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { Calendar } from "react-native-calendars";
 import { useState } from "react";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function DataSavings() {
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  const handleDateSelect = (day: { dateString: string }) => {
+    setSelectedDate(day.dateString);
+    setShowCalendar(false);
+  };
+  // Funkcja formatująca datę z YYYY-MM-DD na DD.MM.YYYY
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "Wybierz datę";
+
+    const [year, month, day] = dateString.split("-");
+    return `${day}.${month}.${year}`;
+  };
 
   return (
     <View style={styles.container}>
@@ -16,7 +32,9 @@ export default function DataSavings() {
       {/* Wiersz 2 */}
       <View style={styles.row}>
         <Text style={styles.label}>Data</Text>
-        <TextInput style={styles.input} />
+        <TouchableOpacity style={styles.input} onPress={() => setShowCalendar(true)}>
+          <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Wiersz 3 */}
@@ -30,6 +48,28 @@ export default function DataSavings() {
           <Picker.Item label="Inne" value="another" />
         </Picker>
       </View>
+
+      {/* Modal z kalendarzem */}
+      <Modal visible={showCalendar} transparent={true} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.calendarContainer}>
+            <Calendar
+              onDayPress={handleDateSelect}
+              markedDates={{
+                [selectedDate]: { selected: true, selectedColor: "#3498db" },
+              }}
+              theme={{
+                todayTextColor: "#3498db",
+                selectedDayBackgroundColor: "#3498db",
+                arrowColor: "#3498db",
+              }}
+            />
+            <TouchableOpacity style={styles.closeButton} onPress={() => setShowCalendar(false)}>
+              <Text style={styles.closeButtonText}>Anuluj</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -48,6 +88,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 8,
   },
+  dateText: {
+    fontSize: 14,
+    lineHeight: 30,
+  },
   input: {
     width: 150,
     height: 30,
@@ -64,5 +108,29 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 4,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  calendarContainer: {
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 10,
+    elevation: 5,
+  },
+  closeButton: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: "#333",
   },
 });

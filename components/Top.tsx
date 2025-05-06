@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   topImage: {
     position: "absolute",
     top: -70,
-    width: 400,
+    width: "100%",
     height: 400,
   },
   slogan: {
