@@ -2,8 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { StyleSheet } from "react-native";
-import "./NewGoal.css";
+import { StyleSheet, View } from "react-native";
 
 const goalSchema = z.object({
   goalName: z
@@ -39,43 +38,7 @@ export default function NewGoal() {
     console.log("Anulowano");
   };
 
-  return (
-    <div className="goal-form-container">
-      <h2>Nowy / Edytuj cel</h2>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-group">
-          <label htmlFor="goalName">Nazwa celu</label>
-          <input id="goalName" type="text" {...register("goalName")} className={errors.goalName ? "input-error" : ""} />
-          {errors.goalName && <p className="error-message">{errors.goalName.message}</p>}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="goalAmount">Kwota</label>
-          <input
-            id="goalAmount"
-            type="number"
-            step="0.01"
-            {...register("goalAmount", { valueAsNumber: true })}
-            className={errors.goalAmount ? "input-error" : ""}
-          />
-          {errors.goalAmount && <p className="error-message">{errors.goalAmount.message}</p>}
-        </div>
-
-        <div className="form-buttons">
-          <button type="submit" className="btn-save">
-            Zapisz
-          </button>
-          <button type="button" className="btn-cancel" onClick={handleCancel}>
-            Anuluj
-          </button>
-          <button type="button" className="btn-clear" onClick={() => reset()}>
-            Wyczyść
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+  return <View style={styles.container}></View>;
 }
 
 const styles = StyleSheet.create({

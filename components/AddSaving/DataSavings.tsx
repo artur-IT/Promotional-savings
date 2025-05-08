@@ -26,7 +26,7 @@ export default function DataSavings() {
       {/* Wiersz 1 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
-        <TextInput style={styles.input} keyboardType="numeric" placeholder="0.00" />
+        <TextInput style={styles.input} keyboardType="numeric" />
       </View>
 
       {/* Wiersz 2 */}
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 4,
+    paddingHorizontal: 5,
   },
   modalContainer: {
     flex: 1,

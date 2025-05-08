@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native"
 import YearSaving from "../../components/Home/YearSaving";
 import MonthSaving from "../../components/Home/MonthSaving";
 import LastAdd from "../../components/Home/LastAdd";
-import GoalProgress from "../../components/Home/GoalProgress";
+import GoalProgress from "../../components/Goal/GoalProgress";
 import { Link } from "expo-router";
 
 const TopImage = require("@/assets/images/top_bg.svg");
