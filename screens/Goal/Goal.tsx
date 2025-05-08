@@ -59,7 +59,7 @@ export default function Goal() {
 
       {/* {showForm && <EditTargetForm />} */}
       {showForm && (
-        <Animated.View style={[styles.formContainer, { opacity: fadeAnim }]}>
+        <Animated.View style={{ opacity: fadeAnim }}>
           <EditTargetForm />
         </Animated.View>
       )}
@@ -82,11 +82,5 @@ const styles = StyleSheet.create({
   goal: {
     marginTop: 30,
     marginBottom: 30,
-  },
-  formContainer: {
-    backgroundColor: "#f5f5f5",
-    padding: 15,
-    margin: 10,
-    borderRadius: 8,
   },
 });

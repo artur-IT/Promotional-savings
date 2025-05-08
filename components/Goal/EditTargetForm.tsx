@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     width: 50,
     fontSize: 16,
   },
-
   targetInput: {
     width: 170,
     height: 30,
