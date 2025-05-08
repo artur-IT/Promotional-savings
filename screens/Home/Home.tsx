@@ -3,17 +3,25 @@ import YearSaving from "../../components/Home/YearSaving";
 import MonthSaving from "../../components/Home/MonthSaving";
 import LastAdd from "../../components/Home/LastAdd";
 import GoalProgress from "../../components/Home/GoalProgress";
-import { Link } from "expo-router";
+import { router } from "expo-router";
+import Button from "@/components/Button";
 
 const TopImage = require("@/assets/images/top_bg.svg");
 const PlaceholderImage = require("@/assets/images/money-bag.svg");
 
 export default function HomeWithGoal() {
+  const AddSavingHandle = () => {
+    router.push("/addSaving");
+  };
+
   return (
     <View style={styles.container}>
       <Image source={TopImage} style={styles.topImage} />
       <Image source={PlaceholderImage} style={styles.image} />
-      <Text style={styles.slogan}>Promocyjne oszczędności</Text>
+      <Text style={styles.slogan}>
+        Promocyjne <br />
+        oszczędności
+      </Text>
 
       <View style={styles.year}>
         <YearSaving />
@@ -26,8 +34,8 @@ export default function HomeWithGoal() {
 
       <GoalProgress />
 
-      <TouchableHighlight onPress={() => {}} underlayColor="#DDDDDD" style={styles.link}>
-        <Link href="/addSaving">Dodaj oszczędność</Link>
+      <TouchableHighlight underlayColor="#DDDDDD" style={styles.link}>
+        <Button title="Dodaj oszczędność" onPress={AddSavingHandle} width={150} />
       </TouchableHighlight>
     </View>
   );
@@ -37,13 +45,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
   },
-  link: { borderColor: "red", borderWidth: 1, marginTop: 50, padding: 10, borderRadius: 5 },
+  link: { marginTop: 30, padding: 10, borderRadius: 5 },
   slogan: {
-    fontSize: 36,
+    marginLeft: -150,
+    fontSize: 32,
     lineHeight: 40,
     marginTop: 30,
     marginBottom: 30,
-    marginLeft: 20,
     color: "#0084CE",
   },
   topImage: {

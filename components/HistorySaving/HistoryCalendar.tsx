@@ -32,7 +32,7 @@ export default function HistoryCalendar() {
     const grouped: { [key: string]: SavingRecord[] } = {};
 
     savingsHistory.forEach((record) => {
-      const monthKey = format(record.date, "MMMM yyyy", { locale: pl });
+      const monthKey = format(record.date, "MMMM ", { locale: pl });
 
       if (!grouped[monthKey]) {
         grouped[monthKey] = [];
@@ -48,11 +48,10 @@ export default function HistoryCalendar() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Historia oszczędności</Text>
+      <Text style={styles.title}>2025</Text>
 
       <View style={styles.header}>
         <Text style={[styles.headerText, styles.flex1]}>Data</Text>
-        <Text style={[styles.headerText, styles.flex1]}>Miesiąc</Text>
         <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (PLN)</Text>
       </View>
 
@@ -66,7 +65,6 @@ export default function HistoryCalendar() {
             {records.map((record, index) => (
               <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
                 <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
-                <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "MMMM", { locale: pl })}</Text>
                 <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.amount.toFixed(2)}</Text>
               </View>
             ))}
@@ -86,20 +84,19 @@ export default function HistoryCalendar() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "white",
+    display: "flex",
     padding: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
-    textAlign: "center",
+    textAlign: "left",
     color: "#2563eb", // blue-600
   },
   header: {
     flexDirection: "row",
-    backgroundColor: "#dbeafe", // blue-100
+    backgroundColor: "#dbeafe",
     padding: 12,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -110,7 +107,7 @@ const styles = StyleSheet.create({
     color: "#1e40af", // blue-800
   },
   scrollView: {
-    flex: 1,
+    // flex: 1,
   },
   monthContainer: {
     marginBottom: 16,

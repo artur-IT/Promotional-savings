@@ -12,9 +12,7 @@ export default function Goal() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const EditHandle = () => {
-    // setShowForm(!showForm);
     if (showForm) {
-      // Animacja znikania
       Animated.timing(fadeAnim, {
         toValue: 0,
         duration: 300,
@@ -23,7 +21,6 @@ export default function Goal() {
         setShowForm(false);
       });
     } else {
-      // Najpierw pokaż formularz, potem animuj
       setShowForm(true);
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -57,7 +54,6 @@ export default function Goal() {
         <GoalProgress />
       </View>
 
-      {/* {showForm && <EditTargetForm />} */}
       {showForm && (
         <Animated.View style={{ opacity: fadeAnim }}>
           <EditTargetForm />
