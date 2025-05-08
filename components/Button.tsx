@@ -4,47 +4,31 @@ import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle } from "react-
 interface ButtonProps {
   title: string;
   onPress: () => void;
-  type?: "primary" | "secondary";
-  style?: ViewStyle;
-  textStyle?: TextStyle;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, type = "primary", style, textStyle }) => {
+const Button: React.FC<ButtonProps> = ({ title, onPress }) => {
   return (
-    <TouchableOpacity style={[styles.button, type === "primary" ? styles.primaryButton : styles.secondaryButton, style]} onPress={onPress}>
-      <Text style={[styles.text, type === "primary" ? styles.primaryText : styles.secondaryText, textStyle]}>{title}</Text>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    width: 100,
-    height: 45,
-    padding: 15,
+    width: 90,
+    height: 40,
     borderRadius: 5,
     alignItems: "center",
-    marginHorizontal: 20,
+    justifyContent: "center",
+    marginHorizontal: 5,
     marginVertical: 5,
-  },
-  primaryButton: {
     backgroundColor: "#000",
   },
-  secondaryButton: {
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#000",
-  },
+
   text: {
-    fontSize: 16,
-    fontWeight: "normal",
-    lineHeight: 16,
-  },
-  primaryText: {
+    fontSize: 14,
     color: "#fff",
-  },
-  secondaryText: {
-    color: "#000",
   },
 });
 
