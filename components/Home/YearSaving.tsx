@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     width: 230,
     borderRadius: 10,
     backgroundColor: "darkorange",
+    // boxShadow: "5px 5px 2px 2px rgba(0, 0, 0, 0.6)",
   },
   year: {
     margin: 0,

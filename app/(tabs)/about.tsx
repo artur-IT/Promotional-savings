@@ -11,31 +11,30 @@ export default function AboutScreen() {
           pieniądze.
         </Text>
 
-        <Text style={styles.paragraph}>Aplikacja zlicza moje zaoszczędzone na zakupach pieniądze i sumuje je.</Text>
+        <Text style={styles.paragraph}>Aplikacja zlicza Twoje zaoszczędzone na zakupach pieniądze i sumuje je.</Text>
 
         <Text style={styles.title}>Jak to działa</Text>
 
-        <Text style={styles.paragraph}>1. Wprowadź kwotę zaoszczędzoną oraz datę kiedy ta kwota była uzyskana.</Text>
+        <Text style={[styles.paragraph, styles.bold]}>1. Wprowadź kwotę zaoszczędzoną oraz datę kiedy ta kwota była uzyskana.</Text>
 
-        <Text style={styles.paragraph}>2. Zobaczysz:</Text>
+        <Text style={[styles.paragraph, styles.bold]}>2. Zobaczysz:</Text>
         <View style={styles.listContainer}>
-          <Text style={styles.listItem}>• sumę kwot zaoszczędzonych w tym miesiącu</Text>
           <Text style={styles.listItem}>• sumę kwot zaoszczędzonych w tym miesiącu</Text>
           <Text style={styles.listItem}>• sumę kwot zaoszczędzonych w bieżącym roku</Text>
           <Text style={styles.listItem}>• postęp w osiągnięciu swojego celu</Text>
           <Text style={styles.listItem}>• historię swoich oszczędności</Text>
         </View>
 
-        <Text style={styles.paragraph}>3. Możesz podać cel, na który kiedyś wydasz te pieniądze.</Text>
+        <Text style={[styles.paragraph, styles.bold]}>3. Możesz podać cel, na który kiedyś wydasz swoje pieniądze.</Text>
 
         <Text style={styles.paragraph}>
-          Na przykład:
+          <Text style={styles.bold}>Na przykład:</Text>
           <br />
           Zaoszczędziłem 17 zł na zakupie żywności, ale nie widzę i nie skorzystam z tych zaoszczędzonych 17 zł ponieważ zaraz o tym
           zapomnę. Gdzie jest te 17 zł, które właśnie zaoszczędziłem?
         </Text>
 
-        <Text style={[styles.paragraph, styles.bold]}>Teraz naprawdę widzę ile zaoszczędziłem na różnych zakupach.</Text>
+        <Text style={[styles.paragraph, styles.bold]}>Teraz naprawdę zobaczysz ile zaoszczędziłeś na różnych zakupach.</Text>
       </View>
     </ScrollView>
   );

@@ -1,8 +1,30 @@
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { Calendar } from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useState } from "react";
 // import DateTimePicker from "@react-native-community/datetimepicker";
+
+LocaleConfig.locales["pl"] = {
+  monthNames: [
+    "Styczeń",
+    "Luty",
+    "Marzec",
+    "Kwiecień",
+    "Maj",
+    "Czerwiec",
+    "Lipiec",
+    "Sierpień",
+    "Wrzesień",
+    "Październik",
+    "Listopad",
+    "Grudzień",
+  ],
+  monthNamesShort: ["Sty.", "Lut.", "Mar.", "Kwi.", "Maj", "Cze.", "Lip.", "Sie.", "Wrz.", "Paź.", "Lis.", "Gru."],
+  dayNames: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+  dayNamesShort: ["Ndz.", "Pon.", "Wt.", "Śr.", "Czw.", "Pt.", "Sob."],
+  today: "Dziś",
+};
+LocaleConfig.defaultLocale = "pl";
 
 export default function DataSavings() {
   const [selectedCategory, setSelectedCategory] = useState("");

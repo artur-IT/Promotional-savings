@@ -1,12 +1,9 @@
-import { Tabs, usePathname } from "expo-router";
+import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import React from "react";
 
 export default function TabLayout() {
-  const pathname = usePathname();
-  const isAddSavingScreen = pathname.includes("AddSaving");
-
   return (
     <Tabs
       screenOptions={{
@@ -18,8 +15,6 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: "#25292e",
           borderColor: "none",
-          // borderTopLeftRadius: 15,
-          // borderTopRightRadius: 15,
           height: 60,
           paddingTop: 5,
           paddingBottom: 5,
