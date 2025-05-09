@@ -31,6 +31,27 @@ export default function HistorySavings() {
     }
   };
 
+  const handleYearChange = (year: string) => {
+    setSelectYear(year);
+
+    if (year) {
+      setShowCalendar(true);
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start(() => {
+        setShowCalendar(false);
+      });
+    }
+  };
+
   useEffect(() => {
     navigation.setOptions({
       tabBarStyle: { display: "none" },
@@ -52,7 +73,7 @@ export default function HistorySavings() {
           oszczędności
         </Text>
         <View style={styles.buttonsContainer}>
-          <Picker style={styles.picker} selectedValue={selectYear} onValueChange={(itemValue) => setSelectYear(itemValue)}>
+          <Picker style={styles.picker} selectedValue={selectYear} onValueChange={(value) => handleYearChange(value)}>
             <Picker.Item label="Rok" value="" />
             <Picker.Item label="2025" value="2025" />
             <Picker.Item label="2024" value="2024" />

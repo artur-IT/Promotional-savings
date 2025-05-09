@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 
@@ -11,6 +11,7 @@ interface SavingRecord {
 
 export default function HistoryCalendar() {
   const [savingsHistory, setSavingsHistory] = useState<SavingRecord[]>([]);
+  const [expandedMonths, setExpandedMonths] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     const mockData: SavingRecord[] = [
@@ -26,22 +27,42 @@ export default function HistoryCalendar() {
 
     const sortedData = mockData.sort((a, b) => b.date.getTime() - a.date.getTime());
     setSavingsHistory(sortedData);
+
+    // Domyślnie rozwijamy pierwszy miesiąc
+    if (sortedData.length > 0) {
+      const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
+      const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
+      setExpandedMonths({ [capitalizedMonth]: true });
+    }
   }, []);
 
   const groupByMonth = () => {
     const grouped: { [key: string]: SavingRecord[] } = {};
 
     savingsHistory.forEach((record) => {
-      const monthKey = format(record.date, "MMMM ", { locale: pl });
+      // Używamy formatu LLLL dla nazwy miesiąca w mianowniku
+      const monthKey = format(record.date, "LLLL", { locale: pl });
+      const capitalizedMonth = monthKey.charAt(0).toUpperCase() + monthKey.slice(1);
 
-      if (!grouped[monthKey]) {
-        grouped[monthKey] = [];
+      if (!grouped[capitalizedMonth]) {
+        grouped[capitalizedMonth] = [];
       }
 
-      grouped[monthKey].push(record);
+      grouped[capitalizedMonth].push(record);
     });
 
     return grouped;
+  };
+
+  const calculateMonthTotal = (records: SavingRecord[]) => {
+    return records.reduce((sum, record) => sum + record.amount, 0).toFixed(2);
+  };
+
+  const toggleMonth = (month: string) => {
+    setExpandedMonths((prev) => ({
+      ...prev,
+      [month]: !prev[month],
+    }));
   };
 
   const groupedData = groupByMonth();
@@ -55,19 +76,28 @@ export default function HistoryCalendar() {
         <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (PLN)</Text>
       </View>
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView>
         {Object.entries(groupedData).map(([month, records], monthIndex) => (
-          <View key={month} style={styles.monthContainer}>
-            <View style={styles.monthHeader}>
-              <Text style={styles.monthTitle}>{month}</Text>
-            </View>
+          <View key={month}>
+            <TouchableOpacity style={styles.monthHeader} onPress={() => toggleMonth(month)} activeOpacity={0.7}>
+              <Text style={styles.monthTitle}>
+                {month} {expandedMonths[month] ? "▼" : "▶"}
+              </Text>
 
-            {records.map((record, index) => (
-              <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
-                <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
-                <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.amount.toFixed(2)}</Text>
+              {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
+              {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} PLN</Text>}
+            </TouchableOpacity>
+
+            {expandedMonths[month] && (
+              <View>
+                {records.map((record, index) => (
+                  <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
+                    <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
+                    <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.amount.toFixed(2)}</Text>
+                  </View>
+                ))}
               </View>
-            ))}
+            )}
           </View>
         ))}
       </ScrollView>
@@ -106,22 +136,23 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1e40af", // blue-800
   },
-  scrollView: {
-    // flex: 1,
-  },
-  monthContainer: {
-    marginBottom: 16,
-  },
   monthHeader: {
     backgroundColor: "#eff6ff", // blue-50
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderLeftWidth: 4,
     borderLeftColor: "#3b82f6", // blue-500
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   monthTitle: {
     fontWeight: "bold",
     color: "#1d4ed8", // blue-700
+  },
+  monthTotalAmount: {
+    fontWeight: "500",
+    color: "#059669", // green-600
   },
   recordRow: {
     flexDirection: "row",
