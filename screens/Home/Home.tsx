@@ -35,7 +35,7 @@ export default function HomeWithGoal() {
       <GoalProgress />
 
       <TouchableHighlight underlayColor="#DDDDDD" style={styles.link}>
-        <Button title="Dodaj oszczędność" onPress={AddSavingHandle} width={150} />
+        <Button title="Dodaj oszczędność" onPress={() => router.push("/(tabs)/(hidden)/addSaving")} width={150} />
       </TouchableHighlight>
     </View>
   );

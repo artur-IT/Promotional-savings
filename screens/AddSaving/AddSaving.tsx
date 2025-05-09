@@ -28,7 +28,7 @@ export default function AddSaving() {
 const styles = StyleSheet.create({
   title: {
     fontSize: 26,
-    marginTop: 50,
+    marginTop: 80,
     marginBottom: 30,
     marginLeft: 20,
   },

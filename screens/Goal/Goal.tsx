@@ -4,6 +4,7 @@ import Top from "@/components/Top";
 import EditTargetForm from "@/components/Goal/EditTargetForm";
 import GoalProgress from "@/components/Goal/GoalProgress";
 import Button from "@/components/Button";
+import colors from "@/constans/colors";
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
@@ -42,32 +43,42 @@ export default function Goal() {
   // }, [navigation]);
 
   return (
-    <View>
+    <>
       <Top />
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Mój Cel </Text>
-        <Button title="Edytuj" onPress={EditHandle} />
-      </View>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Mój Cel </Text>
+          <Button title="Edytuj" onPress={EditHandle} />
+        </View>
 
-      <View style={styles.goal}>
-        <GoalProgress />
-      </View>
+        <View style={styles.goal}>
+          <GoalProgress />
+        </View>
 
-      {showForm && (
-        <Animated.View style={{ opacity: fadeAnim }}>
-          <EditTargetForm />
-        </Animated.View>
-      )}
-    </View>
+        {showForm && (
+          <Animated.View style={{ opacity: fadeAnim }}>
+            <EditTargetForm />
+          </Animated.View>
+        )}
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    height: "100%",
+    // justifyContent: "center",
+    marginTop: 80,
+  },
   headerContainer: {
+    width: 100,
     fontSize: 26,
-    marginTop: 50,
+    // marginTop: 50,
     marginBottom: 10,
     marginLeft: 20,
+    backgroundColor: colors.background.main,
   },
   title: {
     fontSize: 26,

@@ -17,23 +17,28 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     flexDirection: "row",
-    marginTop: 40,
+    // height: "auto",
+    // marginTop: 40,
+    // zIndex: 1,
   },
   topImage: {
     position: "absolute",
-    top: -70,
+    top: -30,
     width: "100%",
     height: 400,
   },
   slogan: {
+    position: "relative",
+    top: 40,
     fontSize: 24,
     color: "#ffffff",
   },
   image: {
+    position: "relative",
+    top: 40,
     width: 70,
     height: 70,
   },

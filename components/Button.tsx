@@ -1,6 +1,6 @@
-import { he } from "date-fns/locale";
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import colors from "@/constans/colors";
 
 interface ButtonProps {
   title: string;
@@ -23,12 +23,13 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, width = 90, height = 40
       textAlign: "center",
       marginHorizontal: 5,
       marginVertical: 5,
-      backgroundColor: "#000",
+      backgroundColor: colors.background.button_other,
     },
 
     text: {
       fontSize: 14,
-      color: "#fff",
+      color: colors.text.button_W,
+      // fontWeight: "bold",
     },
   });
 

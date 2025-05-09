@@ -80,7 +80,7 @@ export default function HistorySavings() {
 const styles = StyleSheet.create({
   headerContainer: {
     fontSize: 26,
-    marginTop: 50,
+    marginTop: 80,
     marginBottom: 10,
     marginLeft: 20,
   },

@@ -1,9 +1,12 @@
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import React from "react";
 
 export default function TabLayout() {
+  const pathname = usePathname();
+  const isAddSavingScreen = pathname.includes("AddSaving");
+
   return (
     <Tabs
       screenOptions={{
@@ -11,10 +14,12 @@ export default function TabLayout() {
         headerStyle: {
           backgroundColor: "#25292e",
         },
-        headerShadowVisible: false,
         headerTintColor: "green",
         tabBarStyle: {
           backgroundColor: "#25292e",
+          borderColor: "none",
+          // borderTopLeftRadius: 15,
+          // borderTopRightRadius: 15,
           height: 60,
           paddingTop: 5,
           paddingBottom: 5,
@@ -53,6 +58,14 @@ export default function TabLayout() {
           headerShown: false,
           title: "Historia",
           tabBarIcon: ({ color, focused }) => <Ionicons name={focused ? "calendar" : "calendar-outline"} color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="(hidden)"
+        options={{
+          headerShown: false,
+          href: null,
+          tabBarItemStyle: { display: "none" },
         }}
       />
     </Tabs>

@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     lineHeight: 30,
   },
   input: {
-    width: 150,
+    width: 130,
     height: 30,
     backgroundColor: "white",
     borderColor: "black",
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   picker: {
-    width: 150,
+    width: 130,
     height: 30,
     backgroundColor: "white",
     borderColor: "black",
