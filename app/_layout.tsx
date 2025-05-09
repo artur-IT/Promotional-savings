@@ -5,9 +5,10 @@ export default function RootLayout() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="addSaving" options={{ headerShown: false }} />
-      <Stack.Screen name="goal" options={{ headerShown: false, presentation: "modal" }} />
-      <Stack.Screen name="historySavings" options={{ headerShown: false }} />
       <Stack.Screen name="+not-found" />
     </Stack>
   );
 }
+
+// Usunąłem linię <Stack.Screen name="goal" />,
+// ponieważ ta trasa jest już częścią zakładek i nie powinna być rejestrowana ponownie na poziomie głównym.

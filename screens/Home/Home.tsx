@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   link: { marginTop: 30, padding: 10, borderRadius: 5 },
   slogan: {
-    marginLeft: -150,
+    marginLeft: -170,
     fontSize: 32,
     lineHeight: 40,
     marginTop: 30,

@@ -1,41 +1,77 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 
 export default function AboutScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-        <h2>O co tu chodzi?</h2>
-        <p>
-          Prosta aplikacja mobilna do śledzenia oszczędności użytkownika, pozwalająca zapisywać kwoty, daty oraz kategorie na czym
-          zaoszczędziłeś/aś pieniądze.
-        </p>
-        <p>Aplikacja zlicza moje zaoszczędzone na zakupach pieniądze i sumuje je.</p>
-        <p>1. Wprowadź kwotę zaoszczędzoną i datę kiedy ta kwota była uzyskana.</p>
-        <p>2. Zobaczycz:</p>
-        <p>- sumę kwot zaoszczędzonych w tym miesiącu </p>
-        <p>- sumę kwot zaoszczędzonych w bieżącym roku</p>
-        <p>- historię swoich oszczędności</p>
-        <p>3. Podaj cel, na który kiedyś wydasz te pieniądze.</p>
-        Na przykład: <br />
-        <p>
-          Zaoszczędziłem np. 17 zł na zakupie żywności, ale nie widzę i nie korzystam z tych zaoszczędzonych 17 zł. Gdzie jest te 17 zł,
-          które zaoszczędziłem?
-        </p>
-        <p>Teraz naprawdę widzę ile zaoszczędziłem na różnych zakupach.</p>
-      </Text>
-    </View>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        <Text style={styles.title}>O aplikacji</Text>
+
+        <Text style={styles.paragraph}>
+          Prosta aplikacja mobilna do śledzenia Twoich oszczędności. Pozwala zapisywać kwoty, daty oraz kategorie na czym zaoszczędziłeś/aś
+          pieniądze.
+        </Text>
+
+        <Text style={styles.paragraph}>Aplikacja zlicza moje zaoszczędzone na zakupach pieniądze i sumuje je.</Text>
+
+        <Text style={styles.title}>Jak to działa</Text>
+
+        <Text style={styles.paragraph}>1. Wprowadź kwotę zaoszczędzoną oraz datę kiedy ta kwota była uzyskana.</Text>
+
+        <Text style={styles.paragraph}>2. Zobaczysz:</Text>
+        <View style={styles.listContainer}>
+          <Text style={styles.listItem}>• sumę kwot zaoszczędzonych w tym miesiącu</Text>
+          <Text style={styles.listItem}>• sumę kwot zaoszczędzonych w tym miesiącu</Text>
+          <Text style={styles.listItem}>• sumę kwot zaoszczędzonych w bieżącym roku</Text>
+          <Text style={styles.listItem}>• postęp w osiągnięciu swojego celu</Text>
+          <Text style={styles.listItem}>• historię swoich oszczędności</Text>
+        </View>
+
+        <Text style={styles.paragraph}>3. Możesz podać cel, na który kiedyś wydasz te pieniądze.</Text>
+
+        <Text style={styles.paragraph}>
+          Na przykład:
+          <br />
+          Zaoszczędziłem 17 zł na zakupie żywności, ale nie widzę i nie skorzystam z tych zaoszczędzonych 17 zł ponieważ zaraz o tym
+          zapomnę. Gdzie jest te 17 zł, które właśnie zaoszczędziłem?
+        </Text>
+
+        <Text style={[styles.paragraph, styles.bold]}>Teraz naprawdę widzę ile zaoszczędziłem na różnych zakupach.</Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
-    backgroundColor: "#25292e",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    backgroundColor: "#f2f2f2",
   },
-  text: {
-    color: "#fff",
+  container: {
     padding: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+    color: "#222",
+  },
+  paragraph: {
+    color: "#222",
+    marginBottom: 12,
+    textAlign: "justify",
+    lineHeight: 22,
+  },
+  listContainer: {
+    marginLeft: 10,
+    marginBottom: 12,
+  },
+  listItem: {
+    color: "#222",
+    marginBottom: 2,
+    lineHeight: 22,
+  },
+  bold: {
+    fontWeight: "bold",
   },
 });

@@ -29,18 +29,18 @@ export default function HistoryCalendar() {
     setSavingsHistory(sortedData);
 
     // Domyślnie rozwijamy pierwszy miesiąc
-    if (sortedData.length > 0) {
-      const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
-      const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
-      setExpandedMonths({ [capitalizedMonth]: true });
-    }
+    // if (sortedData.length > 0) {
+    //   const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
+    //   const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
+    //   setExpandedMonths({ [capitalizedMonth]: true });
+    // }
   }, []);
 
   const groupByMonth = () => {
     const grouped: { [key: string]: SavingRecord[] } = {};
 
     savingsHistory.forEach((record) => {
-      // Używamy formatu LLLL dla nazwy miesiąca w mianowniku
+      // Używam formatu LLLL dla nazwy miesiąca w mianowniku
       const monthKey = format(record.date, "LLLL", { locale: pl });
       const capitalizedMonth = monthKey.charAt(0).toUpperCase() + monthKey.slice(1);
 

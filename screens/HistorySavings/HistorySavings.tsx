@@ -1,13 +1,11 @@
 import HistoryCalendar from "@/components/HistorySaving/HistoryCalendar";
 import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
 import Top from "@/components/Top";
-import { useEffect, useRef, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useRef, useState } from "react";
 import Button from "@/components/Button";
 import { Picker } from "@react-native-picker/picker";
 
 export default function HistorySavings() {
-  const navigation = useNavigation();
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectYear, setSelectYear] = useState("");
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -51,18 +49,6 @@ export default function HistorySavings() {
       });
     }
   };
-
-  useEffect(() => {
-    navigation.setOptions({
-      tabBarStyle: { display: "none" },
-    });
-
-    return () => {
-      navigation.setOptions({
-        tabBarStyle: { display: "flex" },
-      });
-    };
-  }, [navigation]);
 
   return (
     <ScrollView>
