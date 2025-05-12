@@ -1,34 +1,74 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Button from "@/components/Button";
 import { router } from "expo-router";
 import colors from "@/constans/colors";
+import { addGoal } from "@/store/goalsStore";
+import { useState } from "react";
 
 export default function EditTargetForm() {
-  const CancelHandle = () => {
+  const [goalName, setGoalName] = useState("");
+  const [targetAmount, setTargetAmount] = useState("");
+
+  const cancelHandle = () => {
     router.push("/");
   };
+
+  const saveHandle = () => {
+    if (!goalName.trim()) {
+      Alert.alert("Błąd", "Nazwa celu nie może być pusta");
+      return;
+    }
+
+    if (!targetAmount.trim()) {
+      Alert.alert("Błąd", "Kwota celu nie może być pusta");
+      return;
+    }
+    const amount = parseFloat(targetAmount);
+
+    if (isNaN(amount) || amount <= 0) {
+      Alert.alert("Błąd", "Kwota musi być liczbą większą od zera");
+      return;
+    }
+
+    // Dodanie celu do bazy danych
+    addGoal({
+      goal: goalName,
+      targetAmount: amount,
+    });
+
+    Alert.alert("Sukces", "Cel został dodany pomyślnie", [{ text: "OK", onPress: () => router.push("/") }]);
+  };
+
+  const clearGoalName = () => setGoalName("");
+  const clearTargetAmount = () => setTargetAmount("");
 
   return (
     <View style={styles.container}>
       {/* Target Name */}
       <View style={styles.row}>
         <Text style={styles.label}>Cel</Text>
-        <TextInput style={styles.targetInput} />
-        <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} />
+        <TextInput style={styles.targetInput} value={goalName} onChangeText={setGoalName} placeholder="Nazwa celu" />
+        <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearGoalName} />
       </View>
 
       {/* Target Value */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
-        <TextInput style={[styles.targetInput, styles.targetInputValue]} keyboardType="numeric" />
-        <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} />
+        <TextInput
+          style={[styles.targetInput, styles.targetInputValue]}
+          keyboardType="numeric"
+          value={targetAmount}
+          onChangeText={setTargetAmount}
+          placeholder="0.00"
+        />
+        <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearTargetAmount} />
       </View>
 
       {/* Buttons */}
       <View style={styles.buttonsContainer}>
-        <Button title="Zapisz" onPress={() => console.log("Zapisano cel")} />
-        <Button title="Anuluj" onPress={CancelHandle} />
+        <Button title="Zapisz" onPress={saveHandle} />
+        <Button title="Anuluj" onPress={cancelHandle} />
       </View>
     </View>
   );
@@ -37,7 +77,7 @@ export default function EditTargetForm() {
 const styles = StyleSheet.create({
   container: {
     // position: "relative",
-    bottom: -30,
+    bottom: 15,
     display: "flex",
     justifyContent: "center",
     // alignItems: "center",

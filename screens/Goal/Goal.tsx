@@ -5,6 +5,7 @@ import EditTargetForm from "@/components/Goal/EditTargetForm";
 import GoalProgress from "@/components/Goal/GoalProgress";
 import Button from "@/components/Button";
 import colors from "@/constans/colors";
+import { storage } from "@/store/savingsStore";
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
@@ -29,6 +30,18 @@ export default function Goal() {
     }
   };
 
+  const checkSavedData = () => {
+    const savedData = storage.getString("goals");
+    console.log("Zapisane dane:", savedData);
+
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      console.log("Cel:", parsedData.length);
+    } else {
+      console.log("Brak zapisanych danych");
+    }
+  };
+  checkSavedData();
   // Ukrywanie Tab Bar'a
   // useEffect(() => {
   //   navigation.setOptions({
@@ -48,6 +61,7 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
+          <Button title="Dodaj" onPress={EditHandle} />
           <Button title="Edytuj" onPress={EditHandle} />
         </View>
 

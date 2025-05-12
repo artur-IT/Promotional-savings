@@ -1,16 +1,30 @@
-export interface Saving {
-  id: string; // UUID
-  promotional: number;
-  date: string;
-  category: string;
-}
+// export interface Saving {
+//   id: string;
+//   promotional: number;
+//   date: string;
+//   category: string;
+// }
 
-export interface Goal {
+// export interface Goal {
+//   id: string;
+//   goal: string;
+//   targetAmount: number;
+//   currentAmount?: number;
+//   startDate?: string;
+//   endDate?: string;
+// }
+
+export interface CurrentGoal {
   id: string;
   goal: string;
   targetAmount: number;
-  currentAmount: number;
-  startDate: string;
+  startDate?: string;
   endDate?: string;
-  savingId: number;
+  currentAmount?: {
+    id: string; // UUID
+    promotionalValue: number;
+    date: string;
+    category: string;
+  };
+  promotionalSum?: number;
 }
