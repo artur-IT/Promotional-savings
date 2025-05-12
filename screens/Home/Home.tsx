@@ -10,10 +10,6 @@ const TopImage = require("@/assets/images/top_bg.svg");
 const PlaceholderImage = require("@/assets/images/money-bag.svg");
 
 export default function HomeWithGoal() {
-  const AddSavingHandle = () => {
-    router.push("/addSaving");
-  };
-
   return (
     <View style={styles.container}>
       <Image source={TopImage} style={styles.topImage} />

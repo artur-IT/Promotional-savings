@@ -1,8 +1,7 @@
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { useState } from "react";
-// import DateTimePicker from "@react-native-community/datetimepicker";
+import { useState, forwardRef, useImperativeHandle } from "react";
 
 LocaleConfig.locales["pl"] = {
   monthNames: [
@@ -26,15 +25,56 @@ LocaleConfig.locales["pl"] = {
 };
 LocaleConfig.defaultLocale = "pl";
 
-export default function DataSavings() {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+interface DataSavingsProps {
+  onDataChange: (data: { promotional: number; date: string; category: string }) => void;
+}
+
+// Używamy forwardRef, aby umożliwić przekazanie referencji do tego komponentu
+const DataSavings = forwardRef<{ resetForm: () => void }, DataSavingsProps>((props, ref) => {
+  const { onDataChange } = props;
+
+  const [promotional, setPromotional] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string>("");
   const [showCalendar, setShowCalendar] = useState(false);
 
+  // Eksponujemy metodę resetForm, która może być wywołana przez komponent nadrzędny
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setPromotional("");
+      setSelectedCategory("");
+      setSelectedDate("");
+    },
+  }));
+
+  // Aktualizacja wartości promotional
+  const handlePromotionalChange = (value: string) => {
+    setPromotional(value);
+    updateParentData(value, selectedDate, selectedCategory);
+  };
+
+  // Aktualizacja daty
   const handleDateSelect = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
     setShowCalendar(false);
+    updateParentData(promotional, day.dateString, selectedCategory);
   };
+
+  // Aktualizacja kategorii
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    updateParentData(promotional, selectedDate, value);
+  };
+
+  // Funkcja pomocnicza do aktualizacji danych w komponencie nadrzędnym
+  const updateParentData = (promo: string, date: string, category: string) => {
+    onDataChange({
+      promotional: parseFloat(promo) || 0,
+      date: date,
+      category: category,
+    });
+  };
+
   // Funkcja formatująca datę z YYYY-MM-DD na DD.MM.YYYY
   const formatDate = (dateString: string) => {
     if (!dateString) return "Wybierz datę";
@@ -48,7 +88,7 @@ export default function DataSavings() {
       {/* Wiersz 1 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
-        <TextInput style={styles.input} keyboardType="numeric" />
+        <TextInput style={styles.input} keyboardType="numeric" value={promotional} onChangeText={handlePromotionalChange} />
       </View>
 
       {/* Wiersz 2 */}
@@ -62,7 +102,7 @@ export default function DataSavings() {
       {/* Wiersz 3 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kategoria</Text>
-        <Picker style={styles.picker} selectedValue={selectedCategory} onValueChange={(itemValue) => setSelectedCategory(itemValue)}>
+        <Picker style={styles.picker} selectedValue={selectedCategory} onValueChange={handleCategoryChange}>
           <Picker.Item label="Wybierz kategorię" value="" />
           <Picker.Item label="Żywność" value="food" />
           <Picker.Item label="Paliwo" value="fuel" />
@@ -94,7 +134,7 @@ export default function DataSavings() {
       </Modal>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -157,3 +197,5 @@ const styles = StyleSheet.create({
     color: "#333",
   },
 });
+
+export default DataSavings;
