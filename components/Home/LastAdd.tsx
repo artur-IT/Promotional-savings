@@ -6,19 +6,24 @@ export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchLastSavings = () => {
-      const allSavings = getAllSavings();
+    try {
+      const fetchLastSavings = () => {
+        const allSavings = getAllSavings();
 
-      const sortedSavings = [...allSavings].sort((a, b) => {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
-      });
+        const sortedSavings = [...allSavings].sort((a, b) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
 
-      const lastTwo = sortedSavings.slice(0, 2);
-      const lastTwoPromotion = lastTwo.map((saving) => saving.promotion);
-      setLastTwoSavings(lastTwoPromotion);
-    };
+        const lastTwo = sortedSavings.slice(0, 2);
+        const lastTwoPromotion = lastTwo.map((saving) => saving.promotion);
+        setLastTwoSavings(lastTwoPromotion);
+      };
 
-    fetchLastSavings();
+      fetchLastSavings();
+    } catch (error) {
+      console.error("Błąd podczas inicjalizacji danych:", error);
+      setLastTwoSavings([]);
+    }
   }, []);
 
   return (

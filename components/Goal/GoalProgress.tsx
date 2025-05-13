@@ -5,16 +5,25 @@ import { getAllSavings } from "@/store/savingsStore";
 
 export default function GoalProgress() {
   const goal = getAllGoals();
-
   const allSavings = getAllSavings();
-  const totalPromotionSum = allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
 
-  const bigName = goal[0].goal;
-  const goalAmount = goal[0].targetAmount;
+  // Sprawdzenie czy istnieją cele
+  if (!goal || goal.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.noDataText}>Brak zdefiniowanych celów</Text>
+      </View>
+    );
+  }
+
+  const totalPromotionSum = allSavings && allSavings.length > 0 ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0) : 0;
+
+  const bigName = goal[0]?.goal || "Cel";
+  const goalAmount = goal[0]?.targetAmount || 0;
 
   // Obliczanie procentu zebranej kwoty
-  const progressPercent = (totalPromotionSum / goalAmount) * 100;
-  const progressRatio = totalPromotionSum / goalAmount; // Wartość od 0 do 1 dla ProgressBar
+  const progressPercent = goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
+  const progressRatio = goalAmount > 0 ? totalPromotionSum / goalAmount : 0;
 
   return (
     <View style={styles.container}>
@@ -83,5 +92,10 @@ const styles = StyleSheet.create({
     width: 250,
     marginTop: 10,
     marginBottom: 10,
+  },
+  noDataText: {
+    fontSize: 18,
+    color: "#666",
+    textAlign: "center",
   },
 });

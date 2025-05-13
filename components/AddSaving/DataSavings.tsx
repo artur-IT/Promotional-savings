@@ -119,10 +119,15 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
 
   const handleSave = () => {
     if (validateForm()) {
-      addSaving({ id, promotion, date, category });
-      clearForm();
-      Alert.alert("Sukces", "Oszczędność została zapisana pomyślnie!");
-      router.push("/");
+      try {
+        addSaving({ id, promotion, date, category });
+        clearForm();
+        Alert.alert("Sukces", "Oszczędność została zapisana pomyślnie!");
+        router.push("/");
+      } catch (error) {
+        console.error("Błąd podczas zapisywania danych:", error);
+        Alert.alert("Błąd", "Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.");
+      }
     } else {
       Alert.alert("Błąd", "Wypełnij poprawnie wszystkie pola formularza");
     }

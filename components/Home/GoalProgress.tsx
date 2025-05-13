@@ -5,15 +5,24 @@ import ProgressBar from "react-native-progress/Bar";
 
 export default function GoalProgress() {
   const goal = getAllGoals();
-
   const allSavings = getAllSavings();
-  const totalPromotionSum = allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
+  if (!goal || goal.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.noDataText}>Brak zdefiniowanych celów</Text>
+      </View>
+    );
+  }
+  // Bezpieczne pobieranie danych
+  const totalPromotionSum = allSavings && allSavings.length > 0 ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0) : 0;
 
-  const bigName = goal[0].goal;
-  const goalAmount = goal[0].targetAmount;
+  const bigName = goal[0]?.goal || "Cel";
+  const goalAmount = goal[0]?.targetAmount || 0;
 
-  const progressPercent = (totalPromotionSum / goalAmount) * 100;
-  const progressRatio = totalPromotionSum / goalAmount;
+  // Zabezpieczenie przed dzieleniem przez zero
+  const progressPercent = goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
+  const progressRatio = goalAmount > 0 ? totalPromotionSum / goalAmount : 0;
+
   return (
     <View style={styles.container}>
       <View style={styles.numbers}>
@@ -54,5 +63,11 @@ const styles = StyleSheet.create({
     width: 250,
     fontSize: 30,
     textAlign: "left",
+  },
+  noDataText: {
+    fontSize: 18,
+    color: "#666",
+    textAlign: "center",
+    marginTop: 20,
   },
 });
