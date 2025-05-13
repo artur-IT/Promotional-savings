@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { getAllSavings } from "@/store/savingsStore";
 
 export default function YearSaving() {
+  const allSavings = getAllSavings();
+  const totalPromotionSum = allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
+
   return (
     <>
       <View style={styles.container}>
         <View style={styles.insideText}>
-          <Text style={styles.yearValue}>+150 zł</Text>
+          <Text style={styles.yearValue}>+{totalPromotionSum} zł</Text>
           <Text style={styles.infoText}>Zaoszczędzone</Text>
           <Text style={styles.year}>2025</Text>
         </View>

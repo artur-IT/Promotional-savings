@@ -25,7 +25,7 @@ export default function GoalProgress() {
       <View style={styles.progressSection}>
         <Text style={styles.progressTarget}>{goalAmount} zł</Text>
         <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
-        <Text style={styles.progressPercent}>{progressPercent} %</Text>
+        <Text style={styles.progressPercent}>{progressPercent.toFixed(1)} %</Text>
       </View>
     </View>
   );
