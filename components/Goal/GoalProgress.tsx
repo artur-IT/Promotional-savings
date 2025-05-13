@@ -1,17 +1,31 @@
 import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
+import { getAllGoals } from "@/store/goalsStore";
+import { getAllSavings } from "@/store/savingsStore";
 
 export default function GoalProgress() {
+  const goal = getAllGoals();
+
+  const allSavings = getAllSavings();
+  const totalPromotionSum = allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
+
+  const bigName = goal[0].goal;
+  const goalAmount = goal[0].targetAmount;
+
+  // Obliczanie procentu zebranej kwoty
+  const progressPercent = (totalPromotionSum / goalAmount) * 100;
+  const progressRatio = totalPromotionSum / goalAmount; // Wartość od 0 do 1 dla ProgressBar
+
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.description}>Zbieram na</Text>
-        <Text style={styles.descriptionTitle}>Wakacje</Text>
+        <Text style={styles.descriptionTitle}>{bigName.toLocaleUpperCase()}</Text>
       </View>
       <View style={styles.progressSection}>
-        <Text style={styles.progressTarget}>1000 zł</Text>
-        <ProgressBar progress={0.25} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
-        <Text style={styles.progressPercent}>17,8 %</Text>
+        <Text style={styles.progressTarget}>{goalAmount} zł</Text>
+        <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
+        <Text style={styles.progressPercent}>{progressPercent} %</Text>
       </View>
     </View>
   );
