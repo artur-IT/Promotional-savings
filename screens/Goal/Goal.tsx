@@ -13,7 +13,7 @@ export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  const EditHandle = () => {
+  const addHandle = () => {
     if (showForm) {
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -32,6 +32,10 @@ export default function Goal() {
     }
   };
 
+  const editHandle = () => {
+    addHandle();
+  };
+
   const checkSavedData = () => {
     const savedData = storage.getString(GOAL_KEY);
 
@@ -41,7 +45,7 @@ export default function Goal() {
       console.log("Brak zapisanych danych");
     }
   };
-  checkSavedData();
+  // checkSavedData();
   // Ukrywanie Tab Bar'a
   // useEffect(() => {
   //   navigation.setOptions({
@@ -61,8 +65,8 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
-          <Button title="Dodaj" onPress={EditHandle} />
-          <Button title="Edytuj" onPress={EditHandle} />
+          <Button title="Dodaj" onPress={addHandle} />
+          <Button title="Edytuj" onPress={editHandle} />
           <Button title="CLEAR GOAL" height={20} onPress={clearAllGoals} />
         </View>
 
@@ -72,7 +76,7 @@ export default function Goal() {
 
         {showForm && (
           <Animated.View style={{ opacity: fadeAnim }}>
-            <EditTargetForm />
+            <EditTargetForm onFormClose={() => setShowForm(false)} />
           </Animated.View>
         )}
       </View>

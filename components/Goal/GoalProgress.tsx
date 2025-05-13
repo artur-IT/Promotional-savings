@@ -38,7 +38,7 @@ export default function GoalProgress() {
         </View>
 
         <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
-        <Text style={styles.progressPercent}>{progressPercent.toFixed(1)} %</Text>
+        <Text style={styles.progressPercent}>{Number.isInteger(progressPercent) ? progressPercent : progressPercent.toFixed(1)} %</Text>
       </View>
     </View>
   );

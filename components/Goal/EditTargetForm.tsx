@@ -3,12 +3,16 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Button from "@/components/Button";
 import { router } from "expo-router";
 import colors from "@/constans/colors";
-import { addGoal } from "@/store/goalsStore";
+import { addGoal, getAllGoals } from "@/store/goalsStore";
 import { useState } from "react";
 
-export default function EditTargetForm() {
-  const [goalName, setGoalName] = useState("");
-  const [targetAmount, setTargetAmount] = useState("");
+export default function EditTargetForm({ onFormClose }: { onFormClose: () => void }) {
+  const goal = getAllGoals();
+  const bigName = goal[0]?.goal || "";
+  const goalAmount = goal[0]?.targetAmount || "0";
+
+  const [goalName, setGoalName] = useState(bigName);
+  const [targetAmount, setTargetAmount] = useState(goalAmount);
 
   const cancelHandle = () => {
     router.push("/");
@@ -20,11 +24,11 @@ export default function EditTargetForm() {
       return;
     }
 
-    if (!targetAmount.trim()) {
+    if (!`${targetAmount}`.trim()) {
       Alert.alert("Błąd", "Kwota celu nie może być pusta");
       return;
     }
-    const amount = parseFloat(targetAmount);
+    const amount = parseFloat(`${targetAmount}`);
 
     if (isNaN(amount) || amount <= 0) {
       Alert.alert("Błąd", "Kwota musi być liczbą większą od zera");
@@ -35,8 +39,8 @@ export default function EditTargetForm() {
       goal: goalName,
       targetAmount: amount,
     });
-
     Alert.alert("Sukces", "Cel został dodany pomyślnie", [{ text: "OK", onPress: () => router.push("/") }]);
+    onFormClose();
   };
 
   const clearGoalName = () => setGoalName("");
@@ -57,9 +61,9 @@ export default function EditTargetForm() {
         <TextInput
           style={[styles.targetInput, styles.targetInputValue]}
           keyboardType="numeric"
-          value={targetAmount}
+          value={`${targetAmount}`}
           onChangeText={setTargetAmount}
-          placeholder="0.00"
+          // placeholder="0.00"
         />
         <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearTargetAmount} />
       </View>
