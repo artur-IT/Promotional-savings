@@ -1,10 +1,8 @@
 import { MMKV } from "react-native-mmkv";
 import { v4 as uuidv4 } from "uuid";
-import { CurrentGoal } from "@/constans/dataTypes";
+import { Goal } from "@/constans/dataTypes";
 import { storage } from "@/utils/storage";
-
-// Klucz do przechowywania celów
-const GOALS_KEY = "goals";
+import { GOAL_KEY } from "@/constans/dataTypes";
 
 // Interfejs dla danych wejściowych
 export interface GoalInput {
@@ -13,18 +11,17 @@ export interface GoalInput {
 }
 
 // Pobieranie wszystkich celów
-export const getAllGoals = (): CurrentGoal[] => {
-  const goalsJson = storage.getString(GOALS_KEY);
+export const getAllGoals = (): Goal[] => {
+  const goalsJson = storage.getString(GOAL_KEY);
   return goalsJson ? JSON.parse(goalsJson) : [];
 };
 
 // Dodawanie nowego celu
-export const addGoal = (goalData: GoalInput): CurrentGoal => {
+export const addGoal = (goalData: GoalInput): Goal => {
   const shortId = uuidv4().substring(0, 4);
   const currentDate = new Date().toISOString().split("T")[0]; // Format YYYY-MM-DD
 
-  // Tworzenie nowego obiektu celu
-  const newGoal: CurrentGoal = {
+  const newGoal: Goal = {
     id: shortId,
     goal: goalData.goal,
     targetAmount: goalData.targetAmount,
@@ -33,20 +30,20 @@ export const addGoal = (goalData: GoalInput): CurrentGoal => {
   };
 
   // Pobieranie istniejących celów
-  const existingGoals = getAllGoals();
+  // const existingGoals = getAllGoals();
 
-  const isIdUnique = !existingGoals.some((goal) => goal.id === shortId);
+  // const isIdUnique = !existingGoals.some((goal) => goal.id === shortId);
 
   // Jeśli ID nie jest unikalne, generujemy nowe
-  if (!isIdUnique) {
-    return addGoal(goalData); // Rekurencyjne wywołanie z tymi samymi danymi
-  }
+  // if (!isIdUnique) {
+  //   return addGoal(goalData);
+  // }
 
   // Dodawanie nowego celu
-  const updatedGoals = [...existingGoals, newGoal];
+  const updatedGoals = [newGoal];
 
   // Zapisywanie do MMKV
-  storage.set(GOALS_KEY, JSON.stringify(updatedGoals));
+  storage.set(GOAL_KEY, JSON.stringify(updatedGoals));
 
   return newGoal;
 };
@@ -60,7 +57,7 @@ export const deleteGoal = (id: string): boolean => {
     return false; // Nic nie usunięto
   }
 
-  storage.set(GOALS_KEY, JSON.stringify(filteredGoals));
+  storage.set(GOAL_KEY, JSON.stringify(filteredGoals));
   return true;
 };
 
@@ -92,5 +89,5 @@ export const deleteGoal = (id: string): boolean => {
 
 // Czyszczenie wszystkich celów (przydatne do testów)
 export const clearAllGoals = (): void => {
-  storage.delete(GOALS_KEY);
+  storage.delete(GOAL_KEY);
 };

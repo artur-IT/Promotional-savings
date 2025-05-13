@@ -31,7 +31,6 @@ export default function EditTargetForm() {
       return;
     }
 
-    // Dodanie celu do bazy danych
     addGoal({
       goal: goalName,
       targetAmount: amount,

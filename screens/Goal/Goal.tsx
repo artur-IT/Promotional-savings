@@ -6,6 +6,8 @@ import GoalProgress from "@/components/Goal/GoalProgress";
 import Button from "@/components/Button";
 import colors from "@/constans/colors";
 import { storage } from "@/store/savingsStore";
+import { clearAllGoals } from "@/store/goalsStore";
+import { GOAL_KEY } from "@/constans/dataTypes";
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
@@ -31,12 +33,10 @@ export default function Goal() {
   };
 
   const checkSavedData = () => {
-    const savedData = storage.getString("goals");
-    console.log("Zapisane dane:", savedData);
+    const savedData = storage.getString(GOAL_KEY);
 
     if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      console.log("Cel:", parsedData.length);
+      console.log("Cel:", savedData);
     } else {
       console.log("Brak zapisanych danych");
     }
@@ -63,6 +63,7 @@ export default function Goal() {
           <Text style={styles.title}>Mój Cel </Text>
           <Button title="Dodaj" onPress={EditHandle} />
           <Button title="Edytuj" onPress={EditHandle} />
+          <Button title="CLEAR GOAL" height={20} onPress={clearAllGoals} />
         </View>
 
         <View style={styles.goal}>

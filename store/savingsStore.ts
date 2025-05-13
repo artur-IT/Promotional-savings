@@ -1,60 +1,43 @@
 import { MMKV } from "react-native-mmkv";
 import { v4 as uuidv4 } from "uuid";
-import { Saving } from "@/constans/dataTypes";
+import { Saving, SAVINGS_KEY } from "@/constans/dataTypes";
 
-// Inicjalizacja magazynu MMKV
 const storage = new MMKV({
   id: "savings-app-storage",
 });
 
-// Klucz do przechowywania oszczędności
-const SAVINGS_KEY = "savings";
-
-// Interfejs dla danych wejściowych
-export interface SavingInput {
-  promotional: number;
-  date: string;
-  category: string;
-}
-
-// Pobieranie wszystkich oszczędności
 export const getAllSavings = (): Saving[] => {
   const savingsJson = storage.getString(SAVINGS_KEY);
   return savingsJson ? JSON.parse(savingsJson) : [];
 };
 
-// Dodawanie nowej oszczędności
-export const addSaving = (savingData: SavingInput): Saving => {
+export const addSaving = (savingData: Saving): Saving => {
   const shortId = uuidv4().substring(0, 4);
 
-  // Tworzenie nowego obiektu oszczędności
+  const existingSavings = getAllSavings() || [];
+
   const newSaving: Saving = {
     id: shortId,
-    promotional: savingData.promotional,
+    promotion: savingData.promotion,
     date: savingData.date,
     category: savingData.category,
   };
-
-  // Pobieranie istniejących oszczędności
-  const existingSavings = getAllSavings();
 
   const isIdUnique = !existingSavings.some((saving) => saving.id === shortId);
 
   // Jeśli ID nie jest unikalne, generujemy nowe
   if (!isIdUnique) {
-    return addSaving(savingData); // Rekurencyjne wywołanie z tymi samymi danymi
+    return addSaving(savingData);
   }
 
-  // Dodawanie nowej oszczędności
+  // Dodawanie nowej oszczędności do istniejących
   const updatedSavings = [...existingSavings, newSaving];
 
-  // Zapisywanie do MMKV
   storage.set(SAVINGS_KEY, JSON.stringify(updatedSavings));
 
   return newSaving;
 };
 
-// Usuwanie oszczędności
 export const deleteSaving = (id: string): boolean => {
   const existingSavings = getAllSavings();
   const filteredSavings = existingSavings.filter((saving) => saving.id !== id);
@@ -67,7 +50,6 @@ export const deleteSaving = (id: string): boolean => {
   return true;
 };
 
-// Czyszczenie wszystkich oszczędności (przydatne do testów)
 export const clearAllSavings = (): void => {
   storage.delete(SAVINGS_KEY);
 };

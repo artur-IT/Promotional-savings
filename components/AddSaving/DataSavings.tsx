@@ -1,7 +1,11 @@
 import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { useState, forwardRef, useImperativeHandle } from "react";
+import { useState, forwardRef } from "react";
+import { router } from "expo-router";
+import Button from "@/components/Button";
+import { addSaving, clearAllSavings } from "@/store/savingsStore";
+import { v4 as uuidv4 } from "uuid";
 
 LocaleConfig.locales["pl"] = {
   monthNames: [
@@ -25,55 +29,45 @@ LocaleConfig.locales["pl"] = {
 };
 LocaleConfig.defaultLocale = "pl";
 
-interface DataSavingsProps {
-  onDataChange: (data: { promotional: number; date: string; category: string }) => void;
-}
-
 // Używamy forwardRef, aby umożliwić przekazanie referencji do tego komponentu
-const DataSavings = forwardRef<{ resetForm: () => void }, DataSavingsProps>((props, ref) => {
-  const { onDataChange } = props;
-
-  const [promotional, setPromotional] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<string>("");
+const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
+  const [promotion, setPromotion] = useState<number>(0);
+  const [category, setSelectedCategory] = useState<string>("");
+  const [date, setSelectedDate] = useState<string>("");
   const [showCalendar, setShowCalendar] = useState(false);
+  const id = uuidv4().substring(0, 4);
 
-  // Eksponujemy metodę resetForm, która może być wywołana przez komponent nadrzędny
-  useImperativeHandle(ref, () => ({
-    resetForm: () => {
-      setPromotional("");
-      setSelectedCategory("");
-      setSelectedDate("");
-    },
-  }));
+  const CancelHandle = () => {
+    router.push("/");
+  };
 
   // Aktualizacja wartości promotional
   const handlePromotionalChange = (value: string) => {
-    setPromotional(value);
-    updateParentData(value, selectedDate, selectedCategory);
+    setPromotion(Number(value));
+    // updateParentData(id,Number(value), selectedDate, selectedCategory);
   };
 
   // Aktualizacja daty
   const handleDateSelect = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
     setShowCalendar(false);
-    updateParentData(promotional, day.dateString, selectedCategory);
+    // updateParentData(promotion, day.dateString, selectedCategory);
   };
 
   // Aktualizacja kategorii
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
-    updateParentData(promotional, selectedDate, value);
+    // updateParentData(id, promotion, selectedDate, value);
   };
 
   // Funkcja pomocnicza do aktualizacji danych w komponencie nadrzędnym
-  const updateParentData = (promo: string, date: string, category: string) => {
-    onDataChange({
-      promotional: parseFloat(promo) || 0,
-      date: date,
-      category: category,
-    });
-  };
+  // const updateParentData = (id:string, promo: string, date: string, category: string) => {
+  //   onDataChange({
+  //     promotional: parseFloat(promo) || 0,
+  //     date: date,
+  //     category: category,
+  //   });
+  // };
 
   // Funkcja formatująca datę z YYYY-MM-DD na DD.MM.YYYY
   const formatDate = (dateString: string) => {
@@ -83,26 +77,32 @@ const DataSavings = forwardRef<{ resetForm: () => void }, DataSavingsProps>((pro
     return `${day}.${month}.${year}`;
   };
 
+  const clearForm = () => {
+    setPromotion(0);
+    setSelectedDate("");
+    setSelectedCategory("");
+  };
+
   return (
     <View style={styles.container}>
       {/* Wiersz 1 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
-        <TextInput style={styles.input} keyboardType="numeric" value={promotional} onChangeText={handlePromotionalChange} />
+        <TextInput style={styles.input} keyboardType="numeric" value={promotion.toString()} onChangeText={handlePromotionalChange} />
       </View>
 
       {/* Wiersz 2 */}
       <View style={styles.row}>
         <Text style={styles.label}>Data</Text>
         <TouchableOpacity style={styles.input} onPress={() => setShowCalendar(true)}>
-          <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
+          <Text style={styles.dateText}>{formatDate(date)}</Text>
         </TouchableOpacity>
       </View>
 
       {/* Wiersz 3 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kategoria</Text>
-        <Picker style={styles.picker} selectedValue={selectedCategory} onValueChange={handleCategoryChange}>
+        <Picker style={styles.picker} selectedValue={category} onValueChange={handleCategoryChange}>
           <Picker.Item label="Wybierz kategorię" value="" />
           <Picker.Item label="Żywność" value="food" />
           <Picker.Item label="Paliwo" value="fuel" />
@@ -118,7 +118,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }, DataSavingsProps>((pro
             <Calendar
               onDayPress={handleDateSelect}
               markedDates={{
-                [selectedDate]: { selected: true, selectedColor: "#3498db" },
+                [date]: { selected: true, selectedColor: "#3498db" },
               }}
               theme={{
                 todayTextColor: "#3498db",
@@ -132,6 +132,17 @@ const DataSavings = forwardRef<{ resetForm: () => void }, DataSavingsProps>((pro
           </View>
         </View>
       </Modal>
+      <View style={styles.buttons}>
+        <Button
+          title="Zapisz"
+          onPress={() => {
+            addSaving({ id, promotion, date, category });
+            clearForm();
+          }}
+        />
+        <Button title="Anuluj" onPress={CancelHandle} />
+        <Button title="CLEAR" width={60} onPress={clearAllSavings} />
+      </View>
     </View>
   );
 });
@@ -195,6 +206,11 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 16,
     color: "#333",
+  },
+  buttons: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: 40,
   },
 });
 
