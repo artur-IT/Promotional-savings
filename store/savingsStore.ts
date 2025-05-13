@@ -13,7 +13,6 @@ export const getAllSavings = (): Saving[] => {
 
 export const addSaving = (savingData: Saving): Saving => {
   const shortId = uuidv4().substring(0, 4);
-
   const existingSavings = getAllSavings() || [];
 
   const newSaving: Saving = {

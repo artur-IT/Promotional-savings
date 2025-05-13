@@ -23,7 +23,11 @@ export default function GoalProgress() {
         <Text style={styles.descriptionTitle}>{bigName.toLocaleUpperCase()}</Text>
       </View>
       <View style={styles.progressSection}>
-        <Text style={styles.progressTarget}>{goalAmount} zł</Text>
+        <View style={styles.progressTargetContainer}>
+          <Text style={styles.progressSum}>{totalPromotionSum} zł</Text>
+          <Text style={styles.progressTarget}>{goalAmount} zł</Text>
+        </View>
+
         <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
         <Text style={styles.progressPercent}>{progressPercent.toFixed(1)} %</Text>
       </View>
@@ -38,8 +42,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 40,
   },
+  progressTargetContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  progressSum: {
+    alignSelf: "flex-end",
+    fontSize: 18,
+    fontWeight: "normal",
+    marginTop: 10,
+    marginBottom: 10,
+  },
   progressTarget: {
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
     fontSize: 26,
     fontWeight: "bold",
     marginTop: 10,
