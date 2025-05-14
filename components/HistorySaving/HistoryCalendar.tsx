@@ -1,46 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { getAllSavings } from "@/store/savingsStore";
+import { Saving } from "@/constans/dataTypes";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
-
-interface SavingRecord {
-  id: string;
-  date: Date;
-  amount: number;
-}
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function HistoryCalendar() {
-  const [savingsHistory, setSavingsHistory] = useState<SavingRecord[]>([]);
+  const [savingsHistory, setSavingsHistory] = useState<Saving[]>([]);
   const [expandedMonths, setExpandedMonths] = useState<{ [key: string]: boolean }>({});
 
-  useEffect(() => {
-    const mockData: SavingRecord[] = [
-      { id: "1", date: new Date(2023, 0, 5), amount: 100 },
-      { id: "2", date: new Date(2023, 0, 15), amount: 50 },
-      { id: "3", date: new Date(2023, 1, 3), amount: 200 },
-      { id: "4", date: new Date(2023, 1, 20), amount: 75 },
-      { id: "5", date: new Date(2023, 2, 10), amount: 150 },
-      { id: "6", date: new Date(2023, 3, 5), amount: 120 },
-      { id: "7", date: new Date(2023, 4, 12), amount: 90 },
-      { id: "8", date: new Date(2023, 5, 8), amount: 180 },
-    ];
+  const history = getAllSavings();
 
-    const sortedData = mockData.sort((a, b) => b.date.getTime() - a.date.getTime());
+  useEffect(() => {
+    const sortedData = history.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+
     setSavingsHistory(sortedData);
 
     // Domyślnie rozwijamy pierwszy miesiąc
-    // if (sortedData.length > 0) {
-    //   const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
-    //   const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
-    //   setExpandedMonths({ [capitalizedMonth]: true });
-    // }
+    if (sortedData.length > 0) {
+      const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
+      const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
+      setExpandedMonths({ [capitalizedMonth]: true });
+    }
   }, []);
 
   const groupByMonth = () => {
-    const grouped: { [key: string]: SavingRecord[] } = {};
+    const grouped: { [key: string]: Saving[] } = {};
 
     savingsHistory.forEach((record) => {
-      // Używam formatu LLLL dla nazwy miesiąca w mianowniku
+      // Format LLLL dla nazwy miesiąca w mianowniku
       const monthKey = format(record.date, "LLLL", { locale: pl });
       const capitalizedMonth = monthKey.charAt(0).toUpperCase() + monthKey.slice(1);
 
@@ -54,8 +47,8 @@ export default function HistoryCalendar() {
     return grouped;
   };
 
-  const calculateMonthTotal = (records: SavingRecord[]) => {
-    return records.reduce((sum, record) => sum + record.amount, 0).toFixed(2);
+  const calculateMonthTotal = (records: Saving[]) => {
+    return records.reduce((sum, record) => sum + record.promotion, 0).toFixed(2);
   };
 
   const toggleMonth = (month: string) => {
@@ -73,7 +66,9 @@ export default function HistoryCalendar() {
 
       <View style={styles.header}>
         <Text style={[styles.headerText, styles.flex1]}>Data</Text>
-        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (PLN)</Text>
+        <Text style={[styles.headerText, styles.flex1]}>Kategoria</Text>
+        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (zł)</Text>
+        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Usuń</Text>
       </View>
 
       <ScrollView>
@@ -85,7 +80,7 @@ export default function HistoryCalendar() {
               </Text>
 
               {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
-              {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} PLN</Text>}
+              {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} zł</Text>}
             </TouchableOpacity>
 
             {expandedMonths[month] && (
@@ -93,7 +88,11 @@ export default function HistoryCalendar() {
                 {records.map((record, index) => (
                   <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
                     <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
-                    <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.amount.toFixed(2)}</Text>
+                    <Text style={[styles.recordText, styles.flex1]}>{record.category}</Text>
+                    <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.promotion.toFixed(2)}</Text>
+                    <Text style={[styles.icon]}>
+                      <AntDesign name="delete" size={16} color="red" onPress={() => {}} />
+                    </Text>
                   </View>
                 ))}
               </View>
@@ -105,7 +104,7 @@ export default function HistoryCalendar() {
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           Suma oszczędności:{" "}
-          <Text style={styles.totalAmount}>{savingsHistory.reduce((sum, record) => sum + record.amount, 0).toFixed(2)} PLN</Text>
+          <Text style={styles.totalAmount}>{savingsHistory.reduce((sum, record) => sum + record.promotion, 0).toFixed(2)} zł</Text>
         </Text>
       </View>
     </View>
@@ -192,5 +191,8 @@ const styles = StyleSheet.create({
   },
   textRight: {
     textAlign: "right",
+  },
+  icon: {
+    marginLeft: 10,
   },
 });

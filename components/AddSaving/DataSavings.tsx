@@ -172,10 +172,10 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
             onValueChange={handleCategoryChange}
           >
             <Picker.Item label="Wybierz kategorię" value="" />
-            <Picker.Item label="Żywność" value="food" />
-            <Picker.Item label="Paliwo" value="fuel" />
-            <Picker.Item label="Ubrania" value="clothes" />
-            <Picker.Item label="Inne" value="another" />
+            <Picker.Item label="Żywność" value="Żywność" />
+            <Picker.Item label="Paliwo" value="Paliwo" />
+            <Picker.Item label="Ubrania" value="Ubrania" />
+            <Picker.Item label="Inne" value="Inne" />
           </Picker>
           {errors.category && <Text style={styles.errorText}>{errors.category}</Text>}
         </View>
