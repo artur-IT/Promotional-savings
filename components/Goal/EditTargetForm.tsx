@@ -14,33 +14,61 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
   const [goalName, setGoalName] = useState(bigName);
   const [targetAmount, setTargetAmount] = useState(goalAmount);
 
+  const [errors, setErrors] = useState<{
+    goalName?: string;
+    goalValue?: string;
+  }>({});
+
   const cancelHandle = () => {
     router.push("/");
   };
 
   const saveHandle = () => {
+    const newErrors: {
+      goalName?: string;
+      goalValue?: string;
+    } = {};
+    let isValid = true;
+
     if (!goalName.trim()) {
-      Alert.alert("Błąd", "Nazwa celu nie może być pusta");
-      return;
+      newErrors.goalName = "Podaj cel ozczędzania";
+      isValid = false;
     }
 
     if (!`${targetAmount}`.trim()) {
-      Alert.alert("Błąd", "Kwota celu nie może być pusta");
-      return;
+      newErrors.goalValue = "Kwota celu nie może być pusta";
+      isValid = false;
+    } else {
+      const amount = parseFloat(`${targetAmount}`);
+      if (isNaN(amount) || amount <= 0) {
+        newErrors.goalValue = "Kwota musi być liczbą większą od zera";
+        isValid = false;
+      }
     }
-    const amount = parseFloat(`${targetAmount}`);
+    setErrors(newErrors);
 
-    if (isNaN(amount) || amount <= 0) {
-      Alert.alert("Błąd", "Kwota musi być liczbą większą od zera");
-      return;
+    if (isValid) {
+      addGoal({
+        goal: goalName,
+        targetAmount: parseFloat(`${targetAmount}`),
+      });
+      Alert.alert("Sukces", "Cel został dodany pomyślnie", [{ text: "OK", onPress: () => router.push("/") }]);
+      onFormClose();
+    } else {
+      const errorMessage = newErrors.goalName || newErrors.goalValue;
+      if (errorMessage) {
+        Alert.alert("Błąd", errorMessage);
+      }
     }
+  };
 
-    addGoal({
-      goal: goalName,
-      targetAmount: amount,
-    });
-    Alert.alert("Sukces", "Cel został dodany pomyślnie", [{ text: "OK", onPress: () => router.push("/") }]);
-    onFormClose();
+  // Funkcje do czyszczenia błędów po kliknięciu w pole
+  const handleGoalNameFocus = () => {
+    setErrors((prev) => ({ ...prev, goalName: undefined }));
+  };
+
+  const handleTargetAmountFocus = () => {
+    setErrors((prev) => ({ ...prev, goalValue: undefined }));
   };
 
   const clearGoalName = () => setGoalName("");
@@ -51,7 +79,13 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
       {/* Target Name */}
       <View style={styles.row}>
         <Text style={styles.label}>Cel</Text>
-        <TextInput style={styles.targetInput} value={goalName} onChangeText={setGoalName} placeholder="Nazwa celu" />
+        <TextInput
+          style={errors.goalName ? styles.errorBg : styles.targetInput}
+          value={goalName}
+          onChangeText={setGoalName}
+          onFocus={handleGoalNameFocus}
+          placeholder={`${errors.goalName ? errors.goalName : "Nazwa celu"}`}
+        />
         <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearGoalName} />
       </View>
 
@@ -59,11 +93,12 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
         <TextInput
-          style={[styles.targetInput, styles.targetInputValue]}
+          style={[errors.goalValue ? styles.errorBg : styles.targetInput, styles.targetInputValue]}
           keyboardType="numeric"
           value={`${targetAmount}`}
           onChangeText={setTargetAmount}
-          // placeholder="0.00"
+          onFocus={handleTargetAmountFocus}
+          // placeholder={`${errors.goalValue ? errors.goalValue : "0.00"}`}
         />
         <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearTargetAmount} />
       </View>
@@ -79,11 +114,9 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
 
 const styles = StyleSheet.create({
   container: {
-    // position: "relative",
     bottom: 15,
     display: "flex",
     justifyContent: "center",
-    // alignItems: "center",
     alignSelf: "center",
     padding: 16,
     height: 200,
@@ -119,5 +152,10 @@ const styles = StyleSheet.create({
   },
   deleteIcon: {
     marginLeft: 5,
+  },
+  errorBg: {
+    padding: 5,
+    borderRadius: 4,
+    backgroundColor: "yellow",
   },
 });

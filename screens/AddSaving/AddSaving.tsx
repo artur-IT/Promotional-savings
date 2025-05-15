@@ -1,11 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import Top from "@/components/Top";
 import DataSavings from "@/components/AddSaving/DataSavings";
-import { getAllSavings } from "@/store/savingsStore";
 
 export default function AddSavingScreen() {
-  console.log("ze screen Add... : ", getAllSavings());
-
   return (
     <View>
       <Top />

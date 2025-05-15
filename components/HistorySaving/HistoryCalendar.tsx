@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { getAllSavings } from "@/store/savingsStore";
 import { Saving } from "@/constans/dataTypes";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
@@ -28,7 +27,7 @@ export default function HistoryCalendar() {
       const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
       setExpandedMonths({ [capitalizedMonth]: true });
     }
-  }, []);
+  }, [allSavings]);
 
   const groupByMonth = () => {
     const grouped: { [key: string]: Saving[] } = {};

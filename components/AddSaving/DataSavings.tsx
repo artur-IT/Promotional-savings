@@ -32,7 +32,6 @@ LocaleConfig.defaultLocale = "pl";
 
 // Używamy forwardRef, aby umożliwić przekazanie referencji do tego komponentu
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
-  // const { addSaving, deleteSaving } = useSavingsStore();
   const addSaving = useSavingsStore((state) => state.addSaving);
 
   const [promotion, setPromotion] = useState<number>(0);
