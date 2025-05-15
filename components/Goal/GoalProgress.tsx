@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
 import { getAllGoals } from "@/store/goalsStore";
 import useSavingsStore from "@/store/useSavingsStore_Zustand";
@@ -31,13 +31,16 @@ export default function GoalProgress() {
       </View>
       <View style={styles.progressSection}>
         <View style={styles.progressTargetContainer}>
-          <Text style={styles.progressSum}>{totalPromotionSum} zł</Text>
+          <Text style={[styles.progressSum, totalPromotionSum > goalAmount ? styles.successValue : null]}>{totalPromotionSum} zł</Text>
           <Text style={styles.progressTarget}>{goalAmount} zł</Text>
         </View>
 
         <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
         <Text style={styles.progressPercent}>{Number.isInteger(progressPercent) ? progressPercent : progressPercent.toFixed(1)} %</Text>
       </View>
+      {totalPromotionSum >= goalAmount && <Image source={require("@/assets/images/sun_new.gif")} style={styles.happy} />}
+      <Text style={styles.success}>BRAWO TY! </Text>
+      <Text style={styles.success}> Cel osiągnięty </Text>
     </View>
   );
 }
@@ -95,5 +98,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#666",
     textAlign: "center",
+  },
+  happy: {
+    width: 150,
+    height: 150,
+  },
+  success: {
+    textAlign: "center",
+    fontSize: 30,
+  },
+  successValue: {
+    fontSize: 30,
+    color: "green",
+    fontWeight: "bold",
   },
 });

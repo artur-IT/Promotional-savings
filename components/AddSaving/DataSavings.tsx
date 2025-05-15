@@ -34,7 +34,7 @@ LocaleConfig.defaultLocale = "pl";
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   const addSaving = useSavingsStore((state) => state.addSaving);
 
-  const [promotion, setPromotion] = useState<number>(0);
+  const [promotion, setPromotion] = useState<number | string>("");
   const [category, setSelectedCategory] = useState<string>("");
   const [date, setSelectedDate] = useState<string>("");
   const [showCalendar, setShowCalendar] = useState(false);
@@ -101,7 +101,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
     } = {};
     let isValid = true;
 
-    if (promotion <= 0) {
+    if (Number(promotion) <= 0) {
       newErrors.promotion = "Kwota musi być większa od zera";
       isValid = false;
     }
@@ -123,7 +123,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   const handleSave = () => {
     if (validateForm()) {
       try {
-        addSaving({ id, promotion, date, category });
+        addSaving({ id, promotion: Number(promotion), date, category });
         clearForm();
         Alert.alert("Sukces", "Oszczędność została zapisana pomyślnie!");
         router.push("/");
@@ -145,8 +145,9 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           <TextInput
             style={[styles.input, errors.promotion ? styles.inputError : null]}
             keyboardType="numeric"
-            value={promotion.toString()}
+            value={promotion.toString() || ""}
             onChangeText={handlePromotionalChange}
+            onFocus={() => setPromotion("")}
           />
           {errors.promotion && <Text style={styles.errorText}>{errors.promotion}</Text>}
         </View>

@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function EditTargetForm({ onFormClose }: { onFormClose: () => void }) {
   const goal = getAllGoals();
   const bigName = goal[0]?.goal || "";
-  const goalAmount = goal[0]?.targetAmount || "0";
+  const goalAmount = goal[0]?.targetAmount || "";
 
   const [goalName, setGoalName] = useState(bigName);
   const [targetAmount, setTargetAmount] = useState(goalAmount);
@@ -99,7 +99,6 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
           value={`${targetAmount}`}
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
-          // placeholder={`${errors.goalValue ? errors.goalValue : "0.00"}`}
         />
         <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearTargetAmount} />
       </View>
