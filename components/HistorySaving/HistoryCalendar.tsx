@@ -5,15 +5,16 @@ import { Saving } from "@/constans/dataTypes";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 export default function HistoryCalendar() {
+  const { allSavings, deleteSaving } = useSavingsStore();
+
   const [savingsHistory, setSavingsHistory] = useState<Saving[]>([]);
   const [expandedMonths, setExpandedMonths] = useState<{ [key: string]: boolean }>({});
 
-  const history = getAllSavings();
-
   useEffect(() => {
-    const sortedData = history.sort((a, b) => {
+    const sortedData = allSavings.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       return dateB.getTime() - dateA.getTime();
@@ -91,7 +92,14 @@ export default function HistoryCalendar() {
                     <Text style={[styles.recordText, styles.flex1]}>{record.category}</Text>
                     <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.promotion.toFixed(2)}</Text>
                     <Text style={[styles.icon]}>
-                      <AntDesign name="delete" size={16} color="red" onPress={() => {}} />
+                      <AntDesign
+                        name="delete"
+                        size={16}
+                        color="red"
+                        onPress={() => {
+                          deleteSaving(record.id);
+                        }}
+                      />
                     </Text>
                   </View>
                 ))}

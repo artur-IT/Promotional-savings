@@ -19,7 +19,7 @@ export default function HomeWithGoal() {
         oszczędności
       </Text>
 
-      <View style={styles.year}>
+      {/* <View style={styles.year}>
         <YearSaving />
       </View>
 
@@ -28,7 +28,7 @@ export default function HomeWithGoal() {
         <LastAdd />
       </View>
 
-      <GoalProgress />
+      <GoalProgress /> */}
 
       <TouchableHighlight underlayColor="#DDDDDD" style={styles.link}>
         <Button title="Dodaj oszczędność" onPress={() => router.push("/(tabs)/(hidden)/addSaving")} width={150} />

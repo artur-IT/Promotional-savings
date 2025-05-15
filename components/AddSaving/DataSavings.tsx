@@ -4,8 +4,9 @@ import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useState, forwardRef } from "react";
 import { router } from "expo-router";
 import Button from "@/components/Button";
-import { addSaving, clearAllSavings } from "@/store/savingsStore";
+import { clearAllSavings } from "@/store/savingsStore";
 import { v4 as uuidv4 } from "uuid";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 LocaleConfig.locales["pl"] = {
   monthNames: [
@@ -31,6 +32,9 @@ LocaleConfig.defaultLocale = "pl";
 
 // Używamy forwardRef, aby umożliwić przekazanie referencji do tego komponentu
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
+  // const { addSaving, deleteSaving } = useSavingsStore();
+  const addSaving = useSavingsStore((state) => state.addSaving);
+
   const [promotion, setPromotion] = useState<number>(0);
   const [category, setSelectedCategory] = useState<string>("");
   const [date, setSelectedDate] = useState<string>("");
