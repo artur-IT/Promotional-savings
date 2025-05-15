@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
 import { getAllGoals } from "@/store/goalsStore";
-import { getAllSavings } from "@/store/savingsStore";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 export default function GoalProgress() {
   const goal = getAllGoals();
-  const allSavings = getAllSavings();
+  const { allSavings } = useSavingsStore();
 
-  // Sprawdzenie czy istnieją cele
   if (!goal || goal.length === 0) {
     return (
       <View style={styles.container}>
@@ -21,7 +20,6 @@ export default function GoalProgress() {
   const bigName = goal[0]?.goal || "Cel";
   const goalAmount = goal[0]?.targetAmount || 0;
 
-  // Obliczanie procentu zebranej kwoty
   const progressPercent = goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
   const progressRatio = goalAmount > 0 ? totalPromotionSum / goalAmount : 0;
 

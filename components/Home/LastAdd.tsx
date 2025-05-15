@@ -1,15 +1,14 @@
-import { getAllSavings } from "@/store/savingsStore";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
+  const { allSavings } = useSavingsStore();
 
   useEffect(() => {
     try {
       const fetchLastSavings = () => {
-        const allSavings = getAllSavings();
-
         const sortedSavings = [...allSavings].sort((a, b) => {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
@@ -24,7 +23,7 @@ export default function LastAdd() {
       console.error("Błąd podczas inicjalizacji danych:", error);
       setLastTwoSavings([]);
     }
-  }, []);
+  }, [allSavings]);
 
   return (
     <View style={styles.section}>

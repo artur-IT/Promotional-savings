@@ -1,11 +1,12 @@
 import { getAllGoals } from "@/store/goalsStore";
-import { getAllSavings } from "@/store/savingsStore";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 import { StyleSheet, Text, View } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
 
 export default function GoalProgress() {
   const goal = getAllGoals();
-  const allSavings = getAllSavings();
+  const { allSavings } = useSavingsStore();
+
   if (!goal || goal.length === 0) {
     return (
       <View style={styles.container}>

@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { getAllSavings } from "@/store/savingsStore";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 export default function YearSaving() {
-  const allSavings = getAllSavings();
+  const { allSavings } = useSavingsStore();
+
   const totalPromotionSum = allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
 
   return (

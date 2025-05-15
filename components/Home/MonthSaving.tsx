@@ -1,21 +1,19 @@
 import { StyleSheet, View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getAllSavings } from "@/store/savingsStore";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 export default function MonthSaving() {
-  const allSavings = getAllSavings();
+  const { allSavings } = useSavingsStore();
 
   const [currentMonthSavings, setCurrentMonthSavings] = useState(0);
   const [currentMonthName, setCurrentMonthName] = useState("");
 
   useEffect(() => {
-    // Pobierz aktualny miesiąc
     const getCurrentMonthData = () => {
       const now = new Date();
       const currentMonth = now.getMonth();
       const currentYear = now.getFullYear();
 
-      // Nazwy miesięcy po polsku
       const monthNames = [
         "Styczeń",
         "Luty",

@@ -1,17 +1,16 @@
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Alert, Animated, StyleSheet, Text, View } from "react-native";
 import React, { useRef, useState } from "react";
 import Top from "@/components/Top";
 import EditTargetForm from "@/components/Goal/EditTargetForm";
 import GoalProgress from "@/components/Goal/GoalProgress";
 import Button from "@/components/Button";
 import colors from "@/constans/colors";
-import { storage } from "@/store/savingsStore";
-import { clearAllGoals } from "@/store/goalsStore";
-import { GOAL_KEY } from "@/constans/dataTypes";
+import { clearAllGoals, getAllGoals } from "@/store/goalsStore";
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const goal = getAllGoals();
 
   const addHandle = () => {
     if (showForm) {
@@ -32,32 +31,19 @@ export default function Goal() {
     }
   };
 
-  const editHandle = () => {
-    addHandle();
+  const cancelHandle = () => {
+    Alert.alert("Czy na pewno chcesz usunąć wszystkie cele?", "Usunięcie celu spowoduje usunięcie wszystkich zapisanych celów.", [
+      {
+        text: "Nie",
+        style: "cancel",
+      },
+      {
+        text: "Tak",
+        onPress: () => clearAllGoals(),
+      },
+    ]);
+    clearAllGoals();
   };
-
-  const checkSavedData = () => {
-    const savedData = storage.getString(GOAL_KEY);
-
-    if (savedData) {
-      console.log("Cel:", savedData);
-    } else {
-      console.log("Brak zapisanych danych");
-    }
-  };
-  // checkSavedData();
-  // Ukrywanie Tab Bar'a
-  // useEffect(() => {
-  //   navigation.setOptions({
-  //     tabBarStyle: { display: "none" },
-  //   });
-
-  //   return () => {
-  //     navigation.setOptions({
-  //       tabBarStyle: { display: "flex" },
-  //     });
-  //   };
-  // }, [navigation]);
 
   return (
     <>
@@ -65,9 +51,8 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
-          <Button title="Dodaj" onPress={addHandle} />
-          <Button title="Edytuj" onPress={editHandle} />
-          <Button title="CLEAR GOAL" height={20} onPress={clearAllGoals} />
+          <Button title={`${goal.length != 0 ? "Edytuj" : "Dodaj"}`} onPress={addHandle} />
+          <Button title="CLEAR GOAL" height={25} onPress={cancelHandle} />
         </View>
 
         <View style={styles.goal}>
@@ -105,7 +90,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   goal: {
-    marginTop: 30,
+    marginTop: -10,
     marginBottom: 30,
   },
 });

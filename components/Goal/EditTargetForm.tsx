@@ -20,7 +20,8 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
   }>({});
 
   const cancelHandle = () => {
-    router.push("/");
+    onFormClose();
+    // router.push("/");
   };
 
   const saveHandle = () => {
@@ -114,7 +115,7 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
 
 const styles = StyleSheet.create({
   container: {
-    bottom: 15,
+    bottom: 0,
     display: "flex",
     justifyContent: "center",
     alignSelf: "center",
