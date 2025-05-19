@@ -38,9 +38,13 @@ export default function GoalProgress() {
         <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
         <Text style={styles.progressPercent}>{Number.isInteger(progressPercent) ? progressPercent : progressPercent.toFixed(1)} %</Text>
       </View>
-      {totalPromotionSum >= goalAmount && <Image source={require("@/assets/images/sun_new.gif")} style={styles.happy} />}
-      <Text style={styles.success}>BRAWO TY! </Text>
-      <Text style={styles.success}> Cel osiągnięty </Text>
+      {totalPromotionSum >= goalAmount && (
+        <View style={styles.successContainer}>
+          <Image source={require("@/assets/images/sun_new.gif")} style={styles.happy} />
+          <Text style={styles.success}>BRAWO TY! </Text>
+          <Text style={styles.success}> Cel osiągnięty </Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -98,6 +102,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#666",
     textAlign: "center",
+  },
+  successContainer: {
+    position: "absolute",
+    top: 200,
+    display: "flex",
+    alignItems: "center",
   },
   happy: {
     width: 150,

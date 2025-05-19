@@ -56,6 +56,10 @@ const useSavingsStore = create<SavingsState>()(
 
       getTotalSavings: () => {
         const { allSavings } = get();
+        if (!Array.isArray(allSavings)) {
+          console.warn("allSavings nie jest tablicą:", allSavings);
+          return 0;
+        }
         return allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
       },
 
@@ -75,7 +79,7 @@ const useSavingsStore = create<SavingsState>()(
           console.log("Stan został pomyślnie odtworzony z magazynu");
 
           // Konwersja dat z powrotem na obiekty Date jeśli są przechowywane jako stringi
-          if (state.allSavings && Array.isArray(state.allSavings)) {
+          if (state.allSavings) {
             state.allSavings = state.allSavings.map((saving: Saving) => ({
               ...saving,
               date: typeof saving.date === "string" ? saving.date : new Date(saving.date).toISOString(),

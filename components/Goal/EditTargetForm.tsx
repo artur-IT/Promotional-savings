@@ -114,6 +114,7 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     bottom: 0,
     display: "flex",
     justifyContent: "center",

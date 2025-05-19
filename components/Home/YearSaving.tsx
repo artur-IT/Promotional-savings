@@ -3,15 +3,13 @@ import React from "react";
 import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 export default function YearSaving() {
-  const { allSavings } = useSavingsStore();
-
-  const totalPromotionSum = allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
+  const { getTotalSavings } = useSavingsStore();
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.insideText}>
-          <Text style={styles.yearValue}>+{totalPromotionSum} zł</Text>
+          <Text style={styles.yearValue}>+{getTotalSavings()} zł</Text>
           <Text style={styles.infoText}>Zaoszczędzone</Text>
           <Text style={styles.year}>2025</Text>
         </View>
