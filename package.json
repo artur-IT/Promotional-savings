@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "promotional-savings",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -17,8 +17,8 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@hookform/resolvers": "^5.0.1",
-    "@react-native-community/datetimepicker": "github:react-native-community/datetimepicker",
     "@react-native-community/cli": "latest",
+    "@react-native-community/datetimepicker": "github:react-native-community/datetimepicker",
     "@react-native-picker/picker": "^2.11.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
@@ -51,7 +51,8 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "uuid": "^11.1.0",
-    "zod": "^3.24.4"
+    "zod": "^3.24.4",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

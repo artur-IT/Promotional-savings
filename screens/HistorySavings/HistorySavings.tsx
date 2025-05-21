@@ -1,33 +1,51 @@
 import HistoryCalendar from "@/components/HistorySaving/HistoryCalendar";
 import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
 import Top from "@/components/Top";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 export default function HistorySavings() {
-  const [showCalendar, setShowCalendar] = useState(false);
+  const { allSavings } = useSavingsStore();
   const [selectYear, setSelectYear] = useState("");
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [availableYears, setAvailableYears] = useState<string[]>([]);
+  const fadeAnim = useRef(new Animated.Value(1)).current; // Zaczynamy od 1, aby kalendarz był widoczny
+
+  useEffect(() => {
+    if (allSavings && allSavings.length > 0) {
+      // Wyciągnij lata z danych i usuń duplikaty
+      const years = [
+        ...new Set(
+          allSavings.map((saving) => {
+            // Zakładam, że data jest przechowywana w formacie string lub jako obiekt Date
+            const date = new Date(saving.date);
+            return date.getFullYear().toString();
+          })
+        ),
+      ];
+
+      // Sortowanie lat malejąco (od najnowszego)
+      years.sort((a, b) => parseInt(b) - parseInt(a));
+
+      setAvailableYears(years);
+    }
+  }, [allSavings]);
 
   const handleYearChange = (year: string) => {
-    setSelectYear(year);
+    // Animacja przejścia
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true,
+    }).start(() => {
+      setSelectYear(year);
 
-    if (year) {
-      setShowCalendar(true);
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 300,
+        duration: 150,
         useNativeDriver: true,
       }).start();
-    } else {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => {
-        setShowCalendar(false);
-      });
-    }
+    });
   };
 
   return (
@@ -40,18 +58,17 @@ export default function HistorySavings() {
         </Text>
         <View style={styles.buttonsContainer}>
           <Picker style={styles.picker} selectedValue={selectYear} onValueChange={(value) => handleYearChange(value)}>
-            <Picker.Item label="Rok" value="" />
-            <Picker.Item label="2025" value="2025" />
-            <Picker.Item label="2024" value="2024" />
+            <Picker.Item label="Lata" value="" />
+            {availableYears.map((year) => (
+              <Picker.Item key={year} label={year} value={year} />
+            ))}
           </Picker>
         </View>
       </View>
 
-      {showCalendar && (
-        <Animated.View style={{ opacity: fadeAnim }}>
-          <HistoryCalendar />
-        </Animated.View>
-      )}
+      <Animated.View style={{ opacity: fadeAnim }}>
+        <HistoryCalendar selectedYear={selectYear} />
+      </Animated.View>
     </ScrollView>
   );
 }
@@ -68,7 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   picker: {
-    width: 75,
+    width: 80,
     height: 40,
     backgroundColor: "black",
     borderColor: "black",

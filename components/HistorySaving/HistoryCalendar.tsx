@@ -6,14 +6,23 @@ import { pl } from "date-fns/locale";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
-export default function HistoryCalendar() {
+export default function HistoryCalendar({ selectedYear }: { selectedYear?: string }) {
   const { allSavings, deleteSaving } = useSavingsStore();
-
   const [savingsHistory, setSavingsHistory] = useState<Saving[]>([]);
   const [expandedMonths, setExpandedMonths] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
-    const sortedData = allSavings.sort((a, b) => {
+    // Filtrujemy dane według wybranego roku, jeśli został podany
+    let filteredData = [...allSavings];
+
+    if (selectedYear) {
+      filteredData = filteredData.filter((saving) => {
+        const savingYear = new Date(saving.date).getFullYear().toString();
+        return savingYear === selectedYear;
+      });
+    }
+
+    const sortedData = filteredData.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       return dateB.getTime() - dateA.getTime();
@@ -27,7 +36,23 @@ export default function HistoryCalendar() {
       const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
       setExpandedMonths({ [capitalizedMonth]: true });
     }
-  }, [allSavings]);
+  }, [allSavings, selectedYear]);
+
+  const groupByYear = () => {
+    const grouped: { [key: string]: Saving[] } = {};
+
+    savingsHistory.forEach((record) => {
+      const year = new Date(record.date).getFullYear().toString();
+
+      if (!grouped[year]) {
+        grouped[year] = [];
+      }
+
+      grouped[year].push(record);
+    });
+
+    return grouped;
+  };
 
   const groupByMonth = () => {
     const grouped: { [key: string]: Saving[] } = {};
@@ -51,6 +76,10 @@ export default function HistoryCalendar() {
     return records.reduce((sum, record) => sum + record.promotion, 0).toFixed(2);
   };
 
+  const calculateYearTotal = (records: Saving[]) => {
+    return records.reduce((sum, record) => sum + record.promotion, 0).toFixed(2);
+  };
+
   const toggleMonth = (month: string) => {
     setExpandedMonths((prev) => ({
       ...prev,
@@ -59,54 +88,73 @@ export default function HistoryCalendar() {
   };
 
   const groupedData = groupByMonth();
+  const groupedByYearData = groupByYear();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>2025</Text>
-
-      <View style={styles.header}>
-        <Text style={[styles.headerText, styles.flex1]}>Data</Text>
-        <Text style={[styles.headerText, styles.flex1]}>Kategoria</Text>
-        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (zł)</Text>
-        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Usuń</Text>
-      </View>
-
-      <ScrollView>
-        {Object.entries(groupedData).map(([month, records], monthIndex) => (
-          <View key={month}>
-            <TouchableOpacity style={styles.monthHeader} onPress={() => toggleMonth(month)} activeOpacity={0.7}>
-              <Text style={styles.monthTitle}>
-                {month} {expandedMonths[month] ? "▼" : "▶"}
-              </Text>
-
-              {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
-              {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} zł</Text>}
-            </TouchableOpacity>
-
-            {expandedMonths[month] && (
-              <View>
-                {records.map((record, index) => (
-                  <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
-                    <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
-                    <Text style={[styles.recordText, styles.flex1]}>{record.category}</Text>
-                    <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.promotion.toFixed(2)}</Text>
-                    <Text style={[styles.icon]}>
-                      <AntDesign
-                        name="delete"
-                        size={16}
-                        color="red"
-                        onPress={() => {
-                          deleteSaving(record.id);
-                        }}
-                      />
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            )}
+      {selectedYear ? (
+        // Jeśli wybrano rok, pokazujemy dane pogrupowane według miesięcy
+        <>
+          <View style={styles.header}>
+            <Text style={[styles.headerText, styles.flex1]}>Data</Text>
+            <Text style={[styles.headerText, styles.flex1]}>Kategoria</Text>
+            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (zł)</Text>
+            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Usuń</Text>
           </View>
-        ))}
-      </ScrollView>
+
+          <ScrollView>
+            {Object.entries(groupedData).map(([month, records], monthIndex) => (
+              <View key={month}>
+                <TouchableOpacity style={styles.monthHeader} onPress={() => toggleMonth(month)} activeOpacity={0.7}>
+                  <Text style={styles.monthTitle}>
+                    {month} {expandedMonths[month] ? "▼" : "▶"}
+                  </Text>
+
+                  {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
+                  {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} zł</Text>}
+                </TouchableOpacity>
+
+                {expandedMonths[month] && (
+                  <View>
+                    {records.map((record, index) => (
+                      <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
+                        <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
+                        <Text style={[styles.recordText, styles.flex1]}>{record.category}</Text>
+                        <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.promotion.toFixed(2)}</Text>
+                        <Text style={[styles.icon]}>
+                          <AntDesign
+                            name="delete"
+                            size={16}
+                            color="red"
+                            onPress={() => {
+                              deleteSaving(record.id);
+                            }}
+                          />
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
+          </ScrollView>
+        </>
+      ) : (
+        // Jeśli nie wybrano roku, pokazujemy dane pogrupowane według lat
+        <ScrollView>
+          <View style={styles.header}>
+            <Text style={[styles.headerText, styles.flex1]}>Rok</Text>
+            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Suma oszczędności (zł)</Text>
+          </View>
+
+          {Object.entries(groupedByYearData).map(([year, records]) => (
+            <View key={year} style={styles.yearRow}>
+              <Text style={[styles.yearText, styles.flex1]}>{year}</Text>
+              <Text style={[styles.yearAmount, styles.flex1, styles.textRight]}>{calculateYearTotal(records)} zł</Text>
+            </View>
+          ))}
+        </ScrollView>
+      )}
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>
@@ -165,6 +213,23 @@ const styles = StyleSheet.create({
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#e5e7eb", // gray-200
+  },
+  yearRow: {
+    flexDirection: "row",
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb", // gray-200
+    backgroundColor: "#f9fafb", // gray-50
+  },
+  yearText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#1d4ed8", // blue-700
+  },
+  yearAmount: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#059669", // green-600
   },
   evenRow: {
     backgroundColor: "#f9fafb", // gray-50
