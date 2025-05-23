@@ -17,7 +17,6 @@ export default function HistorySavings() {
       const years = [
         ...new Set(
           allSavings.map((saving) => {
-            // Zakładam, że data jest przechowywana w formacie string lub jako obiekt Date
             const date = new Date(saving.date);
             return date.getFullYear().toString();
           })

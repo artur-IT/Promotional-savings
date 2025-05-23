@@ -1,5 +1,5 @@
 import { MMKV } from "react-native-mmkv";
-import { SAVINGS_KEY } from "@/constans/dataTypes";
+import { SAVINGS_KEY } from "@/constants/dataTypes";
 import { Alert } from "react-native";
 
 const storage = new MMKV({

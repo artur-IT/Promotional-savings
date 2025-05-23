@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { MMKV } from "react-native-mmkv";
-import { Saving, SAVINGS_KEY } from "@/constans/dataTypes";
+import { Saving, SAVINGS_KEY } from "@/constants/dataTypes";
 
 // Inicjalizacja instancji MMKV
 const storage = new MMKV({

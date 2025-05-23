@@ -2,7 +2,7 @@ import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Button from "@/components/Button";
 import { router } from "expo-router";
-import colors from "@/constans/colors";
+import colors from "@/constants/colors";
 import { addGoal, getAllGoals } from "@/store/goalsStore";
 import { useState } from "react";
 

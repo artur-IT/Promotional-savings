@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { Saving } from "@/constans/dataTypes";
+import { Saving } from "@/constants/dataTypes";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 import AntDesign from "@expo/vector-icons/AntDesign";

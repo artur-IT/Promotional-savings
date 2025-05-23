@@ -4,7 +4,7 @@ import Top from "@/components/Top";
 import EditTargetForm from "@/components/Goal/EditTargetForm";
 import GoalProgress from "@/components/Goal/GoalProgress";
 import Button from "@/components/Button";
-import colors from "@/constans/colors";
+import colors from "@/constants/colors";
 import { clearAllGoals, getAllGoals } from "@/store/goalsStore";
 
 export default function Goal() {

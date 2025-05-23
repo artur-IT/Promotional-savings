@@ -1,7 +1,6 @@
 import { getAllGoals } from "@/store/goalsStore";
 import useSavingsStore from "@/store/useSavingsStore_Zustand";
-import { Image } from "react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import ProgressBar from "react-native-progress/Bar";
 
 export default function GoalProgress() {
@@ -15,7 +14,7 @@ export default function GoalProgress() {
       </View>
     );
   }
-  // Bezpieczne pobieranie danych
+
   const totalPromotionSum = allSavings && allSavings.length > 0 ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0) : 0;
 
   const bigName = goal[0]?.goal || "Cel";
@@ -31,7 +30,7 @@ export default function GoalProgress() {
         <Text style={[styles.progressNumbers, totalPromotionSum > goalAmount ? styles.success : null]}>
           {progressPercent % 1 === 0 ? progressPercent : progressPercent.toFixed(1)} %
         </Text>
-        {totalPromotionSum > goalAmount ? <Image source={require("@/assets/images/sun_new.gif")} style={styles.happy} /> : null}
+        {totalPromotionSum >= goalAmount && <Image source={require("@/assets/images/sun_new.gif")} style={styles.happy} />}
 
         <Text style={styles.progressNumbers}>{goalAmount} zł</Text>
       </View>
