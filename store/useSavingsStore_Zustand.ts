@@ -1,12 +1,13 @@
+import { storage } from "@/utils/storage";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { MMKV } from "react-native-mmkv";
+// import { MMKV } from "react-native-mmkv";
 import { Saving, SAVINGS_KEY } from "@/constants/dataTypes";
 
 // Inicjalizacja instancji MMKV
-const storage = new MMKV({
-  id: "savings-app-storage",
-});
+// const storage = new MMKV({
+//   id: "savings-app-storage",
+// });
 
 // Adapter dla MMKV do użycia z Zustand persist
 const mmkvStorage = {

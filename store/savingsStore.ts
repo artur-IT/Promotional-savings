@@ -1,10 +1,7 @@
-import { MMKV } from "react-native-mmkv";
+// import { MMKV } from "react-native-mmkv";
 import { SAVINGS_KEY } from "@/constants/dataTypes";
 import { Alert } from "react-native";
-
-const storage = new MMKV({
-  id: "savings-app-storage",
-});
+import { storage } from "@/utils/storage";
 
 export const clearAllSavings = () => {
   try {
@@ -16,4 +13,4 @@ export const clearAllSavings = () => {
 };
 
 // Eksport instancji storage dla innych potrzeb
-export { storage };
+// export { storage };
