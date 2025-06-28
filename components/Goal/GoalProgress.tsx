@@ -1,7 +1,7 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import ProgressBar from "react-native-progress/Bar";
-import { getAllGoals } from "@/store/goalsStore";
-import useSavingsStore from "@/store/useSavingsStore_Zustand";
+import { Image, StyleSheet, Text, View } from 'react-native';
+import ProgressBar from 'react-native-progress/Bar';
+import { getAllGoals } from '@/store/goalsStore';
+import useSavingsStore from '@/store/useSavingsStore_Zustand';
 
 export default function GoalProgress() {
   const goal = getAllGoals();
@@ -15,32 +15,60 @@ export default function GoalProgress() {
     );
   }
 
-  const totalPromotionSum = allSavings && allSavings.length > 0 ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0) : 0;
+  const totalPromotionSum =
+    allSavings && allSavings.length > 0
+      ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0)
+      : 0;
 
-  const bigName = goal[0]?.goal || "Cel";
+  const bigName = goal[0]?.goal || 'Cel';
   const goalAmount = goal[0]?.targetAmount || 0;
 
-  const progressPercent = goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
+  const progressPercent =
+    goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
   const progressRatio = goalAmount > 0 ? totalPromotionSum / goalAmount : 0;
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.description}>Zbieram na</Text>
-        <Text style={styles.descriptionTitle}>{bigName.toLocaleUpperCase()}</Text>
+        <Text style={styles.descriptionTitle}>
+          {bigName.toLocaleUpperCase()}
+        </Text>
       </View>
       <View style={styles.progressSection}>
         <View style={styles.progressTargetContainer}>
-          <Text style={[styles.progressSum, totalPromotionSum > goalAmount ? styles.successValue : null]}>{totalPromotionSum} zł</Text>
+          <Text
+            style={[
+              styles.progressSum,
+              totalPromotionSum > goalAmount ? styles.successValue : null,
+            ]}
+          >
+            {totalPromotionSum} zł
+          </Text>
           <Text style={styles.progressTarget}>{goalAmount} zł</Text>
         </View>
 
-        <ProgressBar progress={progressRatio} width={260} height={12} color={"green"} animated={true} unfilledColor={"lightgreen"} />
-        <Text style={styles.progressPercent}>{Number.isInteger(progressPercent) ? progressPercent : progressPercent.toFixed(1)} %</Text>
+        <ProgressBar
+          progress={progressRatio}
+          width={260}
+          height={12}
+          color={'green'}
+          animated={true}
+          unfilledColor={'lightgreen'}
+        />
+        <Text style={styles.progressPercent}>
+          {Number.isInteger(progressPercent)
+            ? progressPercent
+            : progressPercent.toFixed(1)}{' '}
+          %
+        </Text>
       </View>
       {totalPromotionSum >= goalAmount && (
         <View style={styles.successContainer}>
-          <Image source={require("@/assets/images/sun_new.gif")} style={styles.happy} />
+          <Image
+            source={require('@/assets/images/sun_new.gif')}
+            style={styles.happy}
+          />
           <Text style={styles.success}>BRAWO TY! </Text>
           <Text style={styles.success}> Cel osiągnięty </Text>
         </View>
@@ -52,31 +80,31 @@ export default function GoalProgress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 40,
   },
   progressTargetContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   progressSum: {
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
     fontSize: 18,
-    fontWeight: "normal",
+    fontWeight: 'normal',
     marginTop: 10,
     marginBottom: 10,
   },
   progressTarget: {
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
     fontSize: 26,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 10,
   },
   progressPercent: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     fontSize: 18,
     marginTop: 10,
     marginBottom: 10,
@@ -84,14 +112,14 @@ const styles = StyleSheet.create({
   description: {
     width: 250,
     fontSize: 16,
-    textAlign: "right",
+    textAlign: 'right',
     marginTop: 10,
   },
-  descriptionTitle: { fontSize: 30, textAlign: "right" },
+  descriptionTitle: { fontSize: 30, textAlign: 'right' },
   goal: {
     width: 250,
     fontSize: 30,
-    textAlign: "left",
+    textAlign: 'left',
   },
   progressSection: {
     width: 250,
@@ -100,26 +128,26 @@ const styles = StyleSheet.create({
   },
   noDataText: {
     fontSize: 18,
-    color: "#666",
-    textAlign: "center",
+    color: '#666',
+    textAlign: 'center',
   },
   successContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 200,
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   },
   happy: {
     width: 150,
     height: 150,
   },
   success: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 30,
   },
   successValue: {
     fontSize: 30,
-    color: "green",
-    fontWeight: "bold",
+    color: 'green',
+    fontWeight: 'bold',
   },
 });

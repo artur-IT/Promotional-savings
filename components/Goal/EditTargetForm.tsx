@@ -1,15 +1,19 @@
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Button from "@/components/Button";
-import { router } from "expo-router";
-import colors from "@/constants/colors";
-import { addGoal, getAllGoals } from "@/store/goalsStore";
-import { useState } from "react";
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Button from '@/components/Button';
+import { router } from 'expo-router';
+import colors from '@/constants/colors';
+import { addGoal, getAllGoals } from '@/store/goalsStore';
+import { useState } from 'react';
 
-export default function EditTargetForm({ onFormClose }: { onFormClose: () => void }) {
+export default function EditTargetForm({
+  onFormClose,
+}: {
+  onFormClose: () => void;
+}) {
   const goal = getAllGoals();
-  const bigName = goal[0]?.goal || "";
-  const goalAmount = goal[0]?.targetAmount || "";
+  const bigName = goal[0]?.goal || '';
+  const goalAmount = goal[0]?.targetAmount || '';
 
   const [goalName, setGoalName] = useState(bigName);
   const [targetAmount, setTargetAmount] = useState(goalAmount);
@@ -32,17 +36,17 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
     let isValid = true;
 
     if (!goalName.trim()) {
-      newErrors.goalName = "Podaj cel ozczędzania";
+      newErrors.goalName = 'Podaj cel ozczędzania';
       isValid = false;
     }
 
     if (!`${targetAmount}`.trim()) {
-      newErrors.goalValue = "Kwota celu nie może być pusta";
+      newErrors.goalValue = 'Kwota celu nie może być pusta';
       isValid = false;
     } else {
       const amount = parseFloat(`${targetAmount}`);
       if (isNaN(amount) || amount <= 0) {
-        newErrors.goalValue = "Kwota musi być liczbą większą od zera";
+        newErrors.goalValue = 'Kwota musi być liczbą większą od zera';
         isValid = false;
       }
     }
@@ -53,27 +57,29 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
       });
-      Alert.alert("Sukces", "Cel został dodany pomyślnie", [{ text: "OK", onPress: () => router.push("/") }]);
+      Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
+        { text: 'OK', onPress: () => router.push('/') },
+      ]);
       onFormClose();
     } else {
       const errorMessage = newErrors.goalName || newErrors.goalValue;
       if (errorMessage) {
-        Alert.alert("Błąd", errorMessage);
+        Alert.alert('Błąd', errorMessage);
       }
     }
   };
 
   // Funkcje do czyszczenia błędów po kliknięciu w pole
   const handleGoalNameFocus = () => {
-    setErrors((prev) => ({ ...prev, goalName: undefined }));
+    setErrors(prev => ({ ...prev, goalName: undefined }));
   };
 
   const handleTargetAmountFocus = () => {
-    setErrors((prev) => ({ ...prev, goalValue: undefined }));
+    setErrors(prev => ({ ...prev, goalValue: undefined }));
   };
 
-  const clearGoalName = () => setGoalName("");
-  const clearTargetAmount = () => setTargetAmount("");
+  const clearGoalName = () => setGoalName('');
+  const clearTargetAmount = () => setTargetAmount('');
 
   return (
     <View style={styles.container}>
@@ -85,22 +91,37 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
           value={goalName}
           onChangeText={setGoalName}
           onFocus={handleGoalNameFocus}
-          placeholder={`${errors.goalName ? errors.goalName : "Nazwa celu"}`}
+          placeholder={`${errors.goalName ? errors.goalName : 'Nazwa celu'}`}
         />
-        <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearGoalName} />
+        <AntDesign
+          name="delete"
+          size={20}
+          color="white"
+          style={styles.deleteIcon}
+          onPress={clearGoalName}
+        />
       </View>
 
       {/* Target Value */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
         <TextInput
-          style={[errors.goalValue ? styles.errorBg : styles.targetInput, styles.targetInputValue]}
+          style={[
+            errors.goalValue ? styles.errorBg : styles.targetInput,
+            styles.targetInputValue,
+          ]}
           keyboardType="numeric"
           value={`${targetAmount}`}
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
         />
-        <AntDesign name="delete" size={20} color="white" style={styles.deleteIcon} onPress={clearTargetAmount} />
+        <AntDesign
+          name="delete"
+          size={20}
+          color="white"
+          style={styles.deleteIcon}
+          onPress={clearTargetAmount}
+        />
       </View>
 
       {/* Buttons */}
@@ -114,19 +135,19 @@ export default function EditTargetForm({ onFormClose }: { onFormClose: () => voi
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+    position: 'relative',
     bottom: 0,
-    display: "flex",
-    justifyContent: "center",
-    alignSelf: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
     padding: 16,
     height: 200,
     backgroundColor: colors.background.card,
     borderRadius: 10,
   },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 12,
   },
   label: {
@@ -137,8 +158,8 @@ const styles = StyleSheet.create({
   targetInput: {
     width: 170,
     height: 30,
-    backgroundColor: "white",
-    borderColor: "black",
+    backgroundColor: 'white',
+    borderColor: 'black',
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 8,
@@ -147,8 +168,8 @@ const styles = StyleSheet.create({
     width: 70,
   },
   buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginTop: 10,
   },
   deleteIcon: {
@@ -157,6 +178,6 @@ const styles = StyleSheet.create({
   errorBg: {
     padding: 5,
     borderRadius: 4,
-    backgroundColor: "yellow",
+    backgroundColor: 'yellow',
   },
 });

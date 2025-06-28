@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import useSavingsStore from "@/store/useSavingsStore_Zustand";
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function YearSaving() {
   const { getTotalSavings } = useSavingsStore();
@@ -20,12 +20,12 @@ export default function YearSaving() {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 230,
     borderRadius: 10,
-    backgroundColor: "darkorange",
+    backgroundColor: 'darkorange',
     // boxShadow: "5px 5px 2px 2px rgba(0, 0, 0, 0.6)",
   },
   year: {
@@ -33,21 +33,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   insideText: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     marginTop: 15,
     marginBottom: 15,
   },
   yearValue: {
-    display: "flex",
-    justifyContent: "flex-end",
+    display: 'flex',
+    justifyContent: 'flex-end',
     margin: 0,
     fontSize: 40,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   infoText: {
-    display: "flex",
+    display: 'flex',
     margin: 0,
     fontSize: 25,
   },

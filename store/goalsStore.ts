@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from "uuid";
-import { Goal } from "@/constants/dataTypes";
-import { storage } from "@/utils/storage";
-import { GOAL_KEY } from "@/constants/dataTypes";
+import { v4 as uuidv4 } from 'uuid';
+import { Goal } from '../constants/dataTypes';
+import { storage } from '../utils/storage';
+import { GOAL_KEY } from '../constants/dataTypes';
 
 export interface GoalInput {
   goal: string;
@@ -17,7 +17,7 @@ export const getAllGoals = (): Goal[] => {
 // Dodawanie nowego celu
 export const addGoal = (goalData: GoalInput): Goal => {
   const shortId = uuidv4().substring(0, 4);
-  const currentDate = new Date().toISOString().split("T")[0]; // Format YYYY-MM-DD
+  const currentDate = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
 
   const newGoal: Goal = {
     id: shortId,
@@ -36,7 +36,7 @@ export const addGoal = (goalData: GoalInput): Goal => {
 
 export const deleteGoal = (id: string): boolean => {
   const existingGoals = getAllGoals();
-  const filteredGoals = existingGoals.filter((goal) => goal.id !== id);
+  const filteredGoals = existingGoals.filter(goal => goal.id !== id);
 
   if (filteredGoals.length === existingGoals.length) {
     return false; // Nic nie usunięto

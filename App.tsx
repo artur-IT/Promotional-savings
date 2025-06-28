@@ -1,0 +1,51 @@
+import { createStaticNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Alert, Button } from 'react-native';
+import Home from './screens/Home/Home';
+import AddSaving from './screens/AddSaving/AddSaving';
+
+function HomeScreen() {
+  return <Home />;
+}
+
+function AddSavingScreen() {
+  return <AddSaving />;
+}
+
+const RootStack = createNativeStackNavigator({
+  initialRouteName: 'Home',
+  screenOptions: {
+    headerStyle: { backgroundColor: 'tomato' },
+  },
+  screens: {
+    Home: {
+      screen: HomeScreen,
+      options: {
+        title: 'Witaj!',
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerRight: () => (
+          <Button
+            title="Info"
+            onPress={() => Alert.alert('This is a button!')}
+          />
+        ),
+      },
+    },
+    Details: AddSavingScreen,
+  },
+});
+
+const Navigation = createStaticNavigation(RootStack);
+
+function App() {
+  return <Navigation />;
+}
+
+export default App;

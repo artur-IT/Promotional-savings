@@ -1,8 +1,8 @@
-import { storage } from "@/utils/storage";
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { storage } from '../utils/storage';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 // import { MMKV } from "react-native-mmkv";
-import { Saving, SAVINGS_KEY } from "@/constants/dataTypes";
+import { Saving, SAVINGS_KEY } from '../constants/dataTypes';
 
 // Inicjalizacja instancji MMKV
 // const storage = new MMKV({
@@ -41,24 +41,26 @@ const useSavingsStore = create<SavingsState>()(
       allSavings: [],
 
       addSaving: (saving: Saving) =>
-        set((state) => ({
+        set(state => ({
           allSavings: [...state.allSavings, saving],
         })),
 
       deleteSaving: (id: string) =>
-        set((state) => ({
-          allSavings: state.allSavings.filter((saving) => saving.id !== id),
+        set(state => ({
+          allSavings: state.allSavings.filter(saving => saving.id !== id),
         })),
 
       updateSaving: (id: string, updatedSaving: Partial<Saving>) =>
-        set((state) => ({
-          allSavings: state.allSavings.map((saving) => (saving.id === id ? { ...saving, ...updatedSaving } : saving)),
+        set(state => ({
+          allSavings: state.allSavings.map(saving =>
+            saving.id === id ? { ...saving, ...updatedSaving } : saving,
+          ),
         })),
 
       getTotalSavings: () => {
         const { allSavings } = get();
         if (!Array.isArray(allSavings)) {
-          console.warn("allSavings nie jest tablicą:", allSavings);
+          console.warn('allSavings nie jest tablicą:', allSavings);
           return 0;
         }
         return allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
@@ -66,7 +68,7 @@ const useSavingsStore = create<SavingsState>()(
 
       getSavingsByCategory: (category: string) => {
         const { allSavings } = get();
-        return allSavings.filter((saving) => saving.category === category);
+        return allSavings.filter(saving => saving.category === category);
       },
 
       clearAllSavings: () => set({ allSavings: [] }),
@@ -74,24 +76,27 @@ const useSavingsStore = create<SavingsState>()(
     {
       name: SAVINGS_KEY,
       storage: createJSONStorage(() => mmkvStorage),
-      partialize: (state) => ({ allSavings: state.allSavings }),
-      onRehydrateStorage: () => (state) => {
+      partialize: state => ({ allSavings: state.allSavings }),
+      onRehydrateStorage: () => state => {
         if (state) {
-          console.log("Stan został pomyślnie odtworzony z magazynu");
+          console.log('Stan został pomyślnie odtworzony z magazynu');
 
           // Konwersja dat z powrotem na obiekty Date jeśli są przechowywane jako stringi
           if (state.allSavings) {
             state.allSavings = state.allSavings.map((saving: Saving) => ({
               ...saving,
-              date: typeof saving.date === "string" ? saving.date : new Date(saving.date).toISOString(),
+              date:
+                typeof saving.date === 'string'
+                  ? saving.date
+                  : new Date(saving.date).toISOString(),
             }));
           }
         } else {
-          console.log("Nie udało się odtworzyć stanu z magazynu");
+          console.log('Nie udało się odtworzyć stanu z magazynu');
         }
       },
-    }
-  )
+    },
+  ),
 );
 
 export default useSavingsStore;

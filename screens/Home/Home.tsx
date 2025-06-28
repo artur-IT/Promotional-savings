@@ -1,23 +1,22 @@
-import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import YearSaving from "../../components/Home/YearSaving";
-import MonthSaving from "../../components/Home/MonthSaving";
-import LastAdd from "../../components/Home/LastAdd";
-import GoalProgress from "../../components/Home/GoalProgress";
-import { router } from "expo-router";
-import Button from "@/components/Button";
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import YearSaving from '../../components/Home/YearSaving';
+import MonthSaving from '../../components/Home/MonthSaving';
+import LastAdd from '../../components/Home/LastAdd';
+import GoalProgress from '../../components/Home/GoalProgress';
+import Button from '../../components/Button';
 
-const TopImage = require("@/assets/images/top_bg.svg");
-const PlaceholderImage = require("@/assets/images/money-bag.svg");
+const TopImage = require('../../assets/images/top_bg.jpg');
+const PlaceholderImage = require('../../assets/images/money-bag.jpg');
 
 export default function HomeWithGoal() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Image source={TopImage} style={styles.topImage} />
       <Image source={PlaceholderImage} style={styles.image} />
-      <Text style={styles.slogan}>
-        Promocyjne <br />
-        oszczędności
-      </Text>
+      <Text style={styles.slogan}>Promocyjne oszczędności</Text>
 
       <View style={styles.year}>
         <YearSaving />
@@ -30,47 +29,50 @@ export default function HomeWithGoal() {
 
       <GoalProgress />
 
-      <TouchableHighlight underlayColor="#DDDDDD" style={styles.link}>
-        <Button title="Dodaj oszczędność" onPress={() => router.push("/(tabs)/(hidden)/addSaving")} width={150} />
-      </TouchableHighlight>
+      <Button
+        title="Dodaj oszczędność"
+        onPress={() => (navigation as any).navigate('Details')}
+        width={150}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   link: { marginTop: 30, padding: 10, borderRadius: 5 },
   slogan: {
-    marginLeft: -170,
+    marginLeft: -30,
     fontSize: 32,
     lineHeight: 40,
     marginTop: 30,
     marginBottom: 30,
-    color: "#0084CE",
+    color: '#0084CE',
   },
   topImage: {
-    position: "absolute",
-    top: -150,
+    position: 'absolute',
+    top: -170,
+    right: -10,
     width: 400,
     height: 400,
   },
   image: {
-    position: "absolute",
+    position: 'absolute',
     top: 190,
     width: 370,
     height: 370,
     opacity: 0.3,
   },
   year: {
-    position: "relative",
-    left: -90,
+    position: 'relative',
+    left: -110,
   },
   circles: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "flex-end",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     marginTop: 40,
   },
 });

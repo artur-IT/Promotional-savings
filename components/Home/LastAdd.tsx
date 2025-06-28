@@ -1,6 +1,6 @@
-import useSavingsStore from "@/store/useSavingsStore_Zustand";
-import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
@@ -14,13 +14,13 @@ export default function LastAdd() {
         });
 
         const lastTwo = sortedSavings.slice(0, 2);
-        const lastTwoPromotion = lastTwo.map((saving) => saving.promotion);
+        const lastTwoPromotion = lastTwo.map(saving => saving.promotion);
         setLastTwoSavings(lastTwoPromotion);
       };
 
       fetchLastSavings();
     } catch (error) {
-      console.error("Błąd podczas inicjalizacji danych:", error);
+      console.error('Błąd podczas inicjalizacji danych:', error);
       setLastTwoSavings([]);
     }
   }, [allSavings]);
@@ -43,13 +43,13 @@ export default function LastAdd() {
 
 const styles = StyleSheet.create({
   section: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 100,
     height: 100,
-    borderColor: "red",
-    borderStyle: "solid",
+    borderColor: 'red',
+    borderStyle: 'solid',
     borderWidth: 3,
     borderRadius: 95,
   },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   noData: {
     fontSize: 12,
-    fontStyle: "italic",
-    color: "#888",
+    fontStyle: 'italic',
+    color: '#888',
   },
 });

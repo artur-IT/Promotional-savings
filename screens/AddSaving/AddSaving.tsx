@@ -1,15 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
-import Top from "@/components/Top";
-import DataSavings from "@/components/AddSaving/DataSavings";
+import { View, Text, StyleSheet } from 'react-native';
+import Top from '../../components/Top';
+import DataSavings from '../../components/AddSaving/DataSavings';
 
 export default function AddSavingScreen() {
   return (
     <View>
       <Top />
-      <Text style={styles.title}>
-        Dzisiaj <br />
-        zaoszczędziłem
-      </Text>
+      <Text style={styles.title}>Dzisiaj zaoszczędziłem</Text>
       <DataSavings />
     </View>
   );
@@ -23,8 +20,8 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   buttons: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     marginTop: 40,
   },
 });

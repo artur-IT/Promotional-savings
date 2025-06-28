@@ -1,6 +1,6 @@
-import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import colors from "@/constants/colors";
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import colors from '../constants/colors';
 
 interface ButtonProps {
   title: string;
@@ -9,7 +9,12 @@ interface ButtonProps {
   onPress: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, onPress, width = 90, height = 40 }) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  onPress,
+  width = 90,
+  height = 40,
+}) => {
   const newWidth = width;
   const newHeight = height;
 
@@ -18,9 +23,9 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, width = 90, height = 40
       width: newWidth,
       height: newHeight,
       borderRadius: 5,
-      alignItems: "center",
-      justifyContent: "center",
-      textAlign: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
       marginHorizontal: 5,
       marginVertical: 5,
       backgroundColor: colors.background.button_other,

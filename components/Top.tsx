@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Image } from "expo-image";
+import { StyleSheet, Text, View, Image } from 'react-native';
 
-const TopImage = require("@/assets/images/top_bg.svg");
-const PlaceholderImage = require("@/assets/images/money-bag.svg");
+const TopImage = require('../assets/images/top_bg.jpg');
+const PlaceholderImage = require('../assets/images/money-bag.jpg');
 
 export default function Header() {
   return (
@@ -18,26 +17,26 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    justifyContent: "center",
-    flexDirection: "row",
+    justifyContent: 'center',
+    flexDirection: 'row',
     // height: "auto",
     // marginTop: 40,
     // zIndex: 1,
   },
   topImage: {
-    position: "absolute",
+    position: 'absolute',
     top: -30,
-    width: "100%",
+    width: '100%',
     height: 400,
   },
   slogan: {
-    position: "relative",
+    position: 'relative',
     top: 40,
     fontSize: 24,
-    color: "#ffffff",
+    color: '#ffffff',
   },
   image: {
-    position: "relative",
+    position: 'relative',
     top: 40,
     width: 70,
     height: 70,
