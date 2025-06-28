@@ -1,46 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { Saving } from "@/constants/dataTypes";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
-interface SavingRecord {
-  id: string;
-  date: Date;
-  amount: number;
-}
-
-export default function HistoryCalendar() {
-  const [savingsHistory, setSavingsHistory] = useState<SavingRecord[]>([]);
+export default function HistoryCalendar({ selectedYear }: { selectedYear?: string }) {
+  const { allSavings, deleteSaving } = useSavingsStore();
+  const [savingsHistory, setSavingsHistory] = useState<Saving[]>([]);
   const [expandedMonths, setExpandedMonths] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
-    const mockData: SavingRecord[] = [
-      { id: "1", date: new Date(2023, 0, 5), amount: 100 },
-      { id: "2", date: new Date(2023, 0, 15), amount: 50 },
-      { id: "3", date: new Date(2023, 1, 3), amount: 200 },
-      { id: "4", date: new Date(2023, 1, 20), amount: 75 },
-      { id: "5", date: new Date(2023, 2, 10), amount: 150 },
-      { id: "6", date: new Date(2023, 3, 5), amount: 120 },
-      { id: "7", date: new Date(2023, 4, 12), amount: 90 },
-      { id: "8", date: new Date(2023, 5, 8), amount: 180 },
-    ];
+    // Filtrujemy dane według wybranego roku, jeśli został podany
+    let filteredData = [...allSavings];
 
-    const sortedData = mockData.sort((a, b) => b.date.getTime() - a.date.getTime());
+    if (selectedYear) {
+      filteredData = filteredData.filter((saving) => {
+        const savingYear = new Date(saving.date).getFullYear().toString();
+        return savingYear === selectedYear;
+      });
+    }
+
+    const sortedData = filteredData.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
+
     setSavingsHistory(sortedData);
 
     // Domyślnie rozwijamy pierwszy miesiąc
-    // if (sortedData.length > 0) {
-    //   const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
-    //   const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
-    //   setExpandedMonths({ [capitalizedMonth]: true });
-    // }
-  }, []);
+    if (sortedData.length > 0) {
+      const firstMonthKey = format(sortedData[0].date, "LLLL", { locale: pl });
+      const capitalizedMonth = firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
+      setExpandedMonths({ [capitalizedMonth]: true });
+    }
+  }, [allSavings, selectedYear]);
 
-  const groupByMonth = () => {
-    const grouped: { [key: string]: SavingRecord[] } = {};
+  const groupByYear = () => {
+    const grouped: { [key: string]: Saving[] } = {};
 
     savingsHistory.forEach((record) => {
-      // Używam formatu LLLL dla nazwy miesiąca w mianowniku
+      const year = new Date(record.date).getFullYear().toString();
+
+      if (!grouped[year]) {
+        grouped[year] = [];
+      }
+
+      grouped[year].push(record);
+    });
+
+    return grouped;
+  };
+
+  const groupByMonth = () => {
+    const grouped: { [key: string]: Saving[] } = {};
+
+    savingsHistory.forEach((record) => {
+      // Format LLLL dla nazwy miesiąca w mianowniku
       const monthKey = format(record.date, "LLLL", { locale: pl });
       const capitalizedMonth = monthKey.charAt(0).toUpperCase() + monthKey.slice(1);
 
@@ -54,8 +72,12 @@ export default function HistoryCalendar() {
     return grouped;
   };
 
-  const calculateMonthTotal = (records: SavingRecord[]) => {
-    return records.reduce((sum, record) => sum + record.amount, 0).toFixed(2);
+  const calculateMonthTotal = (records: Saving[]) => {
+    return records.reduce((sum, record) => sum + record.promotion, 0).toFixed(2);
+  };
+
+  const calculateYearTotal = (records: Saving[]) => {
+    return records.reduce((sum, record) => sum + record.promotion, 0).toFixed(2);
   };
 
   const toggleMonth = (month: string) => {
@@ -66,46 +88,78 @@ export default function HistoryCalendar() {
   };
 
   const groupedData = groupByMonth();
+  const groupedByYearData = groupByYear();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>2025</Text>
-
-      <View style={styles.header}>
-        <Text style={[styles.headerText, styles.flex1]}>Data</Text>
-        <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (PLN)</Text>
-      </View>
-
-      <ScrollView>
-        {Object.entries(groupedData).map(([month, records], monthIndex) => (
-          <View key={month}>
-            <TouchableOpacity style={styles.monthHeader} onPress={() => toggleMonth(month)} activeOpacity={0.7}>
-              <Text style={styles.monthTitle}>
-                {month} {expandedMonths[month] ? "▼" : "▶"}
-              </Text>
-
-              {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
-              {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} PLN</Text>}
-            </TouchableOpacity>
-
-            {expandedMonths[month] && (
-              <View>
-                {records.map((record, index) => (
-                  <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
-                    <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
-                    <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.amount.toFixed(2)}</Text>
-                  </View>
-                ))}
-              </View>
-            )}
+      {selectedYear ? (
+        // Jeśli wybrano rok, pokazujemy dane pogrupowane według miesięcy
+        <>
+          <View style={styles.header}>
+            <Text style={[styles.headerText, styles.flex1]}>Data</Text>
+            <Text style={[styles.headerText, styles.flex1]}>Kategoria</Text>
+            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Kwota (zł)</Text>
+            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Usuń</Text>
           </View>
-        ))}
-      </ScrollView>
+
+          <ScrollView>
+            {Object.entries(groupedData).map(([month, records], monthIndex) => (
+              <View key={month}>
+                <TouchableOpacity style={styles.monthHeader} onPress={() => toggleMonth(month)} activeOpacity={0.7}>
+                  <Text style={styles.monthTitle}>
+                    {month} {expandedMonths[month] ? "▼" : "▶"}
+                  </Text>
+
+                  {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
+                  {!expandedMonths[month] && <Text style={styles.monthTotalAmount}>{calculateMonthTotal(records)} zł</Text>}
+                </TouchableOpacity>
+
+                {expandedMonths[month] && (
+                  <View>
+                    {records.map((record, index) => (
+                      <View key={record.id} style={[styles.recordRow, index % 2 === 0 ? styles.evenRow : styles.oddRow]}>
+                        <Text style={[styles.recordText, styles.flex1]}>{format(record.date, "dd.MM.yyyy")}</Text>
+                        <Text style={[styles.recordText, styles.flex1]}>{record.category}</Text>
+                        <Text style={[styles.amountText, styles.flex1, styles.textRight]}>{record.promotion.toFixed(2)}</Text>
+                        <Text style={[styles.icon]}>
+                          <AntDesign
+                            name="delete"
+                            size={16}
+                            color="red"
+                            onPress={() => {
+                              deleteSaving(record.id);
+                            }}
+                          />
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
+          </ScrollView>
+        </>
+      ) : (
+        // Jeśli nie wybrano roku, pokazujemy dane pogrupowane według lat
+        <ScrollView>
+          <View style={styles.header}>
+            <Text style={[styles.headerText, styles.flex1]}>Rok</Text>
+            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>Suma oszczędności (zł)</Text>
+          </View>
+
+          {Object.entries(groupedByYearData).map(([year, records]) => (
+            <View key={year} style={styles.yearRow}>
+              <Text style={[styles.yearText, styles.flex1]}>{year}</Text>
+              <Text style={[styles.yearAmount, styles.flex1, styles.textRight]}>{calculateYearTotal(records)} zł</Text>
+            </View>
+          ))}
+        </ScrollView>
+      )}
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           Suma oszczędności:{" "}
-          <Text style={styles.totalAmount}>{savingsHistory.reduce((sum, record) => sum + record.amount, 0).toFixed(2)} PLN</Text>
+          <Text style={styles.totalAmount}>{savingsHistory.reduce((sum, record) => sum + record.promotion, 0).toFixed(2)} zł</Text>
         </Text>
       </View>
     </View>
@@ -160,6 +214,23 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#e5e7eb", // gray-200
   },
+  yearRow: {
+    flexDirection: "row",
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb", // gray-200
+    backgroundColor: "#f9fafb", // gray-50
+  },
+  yearText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#1d4ed8", // blue-700
+  },
+  yearAmount: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#059669", // green-600
+  },
   evenRow: {
     backgroundColor: "#f9fafb", // gray-50
   },
@@ -192,5 +263,8 @@ const styles = StyleSheet.create({
   },
   textRight: {
     textAlign: "right",
+  },
+  icon: {
+    marginLeft: 10,
   },
 });

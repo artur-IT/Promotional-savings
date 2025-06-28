@@ -1,8 +1,12 @@
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { useState } from "react";
-// import DateTimePicker from "@react-native-community/datetimepicker";
+import { useState, forwardRef } from "react";
+import { router } from "expo-router";
+import Button from "@/components/Button";
+import { clearAllSavings } from "@/store/savingsStore";
+import { v4 as uuidv4 } from "uuid";
+import useSavingsStore from "@/store/useSavingsStore_Zustand";
 
 LocaleConfig.locales["pl"] = {
   monthNames: [
@@ -26,15 +30,53 @@ LocaleConfig.locales["pl"] = {
 };
 LocaleConfig.defaultLocale = "pl";
 
-export default function DataSavings() {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [showCalendar, setShowCalendar] = useState(false);
+// Używamy forwardRef, aby umożliwić przekazanie referencji do tego komponentu
+const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
+  const addSaving = useSavingsStore((state) => state.addSaving);
 
+  const [promotion, setPromotion] = useState<number | string>("");
+  const [category, setSelectedCategory] = useState<string>("");
+  const [date, setSelectedDate] = useState<string>("");
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [errors, setErrors] = useState<{
+    promotion?: string;
+    date?: string;
+    category?: string;
+  }>({});
+
+  const today = new Date().toISOString().split("T")[0]; // Format YYYY-MM-DD
+  const id = uuidv4().substring(0, 4);
+
+  const CancelHandle = () => {
+    router.push("/");
+  };
+
+  const handlePromotionalChange = (value: string) => {
+    setPromotion(Number(value));
+    if (errors.promotion) {
+      setErrors((prev) => ({ ...prev, promotion: undefined }));
+    }
+  };
+
+  // Aktualizacja daty
   const handleDateSelect = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
     setShowCalendar(false);
+    // Usuwamy błąd po wybraniu daty
+    if (errors.date) {
+      setErrors((prev) => ({ ...prev, date: undefined }));
+    }
   };
+
+  // Aktualizacja kategorii
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    // Usuwamy błąd po wybraniu kategorii
+    if (errors.category) {
+      setErrors((prev) => ({ ...prev, category: undefined }));
+    }
+  };
+
   // Funkcja formatująca datę z YYYY-MM-DD na DD.MM.YYYY
   const formatDate = (dateString: string) => {
     if (!dateString) return "Wybierz datę";
@@ -43,32 +85,104 @@ export default function DataSavings() {
     return `${day}.${month}.${year}`;
   };
 
+  const clearForm = () => {
+    setPromotion(0);
+    setSelectedDate("");
+    setSelectedCategory("");
+    setErrors({});
+  };
+
+  // Funkcja walidująca formularz
+  const validateForm = () => {
+    const newErrors: {
+      promotion?: string;
+      date?: string;
+      category?: string;
+    } = {};
+    let isValid = true;
+
+    if (Number(promotion) <= 0) {
+      newErrors.promotion = "Kwota musi być większa od zera";
+      isValid = false;
+    }
+
+    if (!date) {
+      newErrors.date = "Wybierz datę";
+      isValid = false;
+    }
+
+    if (!category) {
+      newErrors.category = "Wybierz kategorię";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSave = () => {
+    if (validateForm()) {
+      try {
+        addSaving({ id, promotion: Number(promotion), date, category });
+        clearForm();
+        Alert.alert("Sukces", "Oszczędność została zapisana pomyślnie!");
+        router.push("/");
+      } catch (error) {
+        console.error("Błąd podczas zapisywania danych:", error);
+        Alert.alert("Błąd", "Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.");
+      }
+    } else {
+      Alert.alert("Błąd", "Wypełnij poprawnie wszystkie pola formularza");
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Wiersz 1 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
-        <TextInput style={styles.input} keyboardType="numeric" />
+        <View>
+          <TextInput
+            style={[styles.input, errors.promotion ? styles.inputError : null]}
+            keyboardType="numeric"
+            value={promotion.toString() || ""}
+            onChangeText={handlePromotionalChange}
+            onFocus={() => setPromotion("")}
+          />
+          {errors.promotion && <Text style={styles.errorText}>{errors.promotion}</Text>}
+        </View>
       </View>
 
       {/* Wiersz 2 */}
       <View style={styles.row}>
         <Text style={styles.label}>Data</Text>
-        <TouchableOpacity style={styles.input} onPress={() => setShowCalendar(true)}>
-          <Text style={styles.dateText}>{formatDate(selectedDate)}</Text>
-        </TouchableOpacity>
+
+        <View>
+          <TouchableOpacity style={[styles.input, errors.date ? styles.inputError : null]} onPress={() => setShowCalendar(true)}>
+            <Text style={styles.dateText}>{formatDate(date)}</Text>
+          </TouchableOpacity>
+          {errors.date && <Text style={styles.errorText}>{errors.date}</Text>}
+        </View>
       </View>
 
       {/* Wiersz 3 */}
       <View style={styles.row}>
         <Text style={styles.label}>Kategoria</Text>
-        <Picker style={styles.picker} selectedValue={selectedCategory} onValueChange={(itemValue) => setSelectedCategory(itemValue)}>
-          <Picker.Item label="Wybierz kategorię" value="" />
-          <Picker.Item label="Żywność" value="food" />
-          <Picker.Item label="Paliwo" value="fuel" />
-          <Picker.Item label="Ubrania" value="clothes" />
-          <Picker.Item label="Inne" value="another" />
-        </Picker>
+
+        <View>
+          <Picker
+            style={[styles.picker, errors.category ? styles.inputError : null]}
+            selectedValue={category}
+            onValueChange={handleCategoryChange}
+          >
+            <Picker.Item label="Wybierz kategorię" value="" />
+            <Picker.Item label="Żywność" value="Żywność" />
+            <Picker.Item label="Paliwo" value="Paliwo" />
+            <Picker.Item label="Ubrania" value="Ubrania" />
+            <Picker.Item label="Inne" value="Inne" />
+          </Picker>
+          {errors.category && <Text style={styles.errorText}>{errors.category}</Text>}
+        </View>
       </View>
 
       {/* Modal z kalendarzem */}
@@ -78,8 +192,9 @@ export default function DataSavings() {
             <Calendar
               onDayPress={handleDateSelect}
               markedDates={{
-                [selectedDate]: { selected: true, selectedColor: "#3498db" },
+                [date]: { selected: true, selectedColor: "#3498db" },
               }}
+              maxDate={today}
               theme={{
                 todayTextColor: "#3498db",
                 selectedDayBackgroundColor: "#3498db",
@@ -92,9 +207,14 @@ export default function DataSavings() {
           </View>
         </View>
       </Modal>
+      <View style={styles.buttons}>
+        <Button title="Zapisz" onPress={handleSave} />
+        <Button title="Anuluj" onPress={CancelHandle} />
+        <Button title="CLEAR" width={60} onPress={clearAllSavings} />
+      </View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -102,7 +222,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: 12,
   },
   label: {
@@ -122,6 +242,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 8,
+  },
+  inputError: {
+    borderColor: "red",
+    borderWidth: 1,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginTop: 2,
   },
   picker: {
     width: 130,
@@ -156,4 +285,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
   },
+  buttons: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: 40,
+  },
 });
+
+export default DataSavings;
