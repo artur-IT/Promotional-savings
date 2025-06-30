@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
+    backgroundColor: 'white',
   },
   progressTargetContainer: {
     display: 'flex',
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
     top: 200,
     display: 'flex',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   happy: {
     width: 150,
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
   success: {
     textAlign: 'center',
     fontSize: 30,
+    backgroundColor: 'white',
   },
   successValue: {
     fontSize: 30,

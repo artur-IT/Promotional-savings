@@ -40,6 +40,12 @@ export default function HomeWithGoal() {
         onPress={() => (navigation as any).navigate('Goal')}
         width={150}
       />
+
+      <Button
+        title="Historia"
+        onPress={() => (navigation as any).navigate('History')}
+        width={150}
+      />
     </View>
   );
 }

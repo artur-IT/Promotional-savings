@@ -6,11 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Saving } from '@/constants/dataTypes';
+import { Saving } from '../../constants/dataTypes';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import useSavingsStore from '@/store/useSavingsStore_Zustand';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import Button from '../Button';
 
 export default function HistoryCalendar({
   selectedYear,
@@ -125,7 +125,7 @@ export default function HistoryCalendar({
           </View>
 
           <ScrollView>
-            {Object.entries(groupedData).map(([month, records], monthIndex) => (
+            {Object.entries(groupedData).map(([month, records]) => (
               <View key={month}>
                 <TouchableOpacity
                   style={styles.monthHeader}
@@ -170,10 +170,8 @@ export default function HistoryCalendar({
                           {record.promotion.toFixed(2)}
                         </Text>
                         <Text style={[styles.icon]}>
-                          <AntDesign
-                            name="delete"
-                            size={16}
-                            color="red"
+                          <Button
+                            title="delete"
                             onPress={() => {
                               deleteSaving(record.id);
                             }}

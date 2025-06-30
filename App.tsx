@@ -4,6 +4,7 @@ import { Alert, Button } from 'react-native';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
 import Goal from './screens/Goal/Goal';
+import HistorySavings from './screens/HistorySavings/HistorySavings';
 
 function HomeScreen() {
   return <Home />;
@@ -15,6 +16,10 @@ function AddSavingScreen() {
 
 function GoalScreen() {
   return <Goal />;
+}
+
+function HistoryScreen() {
+  return <HistorySavings />;
 }
 
 const RootStack = createNativeStackNavigator({
@@ -45,6 +50,7 @@ const RootStack = createNativeStackNavigator({
     },
     NewSaving: AddSavingScreen,
     Goal: GoalScreen,
+    History: HistoryScreen,
   },
 });
 
