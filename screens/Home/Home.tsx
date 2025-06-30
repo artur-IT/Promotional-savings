@@ -16,7 +16,11 @@ export default function HomeWithGoal() {
     <View style={styles.container}>
       <Image source={TopImage} style={styles.topImage} />
       <Image source={PlaceholderImage} style={styles.image} />
-      <Text style={styles.slogan}>Promocyjne oszczędności</Text>
+      {/* <Text style={styles.slogan}>Promocyjne oszczędności</Text> */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Promocyjne </Text>
+        <Text style={styles.title}>oszczędności</Text>
+      </View>
 
       <View style={styles.year}>
         <YearSaving />
@@ -61,6 +65,16 @@ export default function HomeWithGoal() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+  },
+  titleContainer: {
+    marginTop: 30,
+    marginLeft: -200,
+    display: 'flex',
+    marginBottom: 30,
+  },
+  title: {
+    fontSize: 32,
+    color: '#0084CE',
   },
   link: { marginTop: 30, padding: 10, borderRadius: 5 },
   slogan: {
