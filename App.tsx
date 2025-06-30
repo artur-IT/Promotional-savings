@@ -1,10 +1,10 @@
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Alert, Button } from 'react-native';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
 import Goal from './screens/Goal/Goal';
 import HistorySavings from './screens/HistorySavings/HistorySavings';
+import About from './components/About';
 
 function HomeScreen() {
   return <Home />;
@@ -20,6 +20,10 @@ function GoalScreen() {
 
 function HistoryScreen() {
   return <HistorySavings />;
+}
+
+function AboutScreen() {
+  return <About />;
 }
 
 const RootStack = createNativeStackNavigator({
@@ -40,17 +44,12 @@ const RootStack = createNativeStackNavigator({
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-        headerRight: () => (
-          <Button
-            title="Info"
-            onPress={() => Alert.alert('This is a button!')}
-          />
-        ),
       },
     },
     NewSaving: AddSavingScreen,
     Goal: GoalScreen,
     History: HistoryScreen,
+    About: AboutScreen,
   },
 });
 

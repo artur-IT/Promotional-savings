@@ -61,7 +61,7 @@ export default function EditTargetForm({
       Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
         {
           text: 'OK',
-          onPress: () => (navigation as any).navigate('NewSaving'),
+          onPress: () => (navigation as any).navigate('Home'),
         },
       ]);
       onFormClose();
@@ -97,7 +97,7 @@ export default function EditTargetForm({
           onFocus={handleGoalNameFocus}
           placeholder={`${errors.goalName ? errors.goalName : 'Nazwa celu'}`}
         />
-        <Button title="delete" onPress={clearGoalName} />
+        <Button title="clear" width={50} onPress={clearGoalName} />
       </View>
 
       {/* Target Value */}
@@ -113,7 +113,7 @@ export default function EditTargetForm({
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
         />
-        <Button title="delete" onPress={clearTargetAmount} />
+        <Button title="clear" width={50} onPress={clearTargetAmount} />
       </View>
 
       {/* Buttons */}
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
-    padding: 16,
-    height: 200,
+    padding: 25,
+    height: 210,
     backgroundColor: colors.background.card,
     borderRadius: 10,
   },
@@ -148,13 +148,15 @@ const styles = StyleSheet.create({
     color: colors.text.button_W,
   },
   targetInput: {
+    display: 'flex',
+    justifyContent: 'center',
     width: 170,
-    height: 30,
+    height: 40,
     backgroundColor: 'white',
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 4,
-    paddingHorizontal: 8,
+    // paddingHorizontal: 8,
   },
   targetInputValue: {
     width: 70,

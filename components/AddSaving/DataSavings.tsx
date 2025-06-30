@@ -202,12 +202,8 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
       <View style={styles.row}>
         <Text style={styles.label}>Kategoria</Text>
 
-        <View>
-          <Picker
-            style={[styles.picker, errors.category ? styles.inputError : null]}
-            selectedValue={category}
-            onValueChange={handleCategoryChange}
-          >
+        <View style={[styles.picker]}>
+          <Picker selectedValue={category} onValueChange={handleCategoryChange}>
             <Picker.Item label="Wybierz kategorię" value="" />
             <Picker.Item label="Żywność" value="Żywność" />
             <Picker.Item label="Paliwo" value="Paliwo" />
@@ -270,6 +266,7 @@ const styles = StyleSheet.create({
     width: 90,
     fontSize: 16,
     paddingHorizontal: 8,
+    paddingVertical: 8,
   },
   dateText: {
     fontSize: 14,
@@ -294,13 +291,13 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   picker: {
+    display: 'flex',
+    justifyContent: 'center',
     width: 130,
-    height: 65,
-    backgroundColor: 'white',
+    height: 40,
     borderColor: 'black',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 4,
-    paddingHorizontal: 8,
   },
   modalContainer: {
     flex: 1,

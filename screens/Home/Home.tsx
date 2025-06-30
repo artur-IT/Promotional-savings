@@ -29,23 +29,31 @@ export default function HomeWithGoal() {
 
       <GoalProgress />
 
-      <Button
-        title="Dodaj oszczędność"
-        onPress={() => (navigation as any).navigate('NewSaving')}
-        width={150}
-      />
+      <View style={styles.buttons}>
+        <Button
+          title="Dodaj oszczędność"
+          onPress={() => (navigation as any).navigate('NewSaving')}
+          width={150}
+        />
 
-      <Button
-        title="Dodaj Cel"
-        onPress={() => (navigation as any).navigate('Goal')}
-        width={150}
-      />
+        <Button
+          title="Dodaj Cel"
+          onPress={() => (navigation as any).navigate('Goal')}
+          width={150}
+        />
 
-      <Button
-        title="Historia"
-        onPress={() => (navigation as any).navigate('History')}
-        width={150}
-      />
+        <Button
+          title="Historia oszczędności"
+          onPress={() => (navigation as any).navigate('History')}
+          width={150}
+        />
+
+        <Button
+          title="O aplikacji"
+          onPress={() => (navigation as any).navigate('About')}
+          width={150}
+        />
+      </View>
     </View>
   );
 }
@@ -86,5 +94,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     marginTop: 40,
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 20,
   },
 });

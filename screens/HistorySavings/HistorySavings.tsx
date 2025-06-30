@@ -52,17 +52,21 @@ export default function HistorySavings() {
     <ScrollView>
       <Top />
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Historia oszczędności</Text>
-        <Picker
-          style={styles.picker}
-          selectedValue={selectYear}
-          onValueChange={value => handleYearChange(value)}
-        >
-          <Picker.Item label="Lata" value="" />
-          {availableYears.map(year => (
-            <Picker.Item key={year} label={year} value={year} />
-          ))}
-        </Picker>
+        <View style={styles.container}>
+          <Text style={styles.title}>Historia </Text>
+          <Text style={styles.title}>oszczędności</Text>
+        </View>
+        <View style={styles.picker}>
+          <Picker
+            selectedValue={selectYear}
+            onValueChange={value => handleYearChange(value)}
+          >
+            <Picker.Item label="Lata" value="" />
+            {availableYears.map(year => (
+              <Picker.Item key={year} label={year} value={year} />
+            ))}
+          </Picker>
+        </View>
       </View>
 
       <Animated.View style={{ opacity: fadeAnim }}>
@@ -79,13 +83,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
   },
+  container: {
+    display: 'flex',
+    marginBottom: 30,
+  },
   title: {
     fontSize: 26,
-    marginBottom: 10,
   },
   picker: {
     width: 100,
     backgroundColor: 'white',
     marginTop: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    height: 40,
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 4,
   },
 });

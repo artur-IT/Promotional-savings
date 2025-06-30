@@ -6,18 +6,25 @@ export default function AddSavingScreen() {
   return (
     <View>
       <Top />
-      <Text style={styles.title}>Dzisiaj zaoszczędziłem</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Dzisiaj </Text>
+        <Text style={styles.title}>zaoszczędziłem</Text>
+      </View>
+
       <DataSavings />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 26,
+  container: {
+    display: 'flex',
     marginTop: 80,
     marginBottom: 30,
     marginLeft: 20,
+  },
+  title: {
+    fontSize: 26,
   },
   buttons: {
     display: 'flex',

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     height: '100%',
-    // justifyContent: "center",
+    backgroundColor: colors.background.main,
     marginTop: 80,
   },
   headerContainer: {

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-const TopImage = require('../assets/images/top_bg.jpg');
+const TopImage = require('../assets/images/top_bg.gif');
 const PlaceholderImage = require('../assets/images/money-bag.jpg');
 
 export default function Header() {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // height: "auto",
     // marginTop: 40,
-    // zIndex: 1,
+    zIndex: 1,
   },
   topImage: {
     position: 'absolute',
