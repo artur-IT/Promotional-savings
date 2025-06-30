@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Goal } from '../constants/dataTypes';
 import { storage } from '../utils/storage';
 import { GOAL_KEY } from '../constants/dataTypes';
@@ -16,7 +15,7 @@ export const getAllGoals = (): Goal[] => {
 
 // Dodawanie nowego celu
 export const addGoal = (goalData: GoalInput): Goal => {
-  const shortId = uuidv4().substring(0, 4);
+  const shortId = String(Math.floor(Math.random() * 100000));
   const currentDate = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
 
   const newGoal: Goal = {

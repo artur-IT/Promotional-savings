@@ -1,9 +1,8 @@
+import { useNavigation } from '@react-navigation/native';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Button from '@/components/Button';
-import { router } from 'expo-router';
-import colors from '@/constants/colors';
-import { addGoal, getAllGoals } from '@/store/goalsStore';
+import Button from '../../components/Button';
+import colors from '../../constants/colors';
+import { addGoal, getAllGoals } from '../../store/goalsStore';
 import { useState } from 'react';
 
 export default function EditTargetForm({
@@ -11,6 +10,8 @@ export default function EditTargetForm({
 }: {
   onFormClose: () => void;
 }) {
+  const navigation = useNavigation();
+
   const goal = getAllGoals();
   const bigName = goal[0]?.goal || '';
   const goalAmount = goal[0]?.targetAmount || '';
@@ -58,7 +59,10 @@ export default function EditTargetForm({
         targetAmount: parseFloat(`${targetAmount}`),
       });
       Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
-        { text: 'OK', onPress: () => router.push('/') },
+        {
+          text: 'OK',
+          onPress: () => (navigation as any).navigate('NewSaving'),
+        },
       ]);
       onFormClose();
     } else {
@@ -93,13 +97,7 @@ export default function EditTargetForm({
           onFocus={handleGoalNameFocus}
           placeholder={`${errors.goalName ? errors.goalName : 'Nazwa celu'}`}
         />
-        <AntDesign
-          name="delete"
-          size={20}
-          color="white"
-          style={styles.deleteIcon}
-          onPress={clearGoalName}
-        />
+        <Button title="delete" onPress={clearGoalName} />
       </View>
 
       {/* Target Value */}
@@ -115,13 +113,7 @@ export default function EditTargetForm({
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
         />
-        <AntDesign
-          name="delete"
-          size={20}
-          color="white"
-          style={styles.deleteIcon}
-          onPress={clearTargetAmount}
-        />
+        <Button title="delete" onPress={clearTargetAmount} />
       </View>
 
       {/* Buttons */}

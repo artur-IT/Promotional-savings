@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Alert, Button } from 'react-native';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
+import Goal from './screens/Goal/Goal';
 
 function HomeScreen() {
   return <Home />;
@@ -10,6 +11,10 @@ function HomeScreen() {
 
 function AddSavingScreen() {
   return <AddSaving />;
+}
+
+function GoalScreen() {
+  return <Goal />;
 }
 
 const RootStack = createNativeStackNavigator({
@@ -38,7 +43,8 @@ const RootStack = createNativeStackNavigator({
         ),
       },
     },
-    Details: AddSavingScreen,
+    NewSaving: AddSavingScreen,
+    Goal: GoalScreen,
   },
 });
 

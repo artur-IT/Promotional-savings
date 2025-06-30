@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
-import { getAllGoals } from '@/store/goalsStore';
-import useSavingsStore from '@/store/useSavingsStore_Zustand';
+import { getAllGoals } from '../../store/goalsStore';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function GoalProgress() {
   const goal = getAllGoals();
@@ -66,7 +66,7 @@ export default function GoalProgress() {
       {totalPromotionSum >= goalAmount && (
         <View style={styles.successContainer}>
           <Image
-            source={require('@/assets/images/sun_new.gif')}
+            source={require('../../assets/images/sun_new.gif')}
             style={styles.happy}
           />
           <Text style={styles.success}>BRAWO TY! </Text>
@@ -79,7 +79,6 @@ export default function GoalProgress() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,

@@ -1,11 +1,11 @@
-import { Alert, Animated, StyleSheet, Text, View } from "react-native";
-import React, { useRef, useState } from "react";
-import Top from "@/components/Top";
-import EditTargetForm from "@/components/Goal/EditTargetForm";
-import GoalProgress from "@/components/Goal/GoalProgress";
-import Button from "@/components/Button";
-import colors from "@/constants/colors";
-import { clearAllGoals, getAllGoals } from "@/store/goalsStore";
+import { Alert, Animated, StyleSheet, Text, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import Top from '../../components/Top';
+import EditTargetForm from '../../components/Goal/EditTargetForm';
+import GoalProgress from '../../components/Goal/GoalProgress';
+import Button from '../../components/Button';
+import colors from '../../constants/colors';
+import { clearAllGoals, getAllGoals } from '../../store/goalsStore';
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
@@ -32,16 +32,20 @@ export default function Goal() {
   };
 
   const cancelHandle = () => {
-    Alert.alert("Czy na pewno chcesz usunąć wszystkie cele?", "Usunięcie celu spowoduje usunięcie wszystkich zapisanych celów.", [
-      {
-        text: "Nie",
-        style: "cancel",
-      },
-      {
-        text: "Tak",
-        onPress: () => clearAllGoals(),
-      },
-    ]);
+    Alert.alert(
+      'Czy na pewno chcesz usunąć wszystkie cele?',
+      'Usunięcie celu spowoduje usunięcie wszystkich zapisanych celów.',
+      [
+        {
+          text: 'Nie',
+          style: 'cancel',
+        },
+        {
+          text: 'Tak',
+          onPress: () => clearAllGoals(),
+        },
+      ],
+    );
     clearAllGoals();
   };
 
@@ -51,7 +55,10 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
-          <Button title={`${goal.length != 0 ? "Edytuj" : "Dodaj"}`} onPress={addHandle} />
+          <Button
+            title={`${goal.length !== 0 ? 'Edytuj' : 'Dodaj'}`}
+            onPress={addHandle}
+          />
           <Button title="CLEAR GOAL" height={25} onPress={cancelHandle} />
         </View>
 
@@ -71,8 +78,8 @@ export default function Goal() {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    height: "100%",
+    display: 'flex',
+    height: '100%',
     // justifyContent: "center",
     marginTop: 80,
   },
