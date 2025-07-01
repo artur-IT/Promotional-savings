@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     display: 'flex',
     justifyContent: 'center',
-    zIndex: 1000,
+    zIndex: 10,
   },
   inputError: {
     borderColor: 'red',

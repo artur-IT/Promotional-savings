@@ -81,8 +81,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 80,
+    marginTop: 70,
     backgroundColor: 'white',
+    // zIndex: 0,
   },
   progressTargetContainer: {
     display: 'flex',

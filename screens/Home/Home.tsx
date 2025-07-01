@@ -37,24 +37,32 @@ export default function HomeWithGoal() {
           title="Dodaj oszczędność"
           onPress={() => (navigation as any).navigate('NewSaving')}
           width={150}
+          height={70}
+          radius={0}
         />
 
         <Button
           title="Dodaj Cel"
           onPress={() => (navigation as any).navigate('Goal')}
           width={150}
+          height={70}
+          radius={0}
         />
 
         <Button
           title="Historia oszczędności"
           onPress={() => (navigation as any).navigate('History')}
           width={150}
+          height={70}
+          radius={0}
         />
 
         <Button
           title="O aplikacji"
           onPress={() => (navigation as any).navigate('About')}
           width={150}
+          height={70}
+          radius={0}
         />
       </View>
     </View>
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
   },
   year: {
     position: 'relative',
-    left: -110,
+    left: -100,
   },
   circles: {
     display: 'flex',
@@ -115,6 +123,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: 20,
   },
 });

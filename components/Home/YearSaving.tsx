@@ -6,7 +6,6 @@ export default function YearSaving() {
   const { getTotalSavings } = useSavingsStore();
   const { allSavings } = useSavingsStore();
   const [availableYears, setAvailableYears] = useState<string[]>([]);
-  console.log(availableYears);
 
   useEffect(() => {
     if (allSavings && allSavings.length > 0) {
@@ -20,9 +19,7 @@ export default function YearSaving() {
         ),
       ];
 
-      // Sortowanie lat malejąco (od najnowszego)
       years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
-
       setAvailableYears(years);
     }
   }, [allSavings]);
@@ -46,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 230,
-    borderRadius: 10,
+    borderRadius: 0,
     backgroundColor: 'darkorange',
   },
   year: {

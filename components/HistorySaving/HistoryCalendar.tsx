@@ -119,7 +119,14 @@ export default function HistoryCalendar({
             <Text style={[styles.headerText, styles.flex1, styles.textRight]}>
               Kwota (zł)
             </Text>
-            <Text style={[styles.headerText, styles.flex1, styles.textRight]}>
+            <Text
+              style={[
+                styles.headerText,
+                styles.flex1,
+                styles.textRight,
+                styles.delete,
+              ]}
+            >
               Usuń
             </Text>
           </View>
@@ -171,8 +178,8 @@ export default function HistoryCalendar({
                         </Text>
                         <Text style={[styles.icon]}>
                           <Button
-                            title="delete"
-                            width={55}
+                            title="usuń"
+                            width={60}
                             height={30}
                             onPress={() => {
                               deleteSaving(record.id);
@@ -247,6 +254,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontWeight: '600',
     color: '#1e40af', // blue-800
+    // borderColor: 'black',
+    // borderWidth: 1,
+    // borderStyle: 'solid',
   },
   monthHeader: {
     backgroundColor: '#eff6ff', // blue-50
@@ -322,6 +332,9 @@ const styles = StyleSheet.create({
   },
   textRight: {
     textAlign: 'right',
+  },
+  delete: {
+    width: 10,
   },
   icon: {
     marginLeft: 10,

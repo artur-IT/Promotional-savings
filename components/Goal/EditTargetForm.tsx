@@ -91,7 +91,7 @@ export default function EditTargetForm({
           onFocus={handleGoalNameFocus}
           placeholder={`${errors.goalName ? errors.goalName : 'Nazwa celu'}`}
         />
-        <Button title="clear" width={50} onPress={clearGoalName} />
+        <Button title="usuń" width={60} onPress={clearGoalName} />
       </View>
 
       {/* Target Value */}
@@ -107,7 +107,7 @@ export default function EditTargetForm({
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
         />
-        <Button title="clear" width={50} onPress={clearTargetAmount} />
+        <Button title="usuń" width={60} onPress={clearTargetAmount} />
       </View>
 
       {/* Buttons */}
@@ -121,7 +121,8 @@ export default function EditTargetForm({
 
 const styles = StyleSheet.create({
   container: {
-    bottom: 200,
+    position: 'absolute',
+    top: 100,
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
     height: 210,
     backgroundColor: colors.background.card,
     borderRadius: 10,
+    zIndex: 100,
   },
   row: {
     flexDirection: 'row',

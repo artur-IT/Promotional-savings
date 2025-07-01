@@ -6,6 +6,7 @@ interface ButtonProps {
   title: string;
   width?: number;
   height?: number;
+  radius?: number;
   onPress: () => void;
 }
 
@@ -14,6 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   onPress,
   width = 90,
   height = 40,
+  radius = 5,
 }) => {
   const newWidth = width;
   const newHeight = height;
@@ -22,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
     button: {
       width: newWidth,
       height: newHeight,
-      borderRadius: 5,
+      borderRadius: radius,
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
@@ -32,9 +34,9 @@ const Button: React.FC<ButtonProps> = ({
     },
 
     text: {
-      fontSize: 14,
+      fontSize: 18,
       color: colors.text.button_W,
-      // fontWeight: "bold",
+      textAlign: 'center',
     },
   });
 

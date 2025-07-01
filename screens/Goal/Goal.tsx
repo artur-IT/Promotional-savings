@@ -16,7 +16,7 @@ export default function Goal() {
     if (showForm) {
       Animated.timing(fadeAnim, {
         toValue: 0,
-        duration: 300,
+        duration: 500,
         useNativeDriver: true,
       }).start(() => {
         setShowForm(false);
@@ -25,7 +25,7 @@ export default function Goal() {
       setShowForm(true);
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 300,
+        duration: 500,
         useNativeDriver: true,
       }).start();
     }
@@ -59,18 +59,20 @@ export default function Goal() {
             title={`${goal.length !== 0 ? 'Edytuj' : 'Dodaj'}`}
             onPress={addHandle}
           />
-          <Button title="CLEAR GOAL" height={25} onPress={cancelHandle} />
+          <Button title="Usuń" height={35} onPress={cancelHandle} />
         </View>
+
+        {showForm && (
+          <View style={{ zIndex: 100 }}>
+            <Animated.View style={{ opacity: fadeAnim }}>
+              <EditTargetForm onFormClose={() => setShowForm(false)} />
+            </Animated.View>
+          </View>
+        )}
 
         <View style={styles.goal}>
           <GoalProgress />
         </View>
-
-        {showForm && (
-          <Animated.View style={{ opacity: fadeAnim }}>
-            <EditTargetForm onFormClose={() => setShowForm(false)} />
-          </Animated.View>
-        )}
       </View>
     </>
   );
@@ -91,12 +93,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     backgroundColor: colors.background.main,
-    zIndex: 1000,
+    zIndex: 10,
   },
   title: {
     fontSize: 26,
-
-    // marginTop: 40,
     marginLeft: 10,
     marginBottom: 10,
   },
