@@ -6,8 +6,8 @@ import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Home/GoalProgress';
 import Button from '../../components/Button';
 
-const TopImage = require('../../assets/images/top_bg.jpg');
-const PlaceholderImage = require('../../assets/images/money-bag.jpg');
+const TopImage = require('../../assets/images/top_bg.gif');
+const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
 export default function HomeWithGoal() {
   const navigation = useNavigation();
@@ -16,7 +16,6 @@ export default function HomeWithGoal() {
     <View style={styles.container}>
       <Image source={TopImage} style={styles.topImage} />
       <Image source={PlaceholderImage} style={styles.image} />
-      {/* <Text style={styles.slogan}>Promocyjne oszczędności</Text> */}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Promocyjne </Text>
         <Text style={styles.title}>oszczędności</Text>
@@ -114,6 +113,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 40,
   },
 });

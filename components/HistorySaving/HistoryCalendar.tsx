@@ -172,6 +172,8 @@ export default function HistoryCalendar({
                         <Text style={[styles.icon]}>
                           <Button
                             title="delete"
+                            width={55}
+                            height={30}
                             onPress={() => {
                               deleteSaving(record.id);
                             }}
@@ -265,6 +267,7 @@ const styles = StyleSheet.create({
   },
   recordRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e5e7eb', // gray-200

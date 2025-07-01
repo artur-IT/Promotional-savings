@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 
 const TopImage = require('../assets/images/top_bg.gif');
-const PlaceholderImage = require('../assets/images/money-bag.jpg');
+const PlaceholderImage = require('../assets/images/money-bag_big.png');
 
 export default function Header() {
   return (

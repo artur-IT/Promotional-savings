@@ -166,7 +166,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
 
   return (
     <View style={styles.container}>
-      {/* Wiersz 1 */}
+      {/* VALUE */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
         <View>
@@ -183,22 +183,21 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         </View>
       </View>
 
-      {/* Wiersz 2 */}
+      {/* DATE */}
       <View style={styles.row}>
         <Text style={styles.label}>Data</Text>
-
         <View>
           <TouchableOpacity
             style={[styles.input, errors.date ? styles.inputError : null]}
             onPress={() => setShowCalendar(true)}
           >
-            <Text style={styles.dateText}>{formatDate(date)}</Text>
+            <Text>{formatDate(date)}</Text>
           </TouchableOpacity>
           {errors.date && <Text style={styles.errorText}>{errors.date}</Text>}
         </View>
       </View>
 
-      {/* Wiersz 3 */}
+      {/* CATEGORY */}
       <View style={styles.row}>
         <Text style={styles.label}>Kategoria</Text>
 
@@ -268,10 +267,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 8,
   },
-  dateText: {
-    fontSize: 14,
-    lineHeight: 30,
-  },
+
   input: {
     width: 130,
     height: 35,
@@ -280,6 +276,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     paddingHorizontal: 8,
+    display: 'flex',
+    justifyContent: 'center',
+    zIndex: 1000,
   },
   inputError: {
     borderColor: 'red',
@@ -298,6 +297,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 4,
+    backgroundColor: 'white',
   },
   modalContainer: {
     flex: 1,
