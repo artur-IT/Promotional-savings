@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 3,
     borderRadius: 95,
+    backgroundColor: 'white',
   },
   savingItem: {
     fontSize: 14,

@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     padding: 16,
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 24,

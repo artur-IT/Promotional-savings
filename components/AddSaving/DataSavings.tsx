@@ -159,8 +159,6 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           'Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.',
         );
       }
-    } else {
-      Alert.alert('Błąd', 'Wypełnij poprawnie wszystkie pola formularza');
     }
   };
 

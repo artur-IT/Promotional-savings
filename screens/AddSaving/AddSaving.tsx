@@ -4,7 +4,7 @@ import DataSavings from '../../components/AddSaving/DataSavings';
 
 export default function AddSavingScreen() {
   return (
-    <View>
+    <View style={styles.view}>
       <Top />
       <View style={styles.container}>
         <Text style={styles.title}>Dzisiaj </Text>
@@ -17,11 +17,16 @@ export default function AddSavingScreen() {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    backgroundColor: '#fff',
+    height: '100%',
+  },
   container: {
     display: 'flex',
     marginTop: 80,
     marginBottom: 30,
     marginLeft: 20,
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 26,

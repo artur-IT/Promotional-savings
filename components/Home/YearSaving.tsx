@@ -1,9 +1,31 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function YearSaving() {
   const { getTotalSavings } = useSavingsStore();
+  const { allSavings } = useSavingsStore();
+  const [availableYears, setAvailableYears] = useState<string[]>([]);
+  console.log(availableYears);
+
+  useEffect(() => {
+    if (allSavings && allSavings.length > 0) {
+      // Wyciągnij lata z danych i usuń duplikaty
+      const years = [
+        ...new Set(
+          allSavings.map(saving => {
+            const date = new Date(saving.date);
+            return date.getFullYear().toString();
+          }),
+        ),
+      ];
+
+      // Sortowanie lat malejąco (od najnowszego)
+      years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+
+      setAvailableYears(years);
+    }
+  }, [allSavings]);
 
   return (
     <>
@@ -11,7 +33,7 @@ export default function YearSaving() {
         <View style={styles.insideText}>
           <Text style={styles.yearValue}>+{getTotalSavings()} zł</Text>
           <Text style={styles.infoText}>Zaoszczędzone</Text>
-          <Text style={styles.year}>2025</Text>
+          <Text style={styles.year}>{availableYears[0]}</Text>
         </View>
       </View>
     </>
@@ -26,11 +48,11 @@ const styles = StyleSheet.create({
     width: 230,
     borderRadius: 10,
     backgroundColor: 'darkorange',
-    // boxShadow: "5px 5px 2px 2px rgba(0, 0, 0, 0.6)",
   },
   year: {
     margin: 0,
     fontSize: 20,
+    color: 'white',
   },
   insideText: {
     display: 'flex',
@@ -38,6 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15,
     marginBottom: 15,
+    color: 'white',
   },
   yearValue: {
     display: 'flex',
@@ -45,10 +68,12 @@ const styles = StyleSheet.create({
     margin: 0,
     fontSize: 40,
     fontWeight: 'bold',
+    color: 'white',
   },
   infoText: {
     display: 'flex',
     margin: 0,
     fontSize: 25,
+    color: 'white',
   },
 });

@@ -26,7 +26,6 @@ export default function EditTargetForm({
 
   const cancelHandle = () => {
     onFormClose();
-    // router.push("/");
   };
 
   const saveHandle = () => {
@@ -65,11 +64,6 @@ export default function EditTargetForm({
         },
       ]);
       onFormClose();
-    } else {
-      const errorMessage = newErrors.goalName || newErrors.goalValue;
-      if (errorMessage) {
-        Alert.alert('Błąd', errorMessage);
-      }
     }
   };
 
@@ -127,8 +121,7 @@ export default function EditTargetForm({
 
 const styles = StyleSheet.create({
   container: {
-    position: 'relative',
-    bottom: 0,
+    bottom: 200,
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
@@ -150,16 +143,16 @@ const styles = StyleSheet.create({
   targetInput: {
     display: 'flex',
     justifyContent: 'center',
-    width: 170,
+    width: 210,
     height: 40,
     backgroundColor: 'white',
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 4,
-    // paddingHorizontal: 8,
+    paddingHorizontal: 8,
   },
   targetInputValue: {
-    width: 70,
+    width: 80,
   },
   buttonsContainer: {
     flexDirection: 'row',

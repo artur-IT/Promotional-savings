@@ -64,6 +64,8 @@ export default function HomeWithGoal() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: 'white',
+    height: '100%',
   },
   titleContainer: {
     marginTop: 30,

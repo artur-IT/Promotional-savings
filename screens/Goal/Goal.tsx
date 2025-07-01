@@ -80,19 +80,23 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     height: '100%',
-    backgroundColor: colors.background.main,
+    backgroundColor: 'white',
     marginTop: 40,
   },
   headerContainer: {
+    position: 'relative',
+    top: 40,
     width: 100,
     fontSize: 26,
     marginBottom: 10,
     marginLeft: 20,
     backgroundColor: colors.background.main,
+    zIndex: 1000,
   },
   title: {
     fontSize: 26,
-    marginTop: 40,
+
+    // marginTop: 40,
     marginLeft: 10,
     marginBottom: 10,
   },

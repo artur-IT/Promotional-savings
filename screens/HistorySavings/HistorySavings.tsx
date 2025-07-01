@@ -49,7 +49,7 @@ export default function HistorySavings() {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.view}>
       <Top />
       <View style={styles.headerContainer}>
         <View style={styles.container}>
@@ -77,11 +77,16 @@ export default function HistorySavings() {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    backgroundColor: 'white',
+    height: '100%',
+  },
   headerContainer: {
     fontSize: 26,
     marginTop: 80,
     marginBottom: 10,
     marginLeft: 20,
+    backgroundColor: 'white',
   },
   container: {
     display: 'flex',

@@ -89,11 +89,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 0,
     fontSize: 36,
+    color: 'white',
   },
   monthName: {
     display: 'flex',
     margin: 0,
     fontSize: 25,
     fontWeight: 'bold',
+    color: 'white',
   },
 });
