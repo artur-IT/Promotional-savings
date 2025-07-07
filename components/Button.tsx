@@ -37,12 +37,19 @@ const Button: React.FC<ButtonProps> = ({
       fontSize: 18,
       color: colors.text.button_W,
       textAlign: 'center',
+      fontFamily: 'Quicksand',
+    },
+    text2: {
+      // fontSize: 18,
+      color: colors.text.button_W,
+      fontFamily: 'Lexend',
     },
   });
 
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
+      {/* <Text style={styles.text2}>{title}</Text> */}
     </TouchableOpacity>
   );
 };

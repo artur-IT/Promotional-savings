@@ -46,7 +46,10 @@ export default function Goal() {
         },
       ],
     );
-    clearAllGoals();
+  };
+
+  const historylHandle = () => {
+    // (navigation as any).navigate('History');
   };
 
   return (
@@ -55,15 +58,17 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
+          <Button title="Nowy" onPress={addHandle} />
           <Button
             title={`${goal.length !== 0 ? 'Edytuj' : 'Dodaj'}`}
             onPress={addHandle}
           />
           <Button title="Usuń" height={35} onPress={cancelHandle} />
+          <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
 
         {showForm && (
-          <View style={{ zIndex: 100 }}>
+          <View style={styles.showForm}>
             <Animated.View style={{ opacity: fadeAnim }}>
               <EditTargetForm onFormClose={() => setShowForm(false)} />
             </Animated.View>
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '100%',
     backgroundColor: 'white',
-    marginTop: 40,
+    marginTop: 10,
   },
   headerContainer: {
     position: 'relative',
@@ -101,7 +106,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   goal: {
-    marginTop: -10,
+    marginTop: -20,
     marginBottom: 30,
+  },
+  showForm: {
+    zIndex: 100,
   },
 });

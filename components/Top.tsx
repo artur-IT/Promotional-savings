@@ -22,19 +22,19 @@ const styles = StyleSheet.create({
   },
   topImage: {
     position: 'absolute',
-    top: -30,
+    top: -70,
     width: '100%',
     height: 400,
   },
   slogan: {
     position: 'relative',
-    top: 40,
+    top: 20,
     fontSize: 24,
     color: '#ffffff',
   },
   image: {
     position: 'relative',
-    top: 40,
+    top: 20,
     width: 70,
     height: 70,
   },

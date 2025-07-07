@@ -244,7 +244,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           title="Anuluj"
           onPress={() => (navigation as any).navigate('Home')}
         />
-        <Button title="CLEAR" width={60} onPress={clearAllSavings} />
+        <Button title="USUŃ HISTORIĘ" width={150} onPress={clearAllSavings} />
       </View>
     </View>
   );

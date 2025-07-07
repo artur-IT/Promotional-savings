@@ -89,7 +89,7 @@ export default function EditTargetForm({
           value={goalName}
           onChangeText={setGoalName}
           onFocus={handleGoalNameFocus}
-          placeholder={`${errors.goalName ? errors.goalName : 'Nazwa celu'}`}
+          placeholder="Nazwa celu"
         />
         <Button title="usuń" width={60} onPress={clearGoalName} />
       </View>
@@ -104,6 +104,7 @@ export default function EditTargetForm({
           ]}
           keyboardType="numeric"
           value={`${targetAmount}`}
+          placeholder="Ile chcesz zaoszczędzić?"
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
         />
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   targetInputValue: {
-    width: 80,
+    width: 210,
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -165,7 +166,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   errorBg: {
-    padding: 5,
+    width: 210,
+    paddingHorizontal: 8,
     borderRadius: 4,
     backgroundColor: 'yellow',
   },

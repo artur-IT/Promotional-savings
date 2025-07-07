@@ -69,7 +69,7 @@ export default function GoalProgress() {
             source={require('../../assets/images/sun_new.gif')}
             style={styles.happy}
           />
-          <Text style={styles.success}>BRAWO TY! </Text>
+          <Text style={styles.success}>BRAWO! </Text>
           <Text style={styles.success}> Cel osiągnięty </Text>
         </View>
       )}
