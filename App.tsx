@@ -4,6 +4,7 @@ import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
 import Goal from './screens/Goal/Goal';
 import HistorySavings from './screens/HistorySavings/HistorySavings';
+import HistoryGoals from './screens/HistoryGoals/HistoryGoals';
 import About from './components/About';
 
 function HomeScreen() {
@@ -20,6 +21,10 @@ function GoalScreen() {
 
 function HistoryScreen() {
   return <HistorySavings />;
+}
+
+function HistoryGoalsScreen() {
+  return <HistoryGoals />;
 }
 
 function AboutScreen() {
@@ -48,8 +53,9 @@ const RootStack = createNativeStackNavigator({
     },
     NewSaving: AddSavingScreen,
     Goal: GoalScreen,
-    History: HistoryScreen,
+    HistorySavings: HistoryScreen,
     About: AboutScreen,
+    HistoryGoals: HistoryGoalsScreen,
   },
 });
 

@@ -1,5 +1,6 @@
 import { Alert, Animated, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Top from '../../components/Top';
 import EditTargetForm from '../../components/Goal/EditTargetForm';
 import GoalProgress from '../../components/Goal/GoalProgress';
@@ -11,6 +12,7 @@ export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const goal = getAllGoals();
+  const navigation = useNavigation();
 
   const addHandle = () => {
     if (showForm) {
@@ -49,7 +51,7 @@ export default function Goal() {
   };
 
   const historylHandle = () => {
-    // (navigation as any).navigate('History');
+    (navigation as any).navigate('HistoryGoals');
   };
 
   return (

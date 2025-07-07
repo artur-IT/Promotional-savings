@@ -51,7 +51,7 @@ export default function HomeWithGoal() {
 
         <Button
           title="Historia oszczędności"
-          onPress={() => (navigation as any).navigate('History')}
+          onPress={() => (navigation as any).navigate('HistorySavings')}
           width={140}
           height={70}
           radius={0}
