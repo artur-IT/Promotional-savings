@@ -89,7 +89,8 @@ export default function EditTargetForm({
           value={goalName}
           onChangeText={setGoalName}
           onFocus={handleGoalNameFocus}
-          placeholder="Nazwa celu"
+          placeholder="Na co zbierasz?"
+          maxLength={25}
         />
         <Button title="usuń" width={60} onPress={clearGoalName} />
       </View>
@@ -105,6 +106,7 @@ export default function EditTargetForm({
           keyboardType="numeric"
           value={`${targetAmount}`}
           placeholder="Ile chcesz zaoszczędzić?"
+          maxLength={4}
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
         />

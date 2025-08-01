@@ -1,6 +1,6 @@
 # 💰 Promocyjne Oszczędności
 
-Aplikacja mobilna React Native do śledzenia oszczędności z promocji i zarządzania celami finansowymi.
+Aplikacja mobilna React Native do śledzenia oszczędności z promocji i zarządzania celem finansowym.
 
 ## 📱 O aplikacji
 

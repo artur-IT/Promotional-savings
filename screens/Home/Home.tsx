@@ -36,32 +36,32 @@ export default function HomeWithGoal() {
         <Button
           title="Dodaj oszczędność"
           onPress={() => (navigation as any).navigate('NewSaving')}
-          width={140}
-          height={70}
+          width={190}
+          height={60}
           radius={0}
         />
 
         <Button
           title="Dodaj / Edytuj Cel"
           onPress={() => (navigation as any).navigate('Goal')}
-          width={140}
-          height={70}
+          width={190}
+          height={60}
           radius={0}
         />
 
         <Button
           title="Historia oszczędności"
           onPress={() => (navigation as any).navigate('HistorySavings')}
-          width={140}
-          height={70}
+          width={190}
+          height={60}
           radius={0}
         />
 
         <Button
           title="O aplikacji"
           onPress={() => (navigation as any).navigate('About')}
-          width={140}
-          height={70}
+          width={190}
+          height={60}
           radius={0}
         />
       </View>
