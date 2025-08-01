@@ -12,7 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useState, forwardRef } from 'react';
 import Button from '../../components/Button';
-import { clearAllSavings } from '../../store/savingsStore';
+
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 LocaleConfig.locales.pl = {
@@ -151,7 +151,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         addSaving({ id, promotion: Number(promotion), date, category });
         clearForm();
         Alert.alert('Sukces', 'Oszczędność została zapisana pomyślnie!');
-        // router.push('/');
+        (navigation as any).navigate('Home');
       } catch (error) {
         console.error('Błąd podczas zapisywania danych:', error);
         Alert.alert(
@@ -244,7 +244,6 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           title="Anuluj"
           onPress={() => (navigation as any).navigate('Home')}
         />
-        <Button title="USUŃ HISTORIĘ" width={150} onPress={clearAllSavings} />
       </View>
     </View>
   );

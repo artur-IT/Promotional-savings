@@ -3,7 +3,9 @@ import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Top from '../../components/Top';
 import { useRef, useState, useEffect } from 'react';
 import { Picker } from '@react-native-picker/picker';
+import { clearAllSavings } from '../../store/savingsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import Button from '../../components/Button';
 
 export default function HistorySavings() {
   const { allSavings } = useSavingsStore();
@@ -24,7 +26,6 @@ export default function HistorySavings() {
       ];
 
       // Sortowanie lat malejąco (od najnowszego)
-      // years.sort((a, b) => parseInt(b) - parseInt(a));
       years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
 
       setAvailableYears(years);
@@ -32,7 +33,6 @@ export default function HistorySavings() {
   }, [allSavings]);
 
   const handleYearChange = (year: string) => {
-    // Animacja przejścia
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 150,
@@ -61,12 +61,16 @@ export default function HistorySavings() {
             selectedValue={selectYear}
             onValueChange={value => handleYearChange(value)}
           >
-            <Picker.Item label="Lata" value="" />
+            <Picker.Item label="Rok" />
             {availableYears.map(year => (
               <Picker.Item key={year} label={year} value={year} />
             ))}
           </Picker>
         </View>
+      </View>
+
+      <View style={styles.deleteButton}>
+        <Button title="USUŃ" width={70} onPress={clearAllSavings} />
       </View>
 
       <Animated.View style={{ opacity: fadeAnim }}>
@@ -105,5 +109,8 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 4,
+  },
+  deleteButton: {
+    marginLeft: 15,
   },
 });

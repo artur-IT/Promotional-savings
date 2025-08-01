@@ -1,97 +1,166 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 💰 Promocyjne Oszczędności
 
-# Getting Started
+Aplikacja mobilna React Native do śledzenia oszczędności z promocji i zarządzania celami finansowymi.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 📱 O aplikacji
 
-## Step 1: Start Metro
+**Promocyjne Oszczędności** to intuicyjna aplikacja mobilna, która pomaga użytkownikom śledzić pieniądze zaoszczędzone dzięki promocjom, rabatom i okazjom. Aplikacja umożliwia ustawianie celów finansowych i monitorowanie postępów w ich realizacji.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### ✨ Główne funkcjonalności
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **📊 Śledzenie oszczędności** - Dodawanie i kategoryzowanie zaoszczędzonych kwot
+- **🎯 Zarządzanie celami** - Ustawianie i monitorowanie celów finansowych
+- **📈 Statystyki** - Przegląd oszczędności miesięcznych i rocznych
+- **📅 Historia** - Pełna historia oszczędności z kalendarzem
+- **🏆 Historia celów** - Przegląd wszystkich realizowanych celów
+- **💾 Lokalne przechowywanie** - Dane zapisywane lokalnie na urządzeniu
 
-```sh
-# Using npm
-npm start
+### 🏗️ Architektura aplikacji
 
-# OR using Yarn
-yarn start
+#### Ekrany (Screens)
+
+- **Home** - Ekran główny z podsumowaniem i nawigacją
+- **AddSaving** - Dodawanie nowych oszczędności
+- **Goal** - Zarządzanie celami finansowymi
+- **HistorySavings** - Historia wszystkich oszczędności
+- **HistoryGoals** - Historia celów finansowych
+
+#### Zarządzanie stanem
+
+- **Zustand** - Główny store dla oszczędności
+- **MMKV** - Szybkie, lokalne przechowywanie danych
+- **Persist middleware** - Automatyczne zapisywanie stanu
+
+#### Komponenty
+
+- **Komponenty UI** - Przyciski, formularze, wykresy postępu
+- **Komponenty biznesowe** - Logika związana z oszczędnościami i celami
+
+## 🛠️ Technologie
+
+- **React Native 0.80.0** - Framework mobilny
+- **TypeScript** - Typowanie statyczne
+- **React Navigation** - Nawigacja między ekranami
+- **Zustand** - Zarządzanie stanem aplikacji
+- **MMKV** - Szybkie przechowywanie danych
+- **React Native Calendars** - Komponenty kalendarza
+- **React Native Progress** - Paski postępu
+- **Date-fns** - Manipulacja datami
+
+## 🚀 Instalacja i uruchomienie
+
+### Wymagania wstępne
+
+Upewnij się, że masz skonfigurowane środowisko React Native zgodnie z [oficjalnym przewodnikiem](https://reactnative.dev/docs/set-up-your-environment).
+
+### Instalacja
+
+1. **Sklonuj repozytorium**
+
+```bash
+git clone https://github.com/artur-IT/Promotional-savings.git
+cd Promotional-savings
 ```
 
-## Step 2: Build and run your app
+2. **Zainstaluj zależności** - npm install
+3. **Uruchom Metro bundler** - npm start
+4. **Uruchom aplikację na Androidzie** - npm run android
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 📱 Uruchamianie na urządzeniu
 
-### Android
+- **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera lub użyj emulatora Android
 
-```sh
-# Using npm
-npm run android
+## 📂 Struktura projektu
 
-# OR using Yarn
-yarn android
+```
+├── screens/                 # Ekrany aplikacji
+│   ├── Home/                # Ekran główny
+│   ├── AddSaving/           # Dodawanie oszczędności
+│   ├── Goal/                # Zarządzanie celami
+│   ├── HistorySavings/      # Historia oszczędności
+│   └── HistoryGoals/        # Historia celów
+├── components/              # Komponenty wielokrotnego użytku
+│   ├── AddSaving/           # Komponenty dodawania oszczędności
+│   ├── Goal/                # Komponenty celów
+│   ├── Home/                # Komponenty ekranu głównego
+│   └── HistorySaving/       # Komponenty historii
+├── store/                   # Zarządzanie stanem
+│   ├── useSavingsStore_Zustand.ts  # Store oszczędności
+│   ├── savingsStore.ts      # Dodatkowy store
+│   └── goalsStore.ts        # Store celów
+├── constants/               # Stałe aplikacji
+│   ├── colors.ts            # Paleta kolorów
+│   └── dataTypes.ts         # Typy danych
+├── utils/                   # Narzędzia pomocnicze
+│   └── storage.ts           # Konfiguracja MMKV
+├── assets/                  # Zasoby statyczne
+│   ├── fonts/               # Czcionki
+│   └── images/              # Obrazy i ikony
+└── types/                   # Definicje typów TypeScript
 ```
 
-### iOS
+## 🎨 Funkcjonalności szczegółowe
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### Dodawanie oszczędności
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+- Wprowadzanie kwoty zaoszczędzonej
+- Wybór kategorii oszczędności
+- Automatyczne zapisywanie z datą
 
-```sh
-bundle install
-```
+### Cele finansowe
 
-Then, and every time you update your native dependencies, run:
+- Ustawianie docelowej kwoty
+- Śledzenie postępu w czasie rzeczywistym
+- Wizualizacja za pomocą pasków postępu
+- Historia zakończonych celów
 
-```sh
-bundle exec pod install
-```
+### Statystyki i raporty
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+- Podsumowanie miesięczne i roczne
+- Ostatnio dodane oszczędności
+- Wizualne wykresy postępu
 
-```sh
-# Using npm
-npm run ios
+### Przechowywanie danych
 
-# OR using Yarn
-yarn ios
-```
+- Wszystkie dane przechowywane lokalnie
+- Szybki dostęp dzięki MMKV
+- Automatyczne przywracanie stanu aplikacji
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 🔧 Rozwój aplikacji
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Stylowanie
 
-## Step 3: Modify your app
+- Kolory zdefiniowane w `constants/colors.ts`
+- Responsywny design dostosowany do różnych rozmiarów ekranów
+- Spójny system designu w całej aplikacji
 
-Now that you have successfully run the app, let's make changes!
+## 🐛 Rozwiązywanie problemów
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### Typowe problemy
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+1. **Metro bundler nie startuje**
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+   ```bash
+   npx react-native start --reset-cache
+   ```
 
-## Congratulations! :tada:
+2. **Problemy z zależnościami**
 
-You've successfully run and modified your React Native App. :partying_face:
+   ```bash
+   rm -rf node_modules
+   npm install
+   ```
 
-### Now what?
+3. **Problemy z Androidem**
+   ```bash
+   cd android
+   ./gradlew clean
+   cd ..
+   npm run android
+   ```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+Więcej informacji w [oficjalnej dokumentacji troubleshooting](https://reactnative.dev/docs/troubleshooting).
 
-# Troubleshooting
+---
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+_Aplikacja stworzona z myślą o osobach, które chcą świadomie zarządzać swoimi oszczędnościami i osiągać cele finansowe._
