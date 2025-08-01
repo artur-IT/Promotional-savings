@@ -3,6 +3,7 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import colors from '../constants/colors';
 
 interface ButtonProps {
+  bgColor?: string;
   title: string;
   width?: number;
   height?: number;
@@ -11,6 +12,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({
+  bgColor = colors.background.blue,
   title,
   onPress,
   width = 90,
@@ -30,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
       textAlign: 'center',
       marginHorizontal: 5,
       marginVertical: 5,
-      backgroundColor: colors.background.button_other,
+      backgroundColor: colors.background.blue,
     },
 
     text: {
@@ -47,7 +49,10 @@ const Button: React.FC<ButtonProps> = ({
   });
 
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.button, { backgroundColor: bgColor }]}
+      onPress={onPress}
+    >
       <Text style={styles.text}>{title}</Text>
       {/* <Text style={styles.text2}>{title}</Text> */}
     </TouchableOpacity>

@@ -23,7 +23,6 @@ export const addGoal = (goalData: GoalInput): Goal => {
     goal: goalData.goal,
     targetAmount: goalData.targetAmount,
     startDate: currentDate,
-    endDate: undefined, // Będzie ustawione po osiągnięciu celu
   };
 
   const updatedGoals = [newGoal];
