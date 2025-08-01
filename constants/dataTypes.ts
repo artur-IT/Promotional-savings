@@ -13,5 +13,10 @@ export interface Goal {
   endDate?: string;
 }
 
-export const SAVINGS_KEY = "savings";
-export const GOAL_KEY = "goal";
+export interface AchievedGoal extends Goal {
+  totalPromotionSum: number;
+  achievedDate: string;
+}
+
+export const SAVINGS_KEY = 'savings';
+export const GOAL_KEY = 'goal';

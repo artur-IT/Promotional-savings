@@ -2,10 +2,23 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import { getAllGoals } from '../../store/goalsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { useEffect } from 'react';
 
 export default function GoalProgress() {
   const goal = getAllGoals();
-  const { allSavings } = useSavingsStore();
+  const { allSavings, checkAndAchieveGoal } = useSavingsStore();
+
+  const totalPromotionSum =
+    allSavings && allSavings.length > 0
+      ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0)
+      : 0;
+
+  // Automatyczne sprawdzanie i zapisywanie osiągniętego celu
+  useEffect(() => {
+    if (goal[0] && totalPromotionSum > 0) {
+      checkAndAchieveGoal(goal[0], totalPromotionSum);
+    }
+  }, [totalPromotionSum, goal, checkAndAchieveGoal]);
 
   if (!goal || goal.length === 0) {
     return (
@@ -14,11 +27,6 @@ export default function GoalProgress() {
       </View>
     );
   }
-
-  const totalPromotionSum =
-    allSavings && allSavings.length > 0
-      ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0)
-      : 0;
 
   const bigName = goal[0]?.goal || 'Cel';
   const goalAmount = goal[0]?.targetAmount || 0;
