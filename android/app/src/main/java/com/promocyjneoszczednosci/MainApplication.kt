@@ -1,4 +1,4 @@
-package com.newrn
+package com.promocyjneoszczednosci
 
 import android.app.Application
 import com.facebook.react.PackageList

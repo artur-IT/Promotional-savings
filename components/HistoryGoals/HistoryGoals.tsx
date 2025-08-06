@@ -1,11 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import Button from '../Button';
 
 export default function HistoryGoalsComponent() {
-  const { getAchivedGoals } = useSavingsStore();
+  const { getAchivedGoals, deleteAllGoals: clearAllGoals } = useSavingsStore();
 
   return (
     <View style={styles.container}>
+      <Button title="Usuń" bgColor="red" onPress={() => clearAllGoals()} />
+
       <Text>History Goals COMPONENT</Text>
       <Text>Cele osiągnięte:</Text>
       {getAchivedGoals().map((item, index) => (

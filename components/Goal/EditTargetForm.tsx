@@ -2,8 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import Button from '../../components/Button';
 import colors from '../../constants/colors';
-import { addGoal, getAllGoals } from '../../store/goalsStore';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useState } from 'react';
+// import { Goal } from '../../constants/dataTypes';
 
 export default function EditTargetForm({
   onFormClose,
@@ -11,14 +12,13 @@ export default function EditTargetForm({
   onFormClose: () => void;
 }) {
   const navigation = useNavigation();
-
-  const goal = getAllGoals();
-  const bigName = goal[0]?.goal || '';
-  const goalAmount = goal[0]?.targetAmount || '';
+  const { getActualGoal, addNewGoal } = useSavingsStore();
+  const goal = getActualGoal();
+  const bigName = goal?.goal || '';
+  const goalAmount = goal?.targetAmount || '';
 
   const [goalName, setGoalName] = useState(bigName);
   const [targetAmount, setTargetAmount] = useState(goalAmount);
-
   const [errors, setErrors] = useState<{
     goalName?: string;
     goalValue?: string;
@@ -53,10 +53,16 @@ export default function EditTargetForm({
     setErrors(newErrors);
 
     if (isValid) {
-      addGoal({
+      const newGoal = {
+        id: Date.now(),
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
-      });
+        startDate: new Date().toLocaleString(),
+        totalPromotionSum: 0,
+      };
+      addNewGoal(newGoal);
+      // console.log('Dodano nowy cel:', newGoal);
+      // console.log('Wszystkie cele po dodaniu:', getAllGoals());
       Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
         {
           text: 'OK',

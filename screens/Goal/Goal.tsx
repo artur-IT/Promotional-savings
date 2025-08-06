@@ -6,12 +6,12 @@ import EditTargetForm from '../../components/Goal/EditTargetForm';
 import GoalProgress from '../../components/Goal/GoalProgress';
 import Button from '../../components/Button';
 import colors from '../../constants/colors';
-import { clearAllGoals, getAllGoals } from '../../store/goalsStore';
+import deleteActualGoal from '../../store/useSavingsStore_Zustand';
+import getActualGoal from '../../store/useSavingsStore_Zustand';
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const goal = getAllGoals();
   const navigation = useNavigation();
 
   const addHandle = () => {
@@ -33,7 +33,7 @@ export default function Goal() {
     }
   };
 
-  const cancelHandle = () => {
+  const deleteHandle = () => {
     Alert.alert(
       'Czy na pewno chcesz usunąć wszystkie cele?',
       'Usunięcie celu spowoduje usunięcie wszystkich zapisanych celów.',
@@ -44,7 +44,7 @@ export default function Goal() {
         },
         {
           text: 'Tak',
-          onPress: () => clearAllGoals(),
+          onPress: () => deleteActualGoal(),
         },
       ],
     );
@@ -62,10 +62,10 @@ export default function Goal() {
           <Text style={styles.title}>Mój Cel </Text>
           <Button title="Nowy" onPress={addHandle} />
           <Button
-            title={`${goal.length !== 0 ? 'Edytuj' : 'Dodaj'}`}
+            title={`${getActualGoal() !== null ? 'Edytuj' : 'Dodaj'}`}
             onPress={addHandle}
           />
-          <Button title="Usuń" height={35} onPress={cancelHandle} />
+          <Button title="Usuń" height={35} onPress={() => deleteHandle()} />
           <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
 

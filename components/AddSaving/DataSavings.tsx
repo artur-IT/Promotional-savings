@@ -60,21 +60,24 @@ LocaleConfig.defaultLocale = 'pl';
 
 // Używam forwardRef, aby umożliwić przekazanie referencji do tego komponentu
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
-  const addSaving = useSavingsStore(state => state.addSaving);
+  const addNewGoal = useSavingsStore(state => state.addNewGoal);
   const navigation = useNavigation();
 
-  const [promotion, setPromotion] = useState<number | string>('');
+  const [promotion, setPromotion] = useState<number>();
   const [category, setSelectedCategory] = useState<string>('');
   const [date, setSelectedDate] = useState<string>('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [errors, setErrors] = useState<{
-    promotion?: string;
+    promotion?: number;
     date?: string;
     category?: string;
   }>({});
 
   const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
-  const id = String(Math.floor(Math.random() * 100000));
+  // const id = String(Math.floor(Math.random() * 100000));
+
+  const generateNumericId = () => Math.floor(1000000 + Math.random() * 9000000);
+  const id = generateNumericId();
 
   const handlePromotionalChange = (value: string) => {
     setPromotion(Number(value));
@@ -141,14 +144,30 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
       isValid = false;
     }
 
-    setErrors(newErrors);
+    // Ustawiamy błędy, upewniając się, że typy się zgadzają
+    setErrors(
+      newErrors as {
+        promotion?: number;
+        date?: string;
+        category?: string;
+      },
+    );
     return isValid;
   };
 
   const handleSave = () => {
     if (validateForm()) {
       try {
-        addSaving({ id, promotion: Number(promotion), date, category });
+        addNewGoal({
+          id,
+          startDate: date,
+          savings: {
+            id: generateNumericId(),
+            promotion: promotion || 0,
+            date,
+            category,
+          },
+        });
         clearForm();
         Alert.alert('Sukces', 'Oszczędność została zapisana pomyślnie!');
         (navigation as any).navigate('Home');
@@ -171,9 +190,9 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           <TextInput
             style={[styles.input, errors.promotion ? styles.inputError : null]}
             keyboardType="numeric"
-            value={promotion.toString() || ''}
+            value={promotion?.toString() || ''}
             onChangeText={handlePromotionalChange}
-            onFocus={() => setPromotion('')}
+            onFocus={() => setPromotion(undefined)}
           />
           {errors.promotion && (
             <Text style={styles.errorText}>{errors.promotion}</Text>

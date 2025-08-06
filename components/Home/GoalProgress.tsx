@@ -1,13 +1,12 @@
-import { getAllGoals } from '../../store/goalsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 
 export default function GoalProgress() {
-  const goal = getAllGoals();
-  const { allSavings } = useSavingsStore();
+  const { getActualGoal } = useSavingsStore();
+  const goal = getActualGoal();
 
-  if (!goal || goal.length === 0) {
+  if (!goal) {
     return (
       <View style={styles.container}>
         <Text style={styles.noDataText}>Brak zdefiniowanych celów</Text>
@@ -15,17 +14,9 @@ export default function GoalProgress() {
     );
   }
 
-  const totalPromotionSum =
-    allSavings && allSavings.length > 0
-      ? allSavings.reduce(
-          (sum: number, saving: { promotion?: number }) =>
-            sum + (saving.promotion || 0),
-          0,
-        )
-      : 0;
-
-  const bigName = goal[0]?.goal || 'Cel';
-  const goalAmount = goal[0]?.targetAmount || 0;
+  const bigName = goal?.goal || 'Cel';
+  const goalAmount = goal?.targetAmount || 0;
+  const totalPromotionSum = goal?.totalPromotionSum || 0;
 
   // Zabezpieczenie przed dzieleniem przez zero
   const progressPercent =

@@ -3,34 +3,40 @@ import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Top from '../../components/Top';
 import { useRef, useState, useEffect } from 'react';
 import { Picker } from '@react-native-picker/picker';
-import { clearAllSavings } from '../../store/savingsStore';
+// import { clearAllSavings } from '../../store/savingsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
-import Button from '../../components/Button';
+// import Button from '../../components/Button';
 
 export default function HistorySavings() {
-  const { allSavings } = useSavingsStore();
+  const { allGoals } = useSavingsStore();
   const [selectYear, setSelectYear] = useState('');
   const [availableYears, setAvailableYears] = useState<string[]>([]);
   const fadeAnim = useRef(new Animated.Value(1)).current; // Zaczynamy od 1, aby kalendarz był widoczny
 
   useEffect(() => {
-    if (allSavings && allSavings.length > 0) {
+    if (allGoals && allGoals.length > 0) {
       // Wyciągnij lata z danych i usuń duplikaty
       const years = [
         ...new Set(
-          allSavings.map(saving => {
-            const date = new Date(saving.date);
-            return date.getFullYear().toString();
-          }),
+          allGoals
+            .map(saving => {
+              // Sprawdzamy czy saving ma właściwość 'date'
+              if ('date' in saving && saving.date) {
+                const date = new Date((saving as any).date);
+                return date.getFullYear().toString();
+              }
+              return '';
+            })
+            .filter(year => year !== ''),
         ),
       ];
-
-      // Sortowanie lat malejąco (od najnowszego)
-      years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
-
-      setAvailableYears(years);
+      // Najpierw sortujemy lata malejąco (od najnowszego)
+      const sortedYears = years.sort(
+        (a: string, b: string) => parseInt(b, 10) - parseInt(a, 10),
+      );
+      setAvailableYears(sortedYears);
     }
-  }, [allSavings]);
+  }, [allGoals]);
 
   const handleYearChange = (year: string) => {
     Animated.timing(fadeAnim, {
@@ -68,10 +74,10 @@ export default function HistorySavings() {
           </Picker>
         </View>
       </View>
-
+      {/* 
       <View style={styles.deleteButton}>
         <Button title="USUŃ" width={70} onPress={clearAllSavings} />
-      </View>
+      </View> */}
 
       <Animated.View style={{ opacity: fadeAnim }}>
         <HistoryCalendar selectedYear={selectYear} />

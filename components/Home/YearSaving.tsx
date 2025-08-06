@@ -3,32 +3,30 @@ import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function YearSaving() {
-  const { getTotalSavings } = useSavingsStore();
-  const { allSavings } = useSavingsStore();
+  // const { getTotalSavings } = useSavingsStore();
   const [availableYears, setAvailableYears] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (allSavings && allSavings.length > 0) {
-      // Wyciągnij lata z danych i usuń duplikaty
-      const years = [
-        ...new Set(
-          allSavings.map(saving => {
-            const date = new Date(saving.date);
-            return date.getFullYear().toString();
-          }),
-        ),
-      ];
+  // useEffect(() => {
+  //   if (allSavings && allSavings.length > 0) {
+  //     const years = [
+  //       ...new Set(
+  //         allSavings.map(saving => {
+  //           const date = new Date(saving.date);
+  //           return date.getFullYear().toString();
+  //         }),
+  //       ),
+  //     ];
 
-      years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
-      setAvailableYears(years);
-    }
-  }, [allSavings]);
+  //     years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+  //     setAvailableYears(years);
+  //   }
+  // }, [allSavings]);
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.insideText}>
-          <Text style={styles.yearValue}>+{getTotalSavings()} zł</Text>
+          {/* <Text style={styles.yearValue}>+{getTotalSavings()} zł</Text> */}
           <Text style={styles.infoText}>Zaoszczędzone</Text>
           <Text style={styles.year}>{availableYears[0]}</Text>
         </View>

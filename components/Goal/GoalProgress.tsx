@@ -1,26 +1,24 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
-import { getAllGoals } from '../../store/goalsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
-import { useEffect } from 'react';
 
 export default function GoalProgress() {
-  const goal = getAllGoals();
-  const { allSavings, checkAndAchieveGoal } = useSavingsStore();
+  const { getActualGoal } = useSavingsStore();
+  const goal = getActualGoal();
 
-  const totalPromotionSum =
-    allSavings && allSavings.length > 0
-      ? allSavings.reduce((sum, saving) => sum + (saving.promotion || 0), 0)
-      : 0;
+  // Sprawdzamy, czy goal to tablica. Jeśli tak, sumujemy totalPromotionSum dla każdego elementu.
+  let totalPromotionSum = 0;
+  if (Array.isArray(goal)) {
+    totalPromotionSum = goal.reduce(
+      (sum: number, goalItem: any) => sum + (goalItem.totalPromotionSum || 0),
+      0,
+    );
+  } else if (goal && typeof goal === 'object') {
+    // Jeśli goal to pojedynczy obiekt, bierzemy jego totalPromotionSum
+    totalPromotionSum = goal.totalPromotionSum || 0;
+  }
 
-  // Automatyczne sprawdzanie i zapisywanie osiągniętego celu
-  useEffect(() => {
-    if (goal[0] && totalPromotionSum > 0) {
-      checkAndAchieveGoal(goal[0], totalPromotionSum);
-    }
-  }, [totalPromotionSum, goal, checkAndAchieveGoal]);
-
-  if (!goal || goal.length === 0) {
+  if (!goal) {
     return (
       <View style={styles.container}>
         <Text style={styles.noDataText}>Brak zdefiniowanych celów</Text>
@@ -28,8 +26,8 @@ export default function GoalProgress() {
     );
   }
 
-  const bigName = goal[0]?.goal || 'Cel';
-  const goalAmount = goal[0]?.targetAmount || 0;
+  const bigName = goal?.goal || 'Cel';
+  const goalAmount = goal?.targetAmount || 0;
 
   const progressPercent =
     goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
