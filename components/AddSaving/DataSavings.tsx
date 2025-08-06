@@ -12,7 +12,6 @@ import { Picker } from '@react-native-picker/picker';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useState, forwardRef } from 'react';
 import Button from '../../components/Button';
-
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 LocaleConfig.locales.pl = {
@@ -74,10 +73,6 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   }>({});
 
   const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
-  // const id = String(Math.floor(Math.random() * 100000));
-
-  const generateNumericId = () => Math.floor(1000000 + Math.random() * 9000000);
-  const id = generateNumericId();
 
   const handlePromotionalChange = (value: string) => {
     setPromotion(Number(value));
@@ -159,10 +154,10 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
     if (validateForm()) {
       try {
         addNewGoal({
-          id,
+          id: Date.now(),
           startDate: date,
           savings: {
-            id: generateNumericId(),
+            id: Date.now(),
             promotion: promotion || 0,
             date,
             category,

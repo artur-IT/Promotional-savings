@@ -4,7 +4,6 @@ import Button from '../../components/Button';
 import colors from '../../constants/colors';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useState } from 'react';
-// import { Goal } from '../../constants/dataTypes';
 
 export default function EditTargetForm({
   onFormClose,
@@ -12,7 +11,8 @@ export default function EditTargetForm({
   onFormClose: () => void;
 }) {
   const navigation = useNavigation();
-  const { getActualGoal, addNewGoal } = useSavingsStore();
+  const { getActualGoal, addNewGoal, getAllGoals, todayDate } =
+    useSavingsStore();
   const goal = getActualGoal();
   const bigName = goal?.goal || '';
   const goalAmount = goal?.targetAmount || '';
@@ -57,12 +57,11 @@ export default function EditTargetForm({
         id: Date.now(),
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
-        startDate: new Date().toLocaleString(),
-        totalPromotionSum: 0,
+        startDate: todayDate.toString(),
       };
       addNewGoal(newGoal);
       // console.log('Dodano nowy cel:', newGoal);
-      // console.log('Wszystkie cele po dodaniu:', getAllGoals());
+      console.log('Wszystkie cele po dodaniu:', getAllGoals());
       Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
         {
           text: 'OK',

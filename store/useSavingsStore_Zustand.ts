@@ -1,13 +1,7 @@
 import { storage } from '../utils/storage';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import {
-  Goal,
-  // AchievedGoal,
-  // Saving,
-  // SAVINGS_KEY,
-  GOAL_KEY,
-} from '../constants/dataTypes';
+import { Goal, GOAL_KEY } from '../constants/dataTypes';
 
 // Adapter dla MMKV do użycia z Zustand persist
 const mmkvStorage = {
@@ -26,16 +20,10 @@ const mmkvStorage = {
 };
 
 interface SavingsState {
-  // allSavings: Goal[];
+  todayDate: string;
   allGoals: Goal[];
   goal?: string;
   targetAmount?: number;
-  // achivedGoals: AchievedGoal[];
-  // addSaving: (saving: Goal) => void;
-  // deleteSaving: (id: number) => void;
-  // getTotalSavings: () => number;
-  // getSavingsByCategory: (category: string) => Saving[];
-  // clearAllSavings: () => void;
   addNewGoal: (goal: Goal) => void;
   getActualGoal: () => Goal | null;
   deleteActualGoal: () => void;
@@ -79,6 +67,8 @@ const useSavingsStore = create<SavingsState>()(
       deleteAllGoals: () => {
         set({ allGoals: [] });
       },
+
+      todayDate: new Date().toISOString().split('T')[0].toString(), // Format YYYY-MM-DD
     }),
     {
       name: GOAL_KEY,
