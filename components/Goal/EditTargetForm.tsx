@@ -11,7 +11,6 @@ interface TargetProps {
 }
 
 export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
-  console.log(editGoal);
   const navigation = useNavigation();
   const {
     getActualGoal,
@@ -42,8 +41,8 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
     } = {};
     let isValid = true;
 
-    if (!goalName.trim()) {
-      newErrors.goalName = 'Podaj cel ozczędzania';
+    if (!goalName?.trim()) {
+      newErrors.goalName = 'Podaj cel oszczędzania';
       isValid = false;
     }
 
@@ -67,17 +66,11 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
         startDate: todayDate,
       };
       editGoal
-        ? updateCurrentGoal(goalName, parseFloat(`${targetAmount}`))
+        ? updateCurrentGoal(goalName || '', parseFloat(`${targetAmount}`))
         : addNewGoal(newGoal);
-      // console.log('Dodano nowy cel:', newGoal);
-      console.log('Wszystkie cele po dodaniu:', getAllGoals());
-      Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
-        {
-          text: 'OK',
-          onPress: () => (navigation as any).navigate('Home'),
-        },
-      ]);
 
+      console.log('Wszystkie cele po dodaniu:', getAllGoals());
+      (navigation as any).navigate('Home');
       onFormClose();
     }
   };

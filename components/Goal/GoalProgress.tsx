@@ -21,7 +21,7 @@ export default function GoalProgress() {
   if (!goal) {
     return (
       <View style={styles.container}>
-        <Text style={styles.noDataText}>Brak zdefiniowanych celów</Text>
+        <Text style={styles.noDataText}>Musisz mieć cel oszczędzania!</Text>
       </View>
     );
   }
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   noDataText: {
+    marginTop: 20,
     fontSize: 18,
     color: '#666',
     textAlign: 'center',
