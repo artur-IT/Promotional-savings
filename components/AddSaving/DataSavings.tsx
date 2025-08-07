@@ -59,7 +59,7 @@ LocaleConfig.defaultLocale = 'pl';
 
 // Używam forwardRef, aby umożliwić przekazanie referencji do tego komponentu
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
-  const addNewGoal = useSavingsStore(state => state.addNewGoal);
+  const { updateCurrentGoal, getActualGoal, todayDate } = useSavingsStore();
   const navigation = useNavigation();
 
   const [promotion, setPromotion] = useState<number>();
@@ -153,23 +153,19 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   const handleSave = () => {
     if (validateForm()) {
       try {
-        addNewGoal({
+        const actualGoal = getActualGoal();
+        updateCurrentGoal(actualGoal?.goal, actualGoal?.targetAmount, {
           id: Date.now(),
-          startDate: date,
-          savings: {
-            id: Date.now(),
-            promotion: promotion || 0,
-            date,
-            category,
-          },
+          promotion: promotion ?? 0,
+          date: todayDate,
+          category: category,
         });
         clearForm();
-        Alert.alert('Sukces', 'Oszczędność została zapisana pomyślnie!');
         (navigation as any).navigate('Home');
+        console.log('Aktualny cel:', getActualGoal());
       } catch (error) {
         console.error('Błąd podczas zapisywania danych:', error);
         Alert.alert(
-          'Błąd',
           'Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.',
         );
       }
@@ -187,7 +183,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
             keyboardType="numeric"
             value={promotion?.toString() || ''}
             onChangeText={handlePromotionalChange}
-            onFocus={() => setPromotion(undefined)}
+            onFocus={() => setPromotion(promotion)}
           />
           {errors.promotion && (
             <Text style={styles.errorText}>{errors.promotion}</Text>

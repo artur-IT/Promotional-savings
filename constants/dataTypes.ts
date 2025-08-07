@@ -17,7 +17,7 @@ export interface Goal {
     promotion: number;
     date: string;
     category: string;
-  };
+  }[];
 }
 
 // export interface AchievedGoal extends Goal {

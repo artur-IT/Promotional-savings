@@ -64,6 +64,7 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
         startDate: todayDate,
+        savings: [],
       };
       editGoal
         ? updateCurrentGoal(goalName || '', parseFloat(`${targetAmount}`))

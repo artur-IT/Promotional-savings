@@ -29,7 +29,11 @@ interface SavingsState {
   deleteActualGoal: () => void;
   getAllGoals: () => Goal[];
   deleteAllGoals: () => void;
-  updateCurrentGoal: (newGoal: string, newTargetAmount: number) => void;
+  updateCurrentGoal: (
+    newGoal?: string,
+    newTargetAmount?: number,
+    saving?: { id: number; promotion: number; date: string; category: string },
+  ) => void;
 }
 
 const useSavingsStore = create<SavingsState>()(
@@ -69,21 +73,31 @@ const useSavingsStore = create<SavingsState>()(
         set({ allGoals: [] });
       },
 
-      updateCurrentGoal: (newGoal: string, newTargetAmount: number) => {
+      updateCurrentGoal: (
+        newGoal?: string,
+        newTargetAmount?: number,
+        saving?: {
+          id: number;
+          promotion: number;
+          date: string;
+          category: string;
+        },
+      ) => {
         set(state => {
           const currentGoals = [...state.allGoals];
           if (currentGoals.length > 0) {
-            // Aktualizuj ostatni cel (aktualny cel)
             const lastGoalIndex = currentGoals.length - 1;
             currentGoals[lastGoalIndex] = {
               ...currentGoals[lastGoalIndex],
-              goal: newGoal,
-              targetAmount: newTargetAmount,
+              ...(newGoal !== undefined ? { goal: newGoal } : {}),
+              ...(newTargetAmount !== undefined
+                ? { targetAmount: newTargetAmount }
+                : {}),
+              savings: [
+                ...(currentGoals[lastGoalIndex].savings || []),
+                ...(saving ? [saving] : []),
+              ],
             };
-            console.log('Zaktualizowano aktualny cel:', {
-              newGoal,
-              newTargetAmount,
-            });
           }
           return { allGoals: currentGoals };
         });

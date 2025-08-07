@@ -5,12 +5,14 @@ import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Home/GoalProgress';
 import Button from '../../components/Button';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 const TopImage = require('../../assets/images/top_bg.gif');
 const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
 export default function HomeWithGoal() {
   const navigation = useNavigation();
+  const { getActualGoal } = useSavingsStore();
 
   return (
     <View style={styles.container}>
@@ -42,7 +44,7 @@ export default function HomeWithGoal() {
         />
 
         <Button
-          title="Dodaj / Edytuj Cel"
+          title={`${!getActualGoal() ? 'Dodaj Cel' : 'Edytuj Cel'}`}
           onPress={() => (navigation as any).navigate('Goal')}
           width={190}
           height={60}
