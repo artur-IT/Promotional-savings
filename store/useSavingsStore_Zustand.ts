@@ -29,6 +29,7 @@ interface SavingsState {
   deleteActualGoal: () => void;
   getAllGoals: () => Goal[];
   deleteAllGoals: () => void;
+  updateCurrentGoal: (newGoal: string, newTargetAmount: number) => void;
 }
 
 const useSavingsStore = create<SavingsState>()(
@@ -66,6 +67,26 @@ const useSavingsStore = create<SavingsState>()(
 
       deleteAllGoals: () => {
         set({ allGoals: [] });
+      },
+
+      updateCurrentGoal: (newGoal: string, newTargetAmount: number) => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+          if (currentGoals.length > 0) {
+            // Aktualizuj ostatni cel (aktualny cel)
+            const lastGoalIndex = currentGoals.length - 1;
+            currentGoals[lastGoalIndex] = {
+              ...currentGoals[lastGoalIndex],
+              goal: newGoal,
+              targetAmount: newTargetAmount,
+            };
+            console.log('Zaktualizowano aktualny cel:', {
+              newGoal,
+              newTargetAmount,
+            });
+          }
+          return { allGoals: currentGoals };
+        });
       },
 
       todayDate: new Date().toISOString().split('T')[0].toString(), // Format YYYY-MM-DD

@@ -6,15 +6,18 @@ import EditTargetForm from '../../components/Goal/EditTargetForm';
 import GoalProgress from '../../components/Goal/GoalProgress';
 import Button from '../../components/Button';
 import colors from '../../constants/colors';
-import deleteActualGoal from '../../store/useSavingsStore_Zustand';
-import getActualGoal from '../../store/useSavingsStore_Zustand';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
+  const { getActualGoal, deleteActualGoal } = useSavingsStore();
+  const [editMode, setEditMode] = useState(false);
 
-  const addHandle = () => {
+  const addHandle = (buttonTitle: string) => {
+    buttonTitle === 'edit' ? setEditMode(true) : setEditMode(false);
+
     if (showForm) {
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -25,6 +28,7 @@ export default function Goal() {
       });
     } else {
       setShowForm(true);
+
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 500,
@@ -34,20 +38,16 @@ export default function Goal() {
   };
 
   const deleteHandle = () => {
-    Alert.alert(
-      'Czy na pewno chcesz usunąć wszystkie cele?',
-      'Usunięcie celu spowoduje usunięcie wszystkich zapisanych celów.',
-      [
-        {
-          text: 'Nie',
-          style: 'cancel',
-        },
-        {
-          text: 'Tak',
-          onPress: () => deleteActualGoal(),
-        },
-      ],
-    );
+    Alert.alert('Czy na pewno chcesz usunąć obecny cel?', '', [
+      {
+        text: 'Nie',
+        style: 'cancel',
+      },
+      {
+        text: 'Tak',
+        onPress: () => deleteActualGoal(),
+      },
+    ]);
   };
 
   const historylHandle = () => {
@@ -60,19 +60,24 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
-          <Button title="Nowy" onPress={addHandle} />
-          <Button
-            title={`${getActualGoal() !== null ? 'Edytuj' : 'Dodaj'}`}
-            onPress={addHandle}
-          />
-          <Button title="Usuń" height={35} onPress={() => deleteHandle()} />
+          <Button title="Nowy" onPress={() => addHandle('new')} />
+
+          {getActualGoal() && (
+            <>
+              <Button title="Edytuj" onPress={() => addHandle('edit')} />
+              <Button title="Usuń" height={35} onPress={() => deleteHandle()} />
+            </>
+          )}
           <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
 
         {showForm && (
           <View style={styles.showForm}>
             <Animated.View style={{ opacity: fadeAnim }}>
-              <EditTargetForm onFormClose={() => setShowForm(false)} />
+              <EditTargetForm
+                onFormClose={() => setShowForm(false)}
+                editGoal={editMode}
+              />
             </Animated.View>
           </View>
         )}

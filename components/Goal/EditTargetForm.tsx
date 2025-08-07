@@ -5,17 +5,24 @@ import colors from '../../constants/colors';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useState } from 'react';
 
-export default function EditTargetForm({
-  onFormClose,
-}: {
+interface TargetProps {
   onFormClose: () => void;
-}) {
+  editGoal: boolean;
+}
+
+export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
+  console.log(editGoal);
   const navigation = useNavigation();
-  const { getActualGoal, addNewGoal, getAllGoals, todayDate } =
-    useSavingsStore();
+  const {
+    getActualGoal,
+    addNewGoal,
+    updateCurrentGoal,
+    getAllGoals,
+    todayDate,
+  } = useSavingsStore();
   const goal = getActualGoal();
-  const bigName = goal?.goal || '';
-  const goalAmount = goal?.targetAmount || '';
+  const bigName = editGoal ? goal?.goal : '';
+  const goalAmount = editGoal ? goal?.targetAmount : '';
 
   const [goalName, setGoalName] = useState(bigName);
   const [targetAmount, setTargetAmount] = useState(goalAmount);
@@ -57,9 +64,11 @@ export default function EditTargetForm({
         id: Date.now(),
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
-        startDate: todayDate.toString(),
+        startDate: todayDate,
       };
-      addNewGoal(newGoal);
+      editGoal
+        ? updateCurrentGoal(goalName, parseFloat(`${targetAmount}`))
+        : addNewGoal(newGoal);
       // console.log('Dodano nowy cel:', newGoal);
       console.log('Wszystkie cele po dodaniu:', getAllGoals());
       Alert.alert('Sukces', 'Cel został dodany pomyślnie', [
@@ -68,6 +77,7 @@ export default function EditTargetForm({
           onPress: () => (navigation as any).navigate('Home'),
         },
       ]);
+
       onFormClose();
     }
   };
@@ -120,7 +130,7 @@ export default function EditTargetForm({
 
       {/* Buttons */}
       <View style={styles.buttonsContainer}>
-        <Button title="Zapisz" onPress={saveHandle} />
+        <Button title={editGoal ? 'Popraw' : 'Zapisz'} onPress={saveHandle} />
         <Button title="Anuluj" onPress={cancelHandle} />
       </View>
     </View>
