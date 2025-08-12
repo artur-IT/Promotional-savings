@@ -3,24 +3,29 @@ import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function YearSaving() {
-  // const { getTotalSavings } = useSavingsStore();
-  const [availableYears, setAvailableYears] = useState<string[]>([]);
+  const { getAllGoals } = useSavingsStore();
+  const [availableYears, setAvailableYears] = useState(getAllGoals());
+  const test = availableYears.map(item => {
+    console.log(item.savings?.map(item => console.log(item.date)));
+  });
+  console.log(test);
 
   // useEffect(() => {
-  //   if (allSavings && allSavings.length > 0) {
+  //   if (availableYears) {
   //     const years = [
   //       ...new Set(
-  //         allSavings.map(saving => {
-  //           const date = new Date(saving.date);
-  //           return date.getFullYear().toString();
+  //         availableYears.map(saving => {
+  //           console.log(saving);
+  //            const date = new Date(saving.date);
+  //            return date.getFullYear().toString();
   //         }),
   //       ),
   //     ];
 
-  //     years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
-  //     setAvailableYears(years);
+  //     // years.sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
+  //     // setAvailableYears(years);
   //   }
-  // }, [allSavings]);
+  // }, [getAllGoals]);
 
   return (
     <>
@@ -28,7 +33,7 @@ export default function YearSaving() {
         <View style={styles.insideText}>
           {/* <Text style={styles.yearValue}>+{getTotalSavings()} zł</Text> */}
           <Text style={styles.infoText}>Zaoszczędzone</Text>
-          <Text style={styles.year}>{availableYears[0]}</Text>
+          {/* <Text style={styles.year}>{availableYears[0]}</Text> */}
         </View>
       </View>
     </>

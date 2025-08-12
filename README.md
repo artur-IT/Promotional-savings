@@ -1,10 +1,10 @@
 # 💰 Promocyjne Oszczędności
 
-Aplikacja mobilna React Native do śledzenia oszczędności z promocji i zarządzania celem finansowym.
+Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem finansowym.
 
 ## 📱 O aplikacji
 
-**Promocyjne Oszczędności** to intuicyjna aplikacja mobilna, która pomaga użytkownikom śledzić pieniądze zaoszczędzone dzięki promocjom, rabatom i okazjom. Aplikacja umożliwia ustawianie celów finansowych i monitorowanie postępów w ich realizacji.
+**Promocyjne Oszczędności** to intuicyjna aplikacja mobilna, która pomaga użytkownikom śledzić pieniądze zaoszczędzone dzięki promocjom i okazjom. Aplikacja umożliwia ustawianie celów finansowych i monitorowanie postępów w ich realizacji.
 
 ### ✨ Główne funkcjonalności
 
@@ -21,7 +21,7 @@ Aplikacja mobilna React Native do śledzenia oszczędności z promocji i zarząd
 
 - **Home** - Ekran główny z podsumowaniem i nawigacją
 - **AddSaving** - Dodawanie nowych oszczędności
-- **Goal** - Zarządzanie celami finansowymi
+- **Goal** - Zarządzanie celem finansowym
 - **HistorySavings** - Historia wszystkich oszczędności
 - **HistoryGoals** - Historia celów finansowych
 
@@ -33,7 +33,7 @@ Aplikacja mobilna React Native do śledzenia oszczędności z promocji i zarząd
 
 #### Komponenty
 
-- **Komponenty UI** - Przyciski, formularze, wykresy postępu
+- **Komponenty UI** - Przyciski, formularze, pasek postępu
 - **Komponenty biznesowe** - Logika związana z oszczędnościami i celami
 
 ## 🛠️ Technologie
@@ -63,12 +63,11 @@ cd Promotional-savings
 ```
 
 2. **Zainstaluj zależności** - npm install
-3. **Uruchom Metro bundler** - npm start
-4. **Uruchom aplikację na Androidzie** - npm run android
+3. **Uruchom Metro bundler** - npx react-native run-android (Automatycznie uruchamia Metro w osobnym oknie node)
 
 ### 📱 Uruchamianie na urządzeniu
 
-- **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera lub użyj emulatora Android
+- **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera i użyj emulatora z Android Studio
 
 ## 📂 Struktura projektu
 
@@ -105,20 +104,20 @@ cd Promotional-savings
 
 - Wprowadzanie kwoty zaoszczędzonej
 - Wybór kategorii oszczędności
-- Automatyczne zapisywanie z datą
+- Wybór daty oszczędności
 
 ### Cele finansowe
 
 - Ustawianie docelowej kwoty
 - Śledzenie postępu w czasie rzeczywistym
-- Wizualizacja za pomocą pasków postępu
+- Wizualizacja za pomocą paska postępu
 - Historia zakończonych celów
 
 ### Statystyki i raporty
 
 - Podsumowanie miesięczne i roczne
 - Ostatnio dodane oszczędności
-- Wizualne wykresy postępu
+- Wizualny wykres postępu
 
 ### Przechowywanie danych
 
@@ -162,5 +161,3 @@ cd Promotional-savings
 Więcej informacji w [oficjalnej dokumentacji troubleshooting](https://reactnative.dev/docs/troubleshooting).
 
 ---
-
-_Aplikacja stworzona z myślą o osobach, które chcą świadomie zarządzać swoimi oszczędnościami i osiągać cele finansowe._
