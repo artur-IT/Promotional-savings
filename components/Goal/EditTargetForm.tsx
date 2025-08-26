@@ -63,7 +63,7 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
         id: Date.now(),
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
-        startDate: todayDate,
+        startDate: new Date().toISOString().split('T')[0], // Ustaw rzeczywistą datę utworzenia celu
         savings: [],
       };
       editGoal

@@ -5,13 +5,34 @@ import Button from '../Button';
 export default function HistoryGoalsComponent() {
   const { deleteAllGoals, getCompletedGoals } = useSavingsStore();
 
-  function getDaysBetween(start: string, end: string): number {
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    const diffInMs = endDate.getTime() - startDate.getTime();
+  function getDaysBetween(goal: any): number {
+    // Sprawdzamy czy cel ma oszczędności
+    if (!goal.savings || goal.savings.length === 0) {
+      return 0;
+    }
+
+    // Znajdź datę pierwszej oszczędności
+    const firstSavingDate = goal.savings[0]?.date;
+    const endDate = goal.endDate;
+
+    if (!firstSavingDate || !endDate) {
+      return 0;
+    }
+
+    const startDate = new Date(firstSavingDate);
+    const finalDate = new Date(endDate);
+    const diffInMs = finalDate.getTime() - startDate.getTime();
     // Zamieniamy milisekundy na dni
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     return Math.floor(diffInDays); // zaokrąglenie w dół
+  }
+
+  // Funkcja do formatowania daty z YYYY-MM-DD na DD.MM.YYYY
+  function formatDate(dateString: string): string {
+    if (!dateString) return 'Brak daty';
+
+    const [year, month, day] = dateString.split('-');
+    return `${day}.${month}.${year}`;
   }
 
   // Funkcja do obliczania sumy wszystkich promocji w celu
@@ -38,9 +59,7 @@ export default function HistoryGoalsComponent() {
       ) : (
         completedGoals.map((item, index) => {
           const totalPromotions = calculateTotalPromotions(item.savings);
-          const daysToAchieve = item.endDate
-            ? getDaysBetween(item.startDate, item.endDate)
-            : 0;
+          const daysToAchieve = getDaysBetween(item);
 
           return (
             <View key={index} style={styles.goalAchived}>
@@ -60,12 +79,16 @@ export default function HistoryGoalsComponent() {
               </Text>
               <Text style={styles.text}>
                 Zbierałem od:{' '}
-                <Text style={styles.dateValue}>{item.startDate}</Text>
+                <Text style={styles.dateValue}>
+                  {item.savings && item.savings.length > 0
+                    ? formatDate(item.savings[0].date)
+                    : formatDate(item.startDate)}
+                </Text>
               </Text>
               <Text style={styles.text}>
                 Data osiągnięcia celu:{' '}
                 <Text style={styles.dateValue}>
-                  {item.endDate || 'Nie osiągnięto'}
+                  {item.endDate ? formatDate(item.endDate) : 'Nie osiągnięto'}
                 </Text>
               </Text>
               <Text style={styles.text}>
