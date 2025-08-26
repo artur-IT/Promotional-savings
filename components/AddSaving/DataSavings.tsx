@@ -157,7 +157,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         updateCurrentGoal(actualGoal?.goal, actualGoal?.targetAmount, {
           id: Date.now(),
           promotion: promotion ?? 0,
-          date: todayDate,
+          date: date,
           category: category,
         });
         clearForm();
@@ -228,7 +228,10 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         <View style={styles.modalContainer}>
           <View style={styles.calendarContainer}>
             <Calendar
-              onDayPress={handleDateSelect}
+              onDayPress={day => {
+                handleDateSelect(day);
+                setShowCalendar(false);
+              }}
               markedDates={{
                 [date]: { selected: true, selectedColor: '#3498db' },
               }}
