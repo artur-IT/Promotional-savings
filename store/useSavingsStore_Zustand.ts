@@ -26,6 +26,7 @@ interface SavingsState {
   targetAmount?: number;
   addNewGoal: (goal: Goal) => void;
   getActualGoal: () => Goal | null;
+  getLastGoal: () => Goal | null;
   deleteActualGoal: () => void;
   getAllGoals: () => Goal[];
   getCompletedGoals: () => Goal[];
@@ -61,6 +62,12 @@ const useSavingsStore = create<SavingsState>()(
         return activeGoals.length > 0
           ? activeGoals[activeGoals.length - 1]
           : null;
+      },
+
+      getLastGoal: () => {
+        const { allGoals } = get();
+        // Zwraca ostatni cel (aktywny lub ukończony)
+        return allGoals.length > 0 ? allGoals[allGoals.length - 1] : null;
       },
 
       deleteActualGoal: () => {

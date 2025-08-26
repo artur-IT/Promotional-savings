@@ -8,8 +8,9 @@ interface GoalProgressProps {
 }
 
 export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
-  const { getActualGoal, getAllGoals, completeGoal } = useSavingsStore();
-  const goal = getActualGoal();
+  const { getActualGoal, getLastGoal, getAllGoals, completeGoal } =
+    useSavingsStore();
+  const goal = getLastGoal(); // Pokaż ostatni cel (nawet ukończony)
   const completedRef = useRef<Set<number>>(new Set());
 
   // Function that calculates the sum of all savings in the current goal
