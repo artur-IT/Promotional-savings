@@ -83,7 +83,7 @@ export default function Goal() {
         )}
 
         <View style={styles.goal}>
-          <GoalProgress />
+          <GoalProgress variant="goal" />
         </View>
       </View>
     </>

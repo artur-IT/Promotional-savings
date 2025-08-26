@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
-import GoalProgress from '../../components/Home/GoalProgress';
+import GoalProgress from '../../components/Goal/GoalProgress';
 import Button from '../../components/Button';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
@@ -32,7 +32,7 @@ export default function HomeWithGoal() {
         {/* <LastAdd /> */}
       </View>
 
-      <GoalProgress />
+      <GoalProgress variant="home" />
 
       <View style={styles.buttons}>
         <Button

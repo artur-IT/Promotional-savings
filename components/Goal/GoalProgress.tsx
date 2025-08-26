@@ -2,26 +2,33 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
-export default function GoalProgress() {
+interface GoalProgressProps {
+  variant?: 'home' | 'goal';
+}
+
+export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
   const { getActualGoal } = useSavingsStore();
   const goal = getActualGoal();
 
-  // Sprawdzamy, czy goal to tablica. Jeśli tak, sumujemy totalPromotionSum dla każdego elementu.
-  let totalPromotionSum = 0;
-  if (Array.isArray(goal)) {
-    totalPromotionSum = goal.reduce(
-      (sum: number, goalItem: any) => sum + (goalItem.totalPromotionSum || 0),
-      0,
-    );
-  } else if (goal && typeof goal === 'object') {
-    // Jeśli goal to pojedynczy obiekt, bierzemy jego totalPromotionSum
-    totalPromotionSum = goal.totalPromotionSum || 0;
-  }
+  // Function that calculates the sum of all savings in the current goal
+  const calculateTotalPromotionSum = (goal: any) => {
+    if (!goal || !goal.savings || goal.savings.length === 0) {
+      return 0;
+    }
+
+    return goal.savings.reduce((sum: number, saving: any) => {
+      return sum + (saving.promotion || 0);
+    }, 0);
+  };
 
   if (!goal) {
     return (
       <View style={styles.container}>
-        <Text style={styles.noDataText}>Musisz mieć cel oszczędzania!</Text>
+        <Text style={styles.noDataText}>
+          {variant === 'home'
+            ? 'Brak zdefiniowanych celów'
+            : 'Musisz mieć cel oszczędzania!'}
+        </Text>
       </View>
     );
   }
@@ -29,9 +36,50 @@ export default function GoalProgress() {
   const bigName = goal?.goal || 'Cel';
   const goalAmount = goal?.targetAmount || 0;
 
+  const totalPromotionSum = calculateTotalPromotionSum(goal);
+
   const progressPercent =
     goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
   const progressRatio = goalAmount > 0 ? totalPromotionSum / goalAmount : 0;
+
+  if (variant === 'home') {
+    return (
+      <View style={styles.homeContainer}>
+        <View style={styles.homeNumbers}>
+          <Text
+            style={[
+              styles.homeProgressNumbers,
+              totalPromotionSum > goalAmount ? styles.homeSuccess : null,
+            ]}
+          >
+            {progressPercent % 1 === 0
+              ? progressPercent
+              : progressPercent.toFixed(1)}{' '}
+            %
+          </Text>
+          {totalPromotionSum >= goalAmount && (
+            <Image
+              source={require('../../assets/images/sun_new.gif')}
+              style={styles.homeHappy}
+            />
+          )}
+          <Text style={styles.homeProgressNumbers}>{goalAmount} zł</Text>
+        </View>
+        <ProgressBar
+          progress={progressRatio}
+          width={260}
+          height={12}
+          color={'green'}
+          animated={true}
+          unfilledColor={'lightgreen'}
+        />
+        <Text style={styles.homeDescription}>
+          Zbieram i beztrosko wydam je na
+        </Text>
+        <Text style={styles.homeGoal}>{bigName.toLocaleUpperCase()}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -89,6 +137,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 70,
     backgroundColor: 'white',
+  },
+  homeContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  homeNumbers: {
+    width: 400,
+    marginBottom: 7,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  homeProgressNumbers: {
+    fontSize: 18,
+    alignSelf: 'flex-end',
+  },
+  homeDescription: {
+    width: 250,
+    fontSize: 16,
+    textAlign: 'left',
+    marginTop: 10,
+  },
+  homeGoal: {
+    width: 250,
+    fontSize: 30,
+    textAlign: 'left',
+  },
+  homeHappy: {
+    position: 'absolute',
+    top: -20,
+    width: 50,
+    height: 50,
+  },
+  homeSuccess: {
+    fontSize: 24,
+    color: 'green',
+    fontWeight: 'bold',
   },
   progressTargetContainer: {
     display: 'flex',
