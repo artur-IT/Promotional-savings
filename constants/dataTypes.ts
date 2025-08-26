@@ -1,10 +1,3 @@
-// export interface Saving {
-//   id: string;
-//   promotion: number;
-//   date: string;
-//   category: string;
-// }
-
 export interface Goal {
   id: number;
   goal?: string;
@@ -20,10 +13,4 @@ export interface Goal {
   }[];
 }
 
-// export interface AchievedGoal extends Goal {
-//   totalPromotionSum: number;
-//   achievedDate: string;
-// }
-
-// export const SAVINGS_KEY = 'savings';
 export const GOAL_KEY = 'goal';

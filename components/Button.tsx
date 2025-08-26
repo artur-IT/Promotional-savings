@@ -8,6 +8,7 @@ interface ButtonProps {
   width?: number;
   height?: number;
   radius?: number;
+  disabled?: boolean;
   onPress: () => void;
 }
 
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   width = 90,
   height = 40,
   radius = 5,
+  disabled = false,
 }) => {
   const newWidth = width;
   const newHeight = height;
@@ -50,11 +52,24 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
-      style={[styles.button, { backgroundColor: bgColor }]}
-      onPress={onPress}
+      style={[
+        styles.button,
+        {
+          backgroundColor: bgColor,
+          opacity: disabled ? 0.5 : 1,
+        },
+      ]}
+      onPress={disabled ? undefined : onPress}
+      disabled={disabled}
     >
-      <Text style={styles.text}>{title}</Text>
-      {/* <Text style={styles.text2}>{title}</Text> */}
+      <Text
+        style={[
+          styles.text,
+          { color: disabled ? '#999' : colors.text.button_W },
+        ]}
+      >
+        {title}
+      </Text>
     </Pressable>
   );
 };

@@ -1,5 +1,5 @@
-import { Alert, Animated, StyleSheet, Text, View } from 'react-native';
-import React, { useRef, useState } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
+import React, { useRef, useState, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Top from '../../components/Top';
 import EditTargetForm from '../../components/Goal/EditTargetForm';
@@ -12,8 +12,29 @@ export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
-  const { getActualGoal, deleteActualGoal } = useSavingsStore();
+  const { getActualGoal } = useSavingsStore();
   const [editMode, setEditMode] = useState(false);
+
+  // Pobierz aktualny cel
+  const currentGoal = getActualGoal();
+
+  // Memoizowana funkcja sprawdzająca czy cel został osiągnięty
+  const isGoalAchieved = useMemo(() => {
+    if (
+      !currentGoal ||
+      !currentGoal.targetAmount ||
+      currentGoal.targetAmount === 0
+    ) {
+      return false;
+    }
+
+    const totalPromotionSum =
+      currentGoal.savings?.reduce((sum, saving) => {
+        return sum + (saving.promotion || 0);
+      }, 0) || 0;
+
+    return totalPromotionSum >= currentGoal.targetAmount;
+  }, [currentGoal]);
 
   const addHandle = (buttonTitle: string) => {
     buttonTitle === 'edit' ? setEditMode(true) : setEditMode(false);
@@ -37,19 +58,6 @@ export default function Goal() {
     }
   };
 
-  const deleteHandle = () => {
-    Alert.alert('Czy na pewno chcesz usunąć obecny cel?', '', [
-      {
-        text: 'Nie',
-        style: 'cancel',
-      },
-      {
-        text: 'Tak',
-        onPress: () => deleteActualGoal(),
-      },
-    ]);
-  };
-
   const historylHandle = () => {
     (navigation as any).navigate('HistoryGoals');
   };
@@ -60,14 +68,17 @@ export default function Goal() {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
-          <Button title="Nowy" onPress={() => addHandle('new')} />
 
-          {getActualGoal() && (
-            <>
-              <Button title="Edytuj" onPress={() => addHandle('edit')} />
-              <Button title="Usuń" height={35} onPress={() => deleteHandle()} />
-            </>
+          {/* Pokaż przycisk 'Nowy' tylko gdy nie ma aktualnego celu LUB cel jest osiągnięty */}
+          {(!currentGoal || isGoalAchieved) && (
+            <Button title="Nowy" onPress={() => addHandle('new')} />
           )}
+
+          {/* Pokaż przycisk 'Edytuj' tylko gdy jest aktualny cel I nie jest osiągnięty */}
+          {currentGoal && !isGoalAchieved && (
+            <Button title="Edytuj" onPress={() => addHandle('edit')} />
+          )}
+
           <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
 

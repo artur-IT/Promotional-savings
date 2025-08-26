@@ -1,17 +1,19 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { useEffect, useRef, useCallback, useMemo } from 'react';
 
 interface GoalProgressProps {
   variant?: 'home' | 'goal';
 }
 
 export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
-  const { getActualGoal } = useSavingsStore();
+  const { getActualGoal, getAllGoals, completeGoal } = useSavingsStore();
   const goal = getActualGoal();
+  const completedRef = useRef<Set<number>>(new Set());
 
   // Function that calculates the sum of all savings in the current goal
-  const calculateTotalPromotionSum = (goal: any) => {
+  const calculateTotalPromotionSum = useCallback((goal: any) => {
     if (!goal || !goal.savings || goal.savings.length === 0) {
       return 0;
     }
@@ -19,11 +21,50 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
     return goal.savings.reduce((sum: number, saving: any) => {
       return sum + (saving.promotion || 0);
     }, 0);
-  };
+  }, []);
+
+  // Memoized list of all goals to prevent unnecessary re-renders
+  const allGoals = useMemo(() => getAllGoals(), [getAllGoals]);
+
+  // Automatycznie oznacz cel jako ukończony gdy zostanie osiągnięty
+  useEffect(() => {
+    let hasCompletedAnyGoal = false;
+
+    allGoals.forEach(currentGoal => {
+      if (
+        !currentGoal.endDate &&
+        currentGoal.id &&
+        !completedRef.current.has(currentGoal.id)
+      ) {
+        const totalSum = calculateTotalPromotionSum(currentGoal);
+        const targetAmount = currentGoal.targetAmount || 0;
+        const isAchieved =
+          totalSum >= targetAmount && targetAmount > 0 && totalSum > 0;
+
+        if (
+          isAchieved &&
+          currentGoal.savings &&
+          currentGoal.savings.length > 0
+        ) {
+          console.log(
+            'Cel osiągnięty! Zapisuję datę ukończenia i sumę oszczędności.',
+            currentGoal.id,
+          );
+          completedRef.current.add(currentGoal.id);
+          hasCompletedAnyGoal = true;
+        }
+      }
+    });
+
+    // Wywołaj completeGoal tylko raz, jeśli jakiś cel został ukończony
+    if (hasCompletedAnyGoal) {
+      completeGoal();
+    }
+  }, [allGoals, completeGoal, calculateTotalPromotionSum]);
 
   if (!goal) {
     return (
-      <View style={styles.container}>
+      <View>
         <Text style={styles.noDataText}>
           {variant === 'home'
             ? 'Brak zdefiniowanych celów'
@@ -35,7 +76,6 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
 
   const bigName = goal?.goal || 'Cel';
   const goalAmount = goal?.targetAmount || 0;
-
   const totalPromotionSum = calculateTotalPromotionSum(goal);
 
   const progressPercent =
@@ -219,10 +259,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   noDataText: {
-    marginTop: 20,
+    marginTop: 100,
+    marginBottom: 100,
     fontSize: 18,
     color: '#666',
     textAlign: 'center',
+    backgroundColor: 'none',
   },
   successContainer: {
     position: 'absolute',

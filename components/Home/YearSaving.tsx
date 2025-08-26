@@ -7,14 +7,22 @@ export default function YearSaving() {
   const [thisYearTotal, setThisYearTotal] = useState(0);
   const [thisYear, setThisYear] = useState(0);
 
+  // Get goals once to avoid creating new reference each time
+  const allGoals = getAllGoals();
+
   // Function to calculate the sum of deposits from this year
   const calculateThisYearSavings = () => {
     const currentYear = new Date().getFullYear(); // Get current year
     setThisYear(currentYear);
     let totalSavings = 0;
 
+    // Check if there are any goals before processing
+    if (allGoals.length === 0) {
+      return 0;
+    }
+
     // Go through each goal
-    getAllGoals().forEach(goal => {
+    allGoals.forEach(goal => {
       // Check if goal has savings
       if (goal.savings) {
         // Go through each saving in the goal
@@ -35,7 +43,7 @@ export default function YearSaving() {
 
   useEffect(() => {
     setThisYearTotal(calculateThisYearSavings());
-  }, [thisYearTotal]);
+  }, [allGoals.length]);
 
   return (
     <>

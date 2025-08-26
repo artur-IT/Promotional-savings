@@ -28,12 +28,14 @@ interface SavingsState {
   getActualGoal: () => Goal | null;
   deleteActualGoal: () => void;
   getAllGoals: () => Goal[];
+  getCompletedGoals: () => Goal[];
   deleteAllGoals: () => void;
   updateCurrentGoal: (
     newGoal?: string,
     newTargetAmount?: number,
     saving?: { id: number; promotion: number; date: string; category: string },
   ) => void;
+  completeGoal: () => void;
 }
 
 const useSavingsStore = create<SavingsState>()(
@@ -54,19 +56,36 @@ const useSavingsStore = create<SavingsState>()(
 
       getActualGoal: () => {
         const { allGoals } = get();
-        // Zwraca aktualny cel (ostatni dodany lub aktywny)
-        return allGoals.length > 0 ? allGoals[allGoals.length - 1] : null;
+        // Zwraca tylko aktywny cel (bez endDate)
+        const activeGoals = allGoals.filter(goal => !goal.endDate);
+        return activeGoals.length > 0
+          ? activeGoals[activeGoals.length - 1]
+          : null;
       },
 
       deleteActualGoal: () => {
-        set(state => ({
-          allGoals: state.allGoals.slice(0, -1), // Usuwa ostatni cel
-        }));
+        set(state => {
+          const currentGoals = [...state.allGoals];
+          // Usuń aktywny cel (bez endDate)
+          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+
+          if (activeGoalIndex !== -1) {
+            currentGoals.splice(activeGoalIndex, 1);
+          }
+
+          return { allGoals: currentGoals };
+        });
       },
 
       getAllGoals: () => {
         const { allGoals } = get();
         return allGoals;
+      },
+
+      getCompletedGoals: () => {
+        const { allGoals } = get();
+        // Zwraca tylko ukończone cele (z endDate)
+        return allGoals.filter(goal => goal.endDate);
       },
 
       deleteAllGoals: () => {
@@ -85,18 +104,46 @@ const useSavingsStore = create<SavingsState>()(
       ) => {
         set(state => {
           const currentGoals = [...state.allGoals];
-          if (currentGoals.length > 0) {
-            const lastGoalIndex = currentGoals.length - 1;
-            currentGoals[lastGoalIndex] = {
-              ...currentGoals[lastGoalIndex],
+          // Znajdź aktywny cel (bez endDate)
+          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+
+          if (activeGoalIndex !== -1) {
+            currentGoals[activeGoalIndex] = {
+              ...currentGoals[activeGoalIndex],
               ...(newGoal !== undefined ? { goal: newGoal } : {}),
               ...(newTargetAmount !== undefined
                 ? { targetAmount: newTargetAmount }
                 : {}),
               savings: [
-                ...(currentGoals[lastGoalIndex].savings || []),
+                ...(currentGoals[activeGoalIndex].savings || []),
                 ...(saving ? [saving] : []),
               ],
+            };
+          }
+          return { allGoals: currentGoals };
+        });
+      },
+
+      completeGoal: () => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+          // Znajdź aktywny cel (bez endDate)
+          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+
+          if (activeGoalIndex !== -1) {
+            const currentGoal = currentGoals[activeGoalIndex];
+
+            // Oblicz sumę wszystkich oszczędności
+            const totalPromotionSum =
+              currentGoal.savings?.reduce((sum, saving) => {
+                return sum + (saving.promotion || 0);
+              }, 0) || 0;
+
+            // Dodaj datę osiągnięcia celu i sumę oszczędności
+            currentGoals[activeGoalIndex] = {
+              ...currentGoal,
+              endDate: new Date().toISOString().split('T')[0], // Format YYYY-MM-DD
+              totalPromotionSum: totalPromotionSum,
             };
           }
           return { allGoals: currentGoals };

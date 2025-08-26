@@ -154,6 +154,13 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
     if (validateForm()) {
       try {
         const actualGoal = getActualGoal();
+
+        // Check if there's an actual goal before saving
+        if (!actualGoal) {
+          Alert.alert('Błąd', 'Musisz najpierw utworzyć cel oszczędzania!');
+          return;
+        }
+
         updateCurrentGoal(actualGoal?.goal, actualGoal?.targetAmount, {
           id: Date.now(),
           promotion: promotion ?? 0,

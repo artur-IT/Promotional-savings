@@ -3,7 +3,7 @@ import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
 
 export default function HistoryGoalsComponent() {
-  const { deleteAllGoals, getAllGoals } = useSavingsStore();
+  const { deleteAllGoals, getCompletedGoals } = useSavingsStore();
 
   function getDaysBetween(start: string, end: string): number {
     const startDate = new Date(start);
@@ -14,33 +14,71 @@ export default function HistoryGoalsComponent() {
     return Math.floor(diffInDays); // zaokrąglenie w dół
   }
 
-  // Przykład użycia:
-  const days = getDaysBetween('2024-06-01', '2024-06-10');
-  console.log(days);
+  // Funkcja do obliczania sumy wszystkich promocji w celu
+  function calculateTotalPromotions(
+    savings:
+      | Array<{ id: number; promotion: number; date: string; category: string }>
+      | undefined,
+  ): number {
+    if (!savings || savings.length === 0) return 0;
+    return savings.reduce((sum, saving) => sum + saving.promotion, 0);
+  }
+
+  const completedGoals = getCompletedGoals();
 
   return (
     <View style={styles.container}>
       <Button title="Usuń" bgColor="red" onPress={() => deleteAllGoals()} />
 
-      <Text>History Goals COMPONENT</Text>
-      <Text>Cele osiągnięte:</Text>
-      {getAllGoals().map((item, index) => (
-        <View key={index} style={styles.goalAchived}>
-          <Text style={styles.text}>
-            Oszczędzałem na: {item.goal?.toUpperCase()}
-          </Text>
-          <Text style={styles.text}>
-            Cel: <Text style={styles.greenValue}>{item.targetAmount} zł</Text>
-          </Text>
-          <Text style={styles.text}>
-            Nazbieranych promocji: {item.totalPromotionSum} zł
-          </Text>
-          <Text style={styles.text}>Zbierałem od: {item.startDate}</Text>
-          <Text style={styles.text}>Osiągnąłem cel: {item.endDate}</Text>
-          <Text style={styles.text}>Dni: </Text>
-          <Text>--------------------------------</Text>
-        </View>
-      ))}
+      <Text style={styles.title}>Historia Celów</Text>
+      <Text style={styles.subtitle}>Cele osiągnięte:</Text>
+
+      {completedGoals.length === 0 ? (
+        <Text style={styles.noGoalsText}>Brak osiągniętych celów</Text>
+      ) : (
+        completedGoals.map((item, index) => {
+          const totalPromotions = calculateTotalPromotions(item.savings);
+          const daysToAchieve = item.endDate
+            ? getDaysBetween(item.startDate, item.endDate)
+            : 0;
+
+          return (
+            <View key={index} style={styles.goalAchived}>
+              <Text style={styles.text}>
+                Oszczędzałem na:{' '}
+                <Text style={styles.goalName}>{item.goal?.toUpperCase()}</Text>
+              </Text>
+              <Text style={styles.text}>
+                Cel:{' '}
+                <Text style={styles.greenValue}>{item.targetAmount} zł</Text>
+              </Text>
+              <Text style={styles.text}>
+                Suma wszystkich promocji:{' '}
+                <Text style={styles.blueValue}>
+                  {totalPromotions.toFixed(2)} zł
+                </Text>
+              </Text>
+              <Text style={styles.text}>
+                Zbierałem od:{' '}
+                <Text style={styles.dateValue}>{item.startDate}</Text>
+              </Text>
+              <Text style={styles.text}>
+                Data osiągnięcia celu:{' '}
+                <Text style={styles.dateValue}>
+                  {item.endDate || 'Nie osiągnięto'}
+                </Text>
+              </Text>
+              <Text style={styles.text}>
+                Dni potrzebne do osiągnięcia:{' '}
+                <Text style={styles.daysValue}>{daysToAchieve} dni</Text>
+              </Text>
+              <Text style={styles.separator}>
+                --------------------------------
+              </Text>
+            </View>
+          );
+        })
+      )}
     </View>
   );
 }
@@ -51,17 +89,67 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 16,
+    color: '#666',
   },
   text: {
-    fontSize: 18,
-    fontWeight: 700,
+    fontSize: 16,
+    fontWeight: '500',
     marginTop: 4,
+    color: '#333',
+  },
+  goalName: {
+    color: '#8B5CF6',
+    fontWeight: 'bold',
   },
   greenValue: {
-    color: 'green',
+    color: '#10B981',
     fontWeight: 'bold',
+  },
+  blueValue: {
+    color: '#3B82F6',
+    fontWeight: 'bold',
+  },
+  dateValue: {
+    color: '#F59E0B',
+    fontWeight: 'bold',
+  },
+  daysValue: {
+    color: '#EF4444',
+    fontWeight: 'bold',
+  },
+  separator: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 8,
+    textAlign: 'center',
   },
   goalAchived: {
     marginTop: 20,
+    backgroundColor: '#F9FAFB',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    width: '100%',
+    maxWidth: 350,
+  },
+  noGoalsText: {
+    fontSize: 18,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 40,
+    fontStyle: 'italic',
   },
 });
