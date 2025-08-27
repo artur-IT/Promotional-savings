@@ -52,14 +52,6 @@ export default function HomeWithGoal() {
         />
 
         <Button
-          title="Historia oszczędności"
-          onPress={() => (navigation as any).navigate('HistorySavings')}
-          width={190}
-          height={60}
-          radius={0}
-        />
-
-        <Button
           title="O aplikacji"
           onPress={() => (navigation as any).navigate('About')}
           width={190}

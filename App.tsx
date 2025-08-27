@@ -32,6 +32,8 @@ function BottomTabNavigator() {
             icon = '➕';
           } else if (route.name === 'HistoryGoals') {
             icon = '⏰';
+          } else if (route.name === 'HistorySavings') {
+            icon = '📊';
           } else if (route.name === 'About') {
             icon = 'ℹ️';
           } else {
@@ -146,6 +148,23 @@ function BottomTabNavigator() {
                 color: focused ? '#4CAF50' : '#757575',
               }}
             >
+              Cele
+            </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="HistorySavings"
+        component={HistorySavings}
+        options={{
+          tabBarLabel: ({ focused }) => (
+            <Text
+              style={{
+                fontSize: focused ? 14 : 12,
+                fontWeight: focused ? 'bold' : 'normal',
+                color: focused ? '#4CAF50' : '#757575',
+              }}
+            >
               Historia
             </Text>
           ),
@@ -181,7 +200,6 @@ function App() {
         }}
       >
         <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
-        <Stack.Screen name="HistorySavings" component={HistorySavings} />
       </Stack.Navigator>
     </NavigationContainer>
   );
