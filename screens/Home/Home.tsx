@@ -28,8 +28,8 @@ export default function HomeWithGoal() {
       </View>
 
       <View style={styles.circles}>
-        {/* <MonthSaving /> */}
-        {/* <LastAdd /> */}
+        <MonthSaving />
+        <LastAdd />
       </View>
 
       <GoalProgress variant="home" />

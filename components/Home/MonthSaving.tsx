@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function MonthSaving() {
-  const { allSavings } = useSavingsStore();
+  const { getAllGoals } = useSavingsStore();
 
   const [currentMonthSavings, setCurrentMonthSavings] = useState(0);
   const [currentMonthName, setCurrentMonthName] = useState('');
@@ -31,15 +31,22 @@ export default function MonthSaving() {
 
       setCurrentMonthName(monthNames[currentMonth]);
 
-      // Calculate sum of savings from current month
+      // Get all goals and calculate sum of savings from current month
+      const allGoals = getAllGoals();
       let sum = 0;
-      allSavings.forEach(saving => {
-        const savingDate = new Date(saving.date);
-        if (
-          savingDate.getMonth() === currentMonth &&
-          savingDate.getFullYear() === currentYear
-        ) {
-          sum += saving.promotion;
+
+      // Loop through all goals and their savings
+      allGoals.forEach(goal => {
+        if (goal.savings) {
+          goal.savings.forEach(saving => {
+            const savingDate = new Date(saving.date);
+            if (
+              savingDate.getMonth() === currentMonth &&
+              savingDate.getFullYear() === currentYear
+            ) {
+              sum += saving.promotion;
+            }
+          });
         }
       });
 
@@ -47,7 +54,7 @@ export default function MonthSaving() {
     };
 
     getCurrentMonthData();
-  }, [allSavings]);
+  }, [getAllGoals]);
 
   return (
     <View style={styles.section}>

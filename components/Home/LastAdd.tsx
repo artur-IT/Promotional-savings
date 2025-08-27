@@ -4,15 +4,33 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
-  const { allSavings } = useSavingsStore();
+  const { getAllGoals } = useSavingsStore();
 
   useEffect(() => {
     try {
       const fetchLastSavings = () => {
-        const sortedSavings = [...allSavings].sort((a, b) => {
+        // Get all goals and collect all savings from them
+        const allGoals = getAllGoals();
+        const allSavingsFromGoals: { promotion: number; date: string }[] = [];
+
+        // Collect all savings from all goals
+        allGoals.forEach(goal => {
+          if (goal.savings) {
+            goal.savings.forEach(saving => {
+              allSavingsFromGoals.push({
+                promotion: saving.promotion,
+                date: saving.date,
+              });
+            });
+          }
+        });
+
+        // Sort by date (newest first)
+        const sortedSavings = allSavingsFromGoals.sort((a, b) => {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
 
+        // Get last two savings
         const lastTwo = sortedSavings.slice(0, 2);
         const lastTwoPromotion = lastTwo.map(saving => saving.promotion);
         setLastTwoSavings(lastTwoPromotion);
@@ -23,7 +41,7 @@ export default function LastAdd() {
       console.error('Error during data initialization:', error);
       setLastTwoSavings([]);
     }
-  }, [allSavings]);
+  }, [getAllGoals]);
 
   return (
     <View style={styles.section}>
