@@ -3,6 +3,9 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { Goal, GOAL_KEY } from '../constants/dataTypes';
 
+// Type for individual saving from Goal interface
+type Saving = NonNullable<Goal['savings']>[0];
+
 // Adapter dla MMKV do użycia z Zustand persist
 const mmkvStorage = {
   getItem: (name: string) => {
@@ -37,6 +40,9 @@ interface SavingsState {
     saving?: { id: number; promotion: number; date: string; category: string },
   ) => void;
   completeGoal: () => void;
+  getAllSavings: () => Saving[];
+  deleteSaving: (savingId: number) => void;
+  isSavingFromActiveGoal: (savingId: number) => boolean;
 }
 
 const useSavingsStore = create<SavingsState>()(
@@ -166,6 +172,53 @@ const useSavingsStore = create<SavingsState>()(
           }
           return { allGoals: currentGoals };
         });
+      },
+
+      // Zwraca wszystkie oszczędności ze wszystkich celów
+      getAllSavings: () => {
+        const { allGoals } = get();
+        const allSavings: Saving[] = [];
+
+        allGoals.forEach(goal => {
+          if (goal.savings) {
+            allSavings.push(...goal.savings);
+          }
+        });
+
+        return allSavings;
+      },
+
+      // Usuwa konkretną oszczędność z celu (tylko z aktywnego celu)
+      deleteSaving: (savingId: number) => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+
+          // Znajdź aktywny cel (bez endDate) i usuń z niego oszczędność
+          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+
+          if (activeGoalIndex !== -1) {
+            const activeGoal = currentGoals[activeGoalIndex];
+            if (activeGoal.savings) {
+              activeGoal.savings = activeGoal.savings.filter(
+                saving => saving.id !== savingId,
+              );
+            }
+          }
+
+          return { allGoals: currentGoals };
+        });
+      },
+
+      // Sprawdza czy oszczędność należy do aktywnego celu
+      isSavingFromActiveGoal: (savingId: number) => {
+        const { allGoals } = get();
+        const activeGoal = allGoals.find(goal => !goal.endDate);
+
+        if (activeGoal && activeGoal.savings) {
+          return activeGoal.savings.some(saving => saving.id === savingId);
+        }
+
+        return false;
       },
 
       todayDate: new Date().toISOString().split('T')[0].toString(), // Format YYYY-MM-DD

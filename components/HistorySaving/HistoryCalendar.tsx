@@ -6,24 +6,31 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Saving } from '../../constants/dataTypes';
+import { Goal } from '../../constants/dataTypes';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
+
+// Type for individual saving from Goal interface
+type Saving = NonNullable<Goal['savings']>[0];
 
 export default function HistoryCalendar({
   selectedYear,
 }: {
   selectedYear?: string;
 }) {
-  const { allSavings, deleteSaving } = useSavingsStore();
+  const { getAllSavings, deleteSaving, isSavingFromActiveGoal, allGoals } =
+    useSavingsStore();
   const [savingsHistory, setSavingsHistory] = useState<Saving[]>([]);
   const [expandedMonths, setExpandedMonths] = useState<{
     [key: string]: boolean;
   }>({});
 
   useEffect(() => {
+    // Get all savings from all goals
+    const allSavings = getAllSavings();
+
     // Filter data by selected year if provided
     let filteredData = [...allSavings];
 
@@ -49,7 +56,7 @@ export default function HistoryCalendar({
         firstMonthKey.charAt(0).toUpperCase() + firstMonthKey.slice(1);
       setExpandedMonths({ [capitalizedMonth]: true });
     }
-  }, [allSavings, selectedYear]);
+  }, [selectedYear, allGoals, getAllSavings]);
 
   const groupByYear = () => {
     const grouped: { [key: string]: Saving[] } = {};
@@ -108,6 +115,11 @@ export default function HistoryCalendar({
   const groupedData = groupByMonth();
   const groupedByYearData = groupByYear();
 
+  // Check if there are any savings from active goal in current view
+  const hasActiveSavings = savingsHistory.some(saving =>
+    isSavingFromActiveGoal(saving.id),
+  );
+
   return (
     <View style={styles.container}>
       {selectedYear ? (
@@ -119,16 +131,18 @@ export default function HistoryCalendar({
             <Text style={[styles.headerText, styles.flex1, styles.textRight]}>
               Kwota (zł)
             </Text>
-            <Text
-              style={[
-                styles.headerText,
-                styles.flex1,
-                styles.textRight,
-                styles.delete,
-              ]}
-            >
-              Usuń
-            </Text>
+            {hasActiveSavings && (
+              <Text
+                style={[
+                  styles.headerText,
+                  styles.flex1,
+                  styles.textRight,
+                  styles.delete,
+                ]}
+              >
+                Usuń
+              </Text>
+            )}
           </View>
 
           <ScrollView>
@@ -176,16 +190,18 @@ export default function HistoryCalendar({
                         >
                           {record.promotion.toFixed(2)}
                         </Text>
-                        <Text style={[styles.icon]}>
-                          <Button
-                            title="usuń"
-                            width={60}
-                            height={30}
-                            onPress={() => {
-                              deleteSaving(record.id);
-                            }}
-                          />
-                        </Text>
+                        {isSavingFromActiveGoal(record.id) && (
+                          <Text style={[styles.icon]}>
+                            <Button
+                              title="usuń"
+                              width={60}
+                              height={30}
+                              onPress={() => {
+                                deleteSaving(record.id);
+                              }}
+                            />
+                          </Text>
+                        )}
                       </View>
                     ))}
                   </View>

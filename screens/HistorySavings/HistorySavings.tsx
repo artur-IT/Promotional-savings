@@ -15,22 +15,22 @@ export default function HistorySavings() {
 
   useEffect(() => {
     if (allGoals && allGoals.length > 0) {
-      // Extract years from data and remove duplicates
-      const years = [
-        ...new Set(
-          allGoals
-            .map(saving => {
-              // Check if saving has 'date' property
-              if ('date' in saving && saving.date) {
-                const date = new Date((saving as any).date);
-                return date.getFullYear().toString();
-              }
-              return '';
-            })
-            .filter(year => year !== ''),
-        ),
-      ];
-      // First sort years descending (from newest)
+      // Extract years from all savings in all goals
+      const years: string[] = [];
+
+      allGoals.forEach(goal => {
+        if (goal.savings) {
+          goal.savings.forEach(saving => {
+            const date = new Date(saving.date);
+            const year = date.getFullYear().toString();
+            if (!years.includes(year)) {
+              years.push(year);
+            }
+          });
+        }
+      });
+
+      // Sort years descending (from newest)
       const sortedYears = years.sort(
         (a: string, b: string) => parseInt(b, 10) - parseInt(a, 10),
       );
