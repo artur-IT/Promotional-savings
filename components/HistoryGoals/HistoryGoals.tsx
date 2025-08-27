@@ -1,9 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
+import ConfirmationModal from '../ConfirmationModal';
 
 export default function HistoryGoalsComponent() {
   const { deleteAllGoals, getCompletedGoals } = useSavingsStore();
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleDeleteAllGoals = () => {
+    setShowAlert(true);
+  };
+
+  const handleConfirmDelete = () => {
+    deleteAllGoals();
+    setShowAlert(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowAlert(false);
+  };
 
   function getDaysBetween(goal: any): number {
     // Check if the goal has savings
@@ -49,10 +65,14 @@ export default function HistoryGoalsComponent() {
 
   return (
     <View style={styles.container}>
-      <Button title="Usuń" bgColor="red" onPress={() => deleteAllGoals()} />
+      <Button
+        title="Usuń wszystkie cele!"
+        width={200}
+        bgColor="red"
+        onPress={handleDeleteAllGoals}
+      />
 
-      <Text style={styles.title}>Historia Celów</Text>
-      <Text style={styles.subtitle}>Cele osiągnięte:</Text>
+      <Text style={styles.title}>Historia Osiągniętych Celów</Text>
 
       {completedGoals.length === 0 ? (
         <Text style={styles.noGoalsText}>Brak osiągniętych celów</Text>
@@ -86,22 +106,32 @@ export default function HistoryGoalsComponent() {
                 </Text>
               </Text>
               <Text style={styles.text}>
-                Data osiągnięcia celu:{' '}
+                Osiągnąłem cel:{' '}
                 <Text style={styles.dateValue}>
                   {item.endDate ? formatDate(item.endDate) : 'Nie osiągnięto'}
                 </Text>
               </Text>
               <Text style={styles.text}>
-                Dni potrzebne do osiągnięcia:{' '}
+                Zajęło mi to:{' '}
                 <Text style={styles.daysValue}>{daysToAchieve} dni</Text>
-              </Text>
-              <Text style={styles.separator}>
-                --------------------------------
               </Text>
             </View>
           );
         })
       )}
+
+      {/* Confirmation modal for deleting all goals */}
+      <ConfirmationModal
+        visible={showAlert}
+        title="⚠️ Jesteś pewien?"
+        message="Ta operacja usunie wszystkie osiągnięte cele. Nie można jej cofnąć."
+        confirmText="Usuń wszystkie"
+        cancelText="Anuluj"
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCancelDelete}
+        confirmButtonColor="#EF4444"
+        cancelButtonColor="green"
+      />
     </View>
   );
 }
@@ -117,6 +147,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 40,
     marginBottom: 10,
     color: '#333',
   },
@@ -164,7 +195,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#777',
     width: '100%',
     maxWidth: 350,
   },
