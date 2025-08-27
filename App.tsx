@@ -148,7 +148,7 @@ function BottomTabNavigator() {
                 color: focused ? '#4CAF50' : '#757575',
               }}
             >
-              Cele
+              Osiągnięte
             </Text>
           ),
         }}
@@ -182,7 +182,7 @@ function BottomTabNavigator() {
                 color: focused ? '#4CAF50' : '#757575',
               }}
             >
-              O App
+              Info
             </Text>
           ),
         }}

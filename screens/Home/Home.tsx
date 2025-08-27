@@ -1,19 +1,13 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Goal/GoalProgress';
-import Button from '../../components/Button';
-import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 const TopImage = require('../../assets/images/top_bg.gif');
 const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
 export default function HomeWithGoal() {
-  const navigation = useNavigation();
-  const { getActualGoal } = useSavingsStore();
-
   return (
     <View style={styles.container}>
       <Image source={TopImage} style={styles.topImage} />
@@ -33,32 +27,6 @@ export default function HomeWithGoal() {
       </View>
 
       <GoalProgress variant="home" />
-
-      <View style={styles.buttons}>
-        <Button
-          title="Dodaj oszczędność"
-          onPress={() => (navigation as any).navigate('AddSaving')}
-          width={190}
-          height={60}
-          radius={0}
-        />
-
-        <Button
-          title={`${!getActualGoal() ? 'Dodaj Cel' : 'Edytuj Cel'}`}
-          onPress={() => (navigation as any).navigate('Goal')}
-          width={190}
-          height={60}
-          radius={0}
-        />
-
-        <Button
-          title="O aplikacji"
-          onPress={() => (navigation as any).navigate('About')}
-          width={190}
-          height={60}
-          radius={0}
-        />
-      </View>
     </View>
   );
 }
@@ -79,15 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: '#0084CE',
   },
-  link: { marginTop: 30, padding: 10, borderRadius: 5 },
-  slogan: {
-    marginLeft: -30,
-    fontSize: 32,
-    lineHeight: 40,
-    marginTop: 30,
-    marginBottom: 30,
-    color: '#0084CE',
-  },
+
   topImage: {
     position: 'absolute',
     top: -170,
@@ -111,12 +71,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     marginTop: 40,
-  },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: 20,
   },
 });
