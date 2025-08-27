@@ -10,7 +10,7 @@ interface GoalProgressProps {
 export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
   const { getActualGoal, getLastGoal, getAllGoals, completeGoal } =
     useSavingsStore();
-  const goal = getLastGoal(); // Pokaż ostatni cel (nawet ukończony)
+  const goal = getLastGoal(); // Show last goal (even completed)
   const completedRef = useRef<Set<number>>(new Set());
 
   // Function that calculates the sum of all savings in the current goal
@@ -27,7 +27,7 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
   // Memoized list of all goals to prevent unnecessary re-renders
   const allGoals = useMemo(() => getAllGoals(), [getAllGoals]);
 
-  // Automatycznie oznacz cel jako ukończony gdy zostanie osiągnięty
+  // Automatically mark goal as completed when achieved
   useEffect(() => {
     let hasCompletedAnyGoal = false;
 
@@ -48,7 +48,7 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
           currentGoal.savings.length > 0
         ) {
           console.log(
-            'Cel osiągnięty! Zapisuję datę ukończenia i sumę oszczędności.',
+            'Goal achieved! Saving completion date and sum of savings.',
             currentGoal.id,
           );
           completedRef.current.add(currentGoal.id);
@@ -57,7 +57,7 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
       }
     });
 
-    // Wywołaj completeGoal tylko raz, jeśli jakiś cel został ukończony
+    // Call completeGoal only once if any goal was completed
     if (hasCompletedAnyGoal) {
       completeGoal();
     }

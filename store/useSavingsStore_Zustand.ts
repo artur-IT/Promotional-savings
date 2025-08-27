@@ -146,10 +146,21 @@ const useSavingsStore = create<SavingsState>()(
                 return sum + (saving.promotion || 0);
               }, 0) || 0;
 
+            // Znajdź datę ostatniej oszczędności (najnowszą datę)
+            let lastSavingDate = new Date().toISOString().split('T')[0]; // Domyślnie obecna data
+            if (currentGoal.savings && currentGoal.savings.length > 0) {
+              // Posortuj oszczędności według daty i weź ostatnią
+              const sortedSavings = [...currentGoal.savings].sort(
+                (a, b) =>
+                  new Date(b.date).getTime() - new Date(a.date).getTime(),
+              );
+              lastSavingDate = sortedSavings[0].date;
+            }
+
             // Dodaj datę osiągnięcia celu i sumę oszczędności
             currentGoals[activeGoalIndex] = {
               ...currentGoal,
-              endDate: new Date().toISOString().split('T')[0], // Format YYYY-MM-DD
+              endDate: lastSavingDate, // Użyj daty ostatniej oszczędności
               totalPromotionSum: totalPromotionSum,
             };
           }

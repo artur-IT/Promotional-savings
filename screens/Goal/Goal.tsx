@@ -15,10 +15,10 @@ export default function Goal() {
   const { getActualGoal } = useSavingsStore();
   const [editMode, setEditMode] = useState(false);
 
-  // Pobierz aktualny cel
+  // Get current goal
   const currentGoal = getActualGoal();
 
-  // Memoizowana funkcja sprawdzająca czy cel został osiągnięty
+  // Memoized function checking if goal was achieved
   const isGoalAchieved = useMemo(() => {
     if (
       !currentGoal ||
@@ -69,12 +69,12 @@ export default function Goal() {
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
 
-          {/* Pokaż przycisk 'Nowy' tylko gdy nie ma aktualnego celu LUB cel jest osiągnięty */}
+          {/* Show 'New' button only when there's no current goal OR goal is achieved */}
           {(!currentGoal || isGoalAchieved) && (
             <Button title="Nowy" onPress={() => addHandle('new')} />
           )}
 
-          {/* Pokaż przycisk 'Edytuj' tylko gdy jest aktualny cel I nie jest osiągnięty */}
+          {/* Show 'Edit' button only when there's a current goal AND it's not achieved */}
           {currentGoal && !isGoalAchieved && (
             <Button title="Edytuj" onPress={() => addHandle('edit')} />
           )}

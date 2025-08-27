@@ -24,7 +24,7 @@ export default function HistoryCalendar({
   }>({});
 
   useEffect(() => {
-    // Filtrujemy dane według wybranego roku, jeśli został podany
+    // Filter data by selected year if provided
     let filteredData = [...allSavings];
 
     if (selectedYear) {
@@ -42,7 +42,7 @@ export default function HistoryCalendar({
 
     setSavingsHistory(sortedData);
 
-    // Domyślnie rozwijamy pierwszy miesiąc
+    // By default expand the first month
     if (sortedData.length > 0) {
       const firstMonthKey = format(sortedData[0].date, 'LLLL', { locale: pl });
       const capitalizedMonth =
@@ -71,7 +71,7 @@ export default function HistoryCalendar({
     const grouped: { [key: string]: Saving[] } = {};
 
     savingsHistory.forEach(record => {
-      // Format LLLL dla nazwy miesiąca w mianowniku
+      // Format LLLL for month name in nominative
       const monthKey = format(record.date, 'LLLL', { locale: pl });
       const capitalizedMonth =
         monthKey.charAt(0).toUpperCase() + monthKey.slice(1);
@@ -111,7 +111,7 @@ export default function HistoryCalendar({
   return (
     <View style={styles.container}>
       {selectedYear ? (
-        // Jeśli wybrano rok, pokazujemy dane pogrupowane według miesięcy
+        // If year is selected, show data grouped by months
         <>
           <View style={styles.header}>
             <Text style={[styles.headerText, styles.flex1]}>Data</Text>
@@ -143,7 +143,7 @@ export default function HistoryCalendar({
                     {month} {expandedMonths[month] ? '▼' : '▶'}
                   </Text>
 
-                  {/* Wyświetlanie sumy kwot dla zwiniętego miesiąca */}
+                  {/* Display sum of amounts for collapsed month */}
                   {!expandedMonths[month] && (
                     <Text style={styles.monthTotalAmount}>
                       {calculateMonthTotal(records)} zł
@@ -195,7 +195,7 @@ export default function HistoryCalendar({
           </ScrollView>
         </>
       ) : (
-        // Jeśli nie wybrano roku, pokazujemy dane pogrupowane według lat
+        // If no year selected, show data grouped by years
         <ScrollView>
           <View style={styles.header}>
             <Text style={[styles.headerText, styles.flex1]}>Rok</Text>

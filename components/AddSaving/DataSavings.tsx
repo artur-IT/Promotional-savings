@@ -57,7 +57,7 @@ LocaleConfig.locales.pl = {
 };
 LocaleConfig.defaultLocale = 'pl';
 
-// Używam forwardRef, aby umożliwić przekazanie referencji do tego komponentu
+// Using forwardRef to enable passing reference to this component
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   const { updateCurrentGoal, getActualGoal, todayDate } = useSavingsStore();
   const navigation = useNavigation();
@@ -81,26 +81,26 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
     }
   };
 
-  // Aktualizacja daty
+  // Date update
   const handleDateSelect = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
     setShowCalendar(false);
-    // Usuwamy błąd po wybraniu daty
+    // Remove error after selecting date
     if (errors.date) {
       setErrors(prev => ({ ...prev, date: undefined }));
     }
   };
 
-  // Aktualizacja kategorii
+  // Category update
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
-    // Usuwamy błąd po wybraniu kategorii
+    // Remove error after selecting category
     if (errors.category) {
       setErrors(prev => ({ ...prev, category: undefined }));
     }
   };
 
-  // Funkcja formatująca datę z YYYY-MM-DD na DD.MM.YYYY
+  // Function to format date from YYYY-MM-DD to DD.MM.YYYY
   const formatDate = (dateString: string) => {
     if (!dateString) return 'Wybierz datę';
 
@@ -115,7 +115,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
     setErrors({});
   };
 
-  // Funkcja walidująca formularz
+  // Form validation function
   const validateForm = () => {
     const newErrors: {
       promotion?: string;
@@ -139,7 +139,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
       isValid = false;
     }
 
-    // Ustawiamy błędy, upewniając się, że typy się zgadzają
+    // Set errors, making sure types match
     setErrors(
       newErrors as {
         promotion?: number;
@@ -171,7 +171,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         (navigation as any).navigate('Home');
         console.log('Aktualny cel:', getActualGoal());
       } catch (error) {
-        console.error('Błąd podczas zapisywania danych:', error);
+        console.error('Error while saving data:', error);
         Alert.alert(
           'Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.',
         );
@@ -230,7 +230,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         </View>
       </View>
 
-      {/* Modal z kalendarzem */}
+      {/* Modal with calendar */}
       <Modal visible={showCalendar} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.calendarContainer}>

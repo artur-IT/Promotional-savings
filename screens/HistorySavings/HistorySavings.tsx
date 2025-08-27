@@ -11,16 +11,16 @@ export default function HistorySavings() {
   const { allGoals } = useSavingsStore();
   const [selectYear, setSelectYear] = useState('');
   const [availableYears, setAvailableYears] = useState<string[]>([]);
-  const fadeAnim = useRef(new Animated.Value(1)).current; // Zaczynamy od 1, aby kalendarz był widoczny
+  const fadeAnim = useRef(new Animated.Value(1)).current; // Start from 1 so calendar is visible
 
   useEffect(() => {
     if (allGoals && allGoals.length > 0) {
-      // Wyciągnij lata z danych i usuń duplikaty
+      // Extract years from data and remove duplicates
       const years = [
         ...new Set(
           allGoals
             .map(saving => {
-              // Sprawdzamy czy saving ma właściwość 'date'
+              // Check if saving has 'date' property
               if ('date' in saving && saving.date) {
                 const date = new Date((saving as any).date);
                 return date.getFullYear().toString();
@@ -30,7 +30,7 @@ export default function HistorySavings() {
             .filter(year => year !== ''),
         ),
       ];
-      // Najpierw sortujemy lata malejąco (od najnowszego)
+      // First sort years descending (from newest)
       const sortedYears = years.sort(
         (a: string, b: string) => parseInt(b, 10) - parseInt(a, 10),
       );

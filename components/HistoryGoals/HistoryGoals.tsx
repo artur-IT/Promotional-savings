@@ -6,12 +6,12 @@ export default function HistoryGoalsComponent() {
   const { deleteAllGoals, getCompletedGoals } = useSavingsStore();
 
   function getDaysBetween(goal: any): number {
-    // Sprawdzamy czy cel ma oszczędności
+    // Check if the goal has savings
     if (!goal.savings || goal.savings.length === 0) {
       return 0;
     }
 
-    // Znajdź datę pierwszej oszczędności
+    // Find the date of the first saving
     const firstSavingDate = goal.savings[0]?.date;
     const endDate = goal.endDate;
 
@@ -22,12 +22,12 @@ export default function HistoryGoalsComponent() {
     const startDate = new Date(firstSavingDate);
     const finalDate = new Date(endDate);
     const diffInMs = finalDate.getTime() - startDate.getTime();
-    // Zamieniamy milisekundy na dni
+    // Convert milliseconds to days
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-    return Math.floor(diffInDays); // zaokrąglenie w dół
+    return Math.floor(diffInDays); // round down
   }
 
-  // Funkcja do formatowania daty z YYYY-MM-DD na DD.MM.YYYY
+  // Function to format date from YYYY-MM-DD to DD.MM.YYYY
   function formatDate(dateString: string): string {
     if (!dateString) return 'Brak daty';
 
@@ -35,7 +35,7 @@ export default function HistoryGoalsComponent() {
     return `${day}.${month}.${year}`;
   }
 
-  // Funkcja do obliczania sumy wszystkich promocji w celu
+  // Function to calculate the sum of all promotions in the goal
   function calculateTotalPromotions(
     savings:
       | Array<{ id: number; promotion: number; date: string; category: string }>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 16,
   },
   title: {

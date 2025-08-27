@@ -20,7 +20,7 @@ export default function LastAdd() {
 
       fetchLastSavings();
     } catch (error) {
-      console.error('Błąd podczas inicjalizacji danych:', error);
+      console.error('Error during data initialization:', error);
       setLastTwoSavings([]);
     }
   }, [allSavings]);

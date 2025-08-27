@@ -63,20 +63,20 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
         id: Date.now(),
         goal: goalName,
         targetAmount: parseFloat(`${targetAmount}`),
-        startDate: new Date().toISOString().split('T')[0], // Ustaw rzeczywistą datę utworzenia celu
+        startDate: new Date().toISOString().split('T')[0], // Set actual goal creation date
         savings: [],
       };
       editGoal
         ? updateCurrentGoal(goalName || '', parseFloat(`${targetAmount}`))
         : addNewGoal(newGoal);
 
-      console.log('Wszystkie cele po dodaniu:', getAllGoals());
+      console.log('All goals after adding:', getAllGoals());
       (navigation as any).navigate('Home');
       onFormClose();
     }
   };
 
-  // Funkcje do czyszczenia błędów po kliknięciu w pole
+  // Functions to clear errors after clicking on field
   const handleGoalNameFocus = () => {
     setErrors(prev => ({ ...prev, goalName: undefined }));
   };

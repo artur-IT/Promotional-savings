@@ -31,7 +31,7 @@ export default function MonthSaving() {
 
       setCurrentMonthName(monthNames[currentMonth]);
 
-      // Oblicz sumę oszczędności z bieżącego miesiąca
+      // Calculate sum of savings from current month
       let sum = 0;
       allSavings.forEach(saving => {
         const savingDate = new Date(saving.date);
