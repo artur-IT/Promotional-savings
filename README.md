@@ -62,12 +62,23 @@ git clone https://github.com/artur-IT/Promotional-savings.git
 cd Promotional-savings
 ```
 
-2. **Zainstaluj zależności** - npm install
-3. **Uruchom Metro bundler** - npx react-native run-android (Automatycznie uruchamia Metro w osobnym oknie node)
+2. **Zainstaluj zależności** - `npm install`
+3. **Uruchom Metro bundler** - `npx react-native run-android` (Automatycznie uruchamia Metro w osobnym oknie node)
+4. **Kompilacja do pliku apk** - z głównego folderu `npx react-native build-android --mode=release`
+
+Przed pierwszym buildem upewnij się, że masz uruchomiony Metro bundler!
+`npx react-native start`
+
+Po zakończeniu budowania, plik APK będzie w:
+`android/app/build/outputs/apk/release/app-release.apk`
+
+Jeśli chcesz mniejszy APK, możesz zbudować tylko dla określonej architektury:
+cd android
+`./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
 
 ### 📱 Uruchamianie na urządzeniu
 
-- **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera i użyj emulatora z Android Studio
+- **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera i użyj emulatora z Android Studio lub wgraj plik apk i zainstaluj aplikację.
 
 ## 📂 Struktura projektu
 
