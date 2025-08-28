@@ -20,8 +20,13 @@ export default function HistoryCalendar({
 }: {
   selectedYear?: string;
 }) {
-  const { getAllSavings, deleteSaving, isSavingFromActiveGoal, allGoals } =
-    useSavingsStore();
+  const {
+    getAllSavings,
+    deleteSaving,
+    isSavingFromActiveGoal,
+    isLatestSavingFromActiveGoal,
+    allGoals,
+  } = useSavingsStore();
   const [savingsHistory, setSavingsHistory] = useState<Saving[]>([]);
   const [expandedMonths, setExpandedMonths] = useState<{
     [key: string]: boolean;
@@ -115,9 +120,9 @@ export default function HistoryCalendar({
   const groupedData = groupByMonth();
   const groupedByYearData = groupByYear();
 
-  // Check if there are any savings from active goal in current view
-  const hasActiveSavings = savingsHistory.some(saving =>
-    isSavingFromActiveGoal(saving.id),
+  // Check if there is the latest saving from active goal in current view
+  const hasLatestActiveSaving = savingsHistory.some(saving =>
+    isLatestSavingFromActiveGoal(saving.id),
   );
 
   return (
@@ -131,7 +136,7 @@ export default function HistoryCalendar({
             <Text style={[styles.headerText, styles.flex1, styles.textRight]}>
               Kwota (zł)
             </Text>
-            {hasActiveSavings && (
+            {hasLatestActiveSaving && (
               <Text
                 style={[
                   styles.headerText,
@@ -190,7 +195,7 @@ export default function HistoryCalendar({
                         >
                           {record.promotion.toFixed(2)}
                         </Text>
-                        {isSavingFromActiveGoal(record.id) && (
+                        {isLatestSavingFromActiveGoal(record.id) && (
                           <Text style={[styles.icon]}>
                             <Button
                               title="usuń"

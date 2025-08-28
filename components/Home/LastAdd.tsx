@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
-  const { getAllGoals } = useSavingsStore();
+  const { getAllGoals, allGoals } = useSavingsStore();
 
   useEffect(() => {
     try {
@@ -41,7 +41,7 @@ export default function LastAdd() {
       console.error('Error during data initialization:', error);
       setLastTwoSavings([]);
     }
-  }, [getAllGoals]);
+  }, [allGoals]);
 
   return (
     <View style={styles.section}>

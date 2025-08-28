@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function MonthSaving() {
-  const { getAllGoals } = useSavingsStore();
+  const { getAllGoals, allGoals } = useSavingsStore();
 
   const [currentMonthSavings, setCurrentMonthSavings] = useState(0);
   const [currentMonthName, setCurrentMonthName] = useState('');
@@ -54,7 +54,7 @@ export default function MonthSaving() {
     };
 
     getCurrentMonthData();
-  }, [getAllGoals]);
+  }, [allGoals]);
 
   return (
     <View style={styles.section}>

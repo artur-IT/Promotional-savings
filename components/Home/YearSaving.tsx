@@ -3,15 +3,13 @@ import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 
 export default function YearSaving() {
-  const { getAllGoals } = useSavingsStore();
+  const { getAllGoals, allGoals } = useSavingsStore();
   const [thisYearTotal, setThisYearTotal] = useState(0);
   const [thisYear, setThisYear] = useState(0);
 
-  // Get goals once to avoid creating new reference each time
-  const allGoals = getAllGoals();
-
   // Function to calculate the sum of deposits from this year
   const calculateThisYearSavings = () => {
+    const allGoals = getAllGoals(); // Get goals inside the function
     const currentYear = new Date().getFullYear(); // Get current year
     setThisYear(currentYear);
     let totalSavings = 0;
@@ -43,7 +41,7 @@ export default function YearSaving() {
 
   useEffect(() => {
     setThisYearTotal(calculateThisYearSavings());
-  }, [allGoals.length]);
+  }, [allGoals]);
 
   return (
     <>

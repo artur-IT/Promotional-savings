@@ -75,10 +75,14 @@ function BottomTabNavigator() {
         // Tab bar styling
         tabBarStyle: {
           backgroundColor: '#fff',
-          borderTopWidth: 0,
-          borderTopColor: '#000',
-          borderTopLeftRadius: 10,
-          borderTopRightRadius: 10,
+          // borderTopWidth: 1,
+          // borderTopColor: '#000',
+          // borderLeftColor: '#000',
+          // borderRightColor: '#000',
+          // borderLeftWidth: 1,
+          // borderRightWidth: 1,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           height: 70,
           paddingBottom: 10,
           paddingTop: 10,

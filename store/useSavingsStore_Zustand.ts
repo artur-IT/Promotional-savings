@@ -43,6 +43,7 @@ interface SavingsState {
   getAllSavings: () => Saving[];
   deleteSaving: (savingId: number) => void;
   isSavingFromActiveGoal: (savingId: number) => boolean;
+  isLatestSavingFromActiveGoal: (savingId: number) => boolean;
 }
 
 const useSavingsStore = create<SavingsState>()(
@@ -216,6 +217,23 @@ const useSavingsStore = create<SavingsState>()(
 
         if (activeGoal && activeGoal.savings) {
           return activeGoal.savings.some(saving => saving.id === savingId);
+        }
+
+        return false;
+      },
+
+      // Sprawdza czy oszczędność jest ostatnio dodaną w aktywnym celu
+      isLatestSavingFromActiveGoal: (savingId: number) => {
+        const { allGoals } = get();
+        const activeGoal = allGoals.find(goal => !goal.endDate);
+
+        if (activeGoal && activeGoal.savings && activeGoal.savings.length > 0) {
+          // Znajdź oszczędność z najwyższym ID (ostatnio dodaną)
+          const latestSaving = activeGoal.savings.reduce((latest, current) => {
+            return current.id > latest.id ? current : latest;
+          });
+
+          return latestSaving.id === savingId;
         }
 
         return false;
