@@ -2,14 +2,14 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useEffect, useRef, useCallback, useMemo } from 'react';
+import { colors } from '../../constants/colors';
 
 interface GoalProgressProps {
   variant?: 'home' | 'goal';
 }
 
 export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
-  const { getActualGoal, getLastGoal, getAllGoals, completeGoal } =
-    useSavingsStore();
+  const { getLastGoal, getAllGoals, completeGoal } = useSavingsStore();
   const goal = getLastGoal(); // Show last goal (even completed)
   const completedRef = useRef<Set<number>>(new Set());
 
@@ -22,6 +22,53 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
     return goal.savings.reduce((sum: number, saving: any) => {
       return sum + (saving.promotion || 0);
     }, 0);
+  }, []);
+
+  // Function to get motivational message based on progress
+  const getMotivationalMessage = useCallback((progressPercent: number) => {
+    if (progressPercent >= 100) {
+      return {
+        message: '',
+        emoji: '',
+        color: '',
+      };
+    } else if (progressPercent >= 85) {
+      return {
+        message: 'Już prawie, ostatni sprint! 🏃‍♀️',
+        emoji: '🔥',
+        color: colors.status.success,
+      };
+    } else if (progressPercent >= 70) {
+      return {
+        message: 'Świetnie Ci idzie, trzymaj tempo!',
+        emoji: '💪',
+        color: colors.primary,
+      };
+    } else if (progressPercent >= 50) {
+      return {
+        message: 'W połowie drogi, nie poddawaj się!',
+        emoji: '🌟',
+        color: colors.primary,
+      };
+    } else if (progressPercent >= 20) {
+      return {
+        message: 'Dobry początek, każda złotówka się liczy!',
+        emoji: '💰',
+        color: colors.secondary,
+      };
+    } else if (progressPercent > 0) {
+      return {
+        message: 'Pierwszy krok zrobiony!',
+        emoji: '🌱',
+        color: colors.secondary,
+      };
+    } else {
+      return {
+        message: 'Czas zacząć oszczędzać! Możesz to zrobić!',
+        emoji: '🚀',
+        color: colors.accent,
+      };
+    }
   }, []);
 
   // Memoized list of all goals to prevent unnecessary re-renders
@@ -83,6 +130,9 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
     goalAmount > 0 ? (totalPromotionSum / goalAmount) * 100 : 0;
   const progressRatio = goalAmount > 0 ? totalPromotionSum / goalAmount : 0;
 
+  // Get motivational message
+  const motivationalData = getMotivationalMessage(progressPercent);
+
   if (variant === 'home') {
     return (
       <View style={styles.homeContainer}>
@@ -130,6 +180,7 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
           {bigName.toLocaleUpperCase()}
         </Text>
       </View>
+
       <View style={styles.progressSection}>
         <View style={styles.progressTargetContainer}>
           <Text
@@ -168,6 +219,16 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
           <Text style={styles.success}> Cel osiągnięty </Text>
         </View>
       )}
+
+      {/* Motivational Message */}
+      <View style={styles.motivationalContainer}>
+        <Text style={styles.motivationalEmoji}>{motivationalData.emoji}</Text>
+        <Text
+          style={[styles.motivationalText, { color: motivationalData.color }]}
+        >
+          {motivationalData.message}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -178,6 +239,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 70,
     backgroundColor: 'white',
+  },
+  motivationalContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 20,
+  },
+  motivationalEmoji: {
+    fontSize: 40,
+    marginBottom: 10,
+  },
+  motivationalText: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    lineHeight: 24,
   },
   homeContainer: {
     justifyContent: 'center',

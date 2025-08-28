@@ -1,8 +1,16 @@
 import HistoryCalendar from '../../components/HistorySaving/HistoryCalendar';
-import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Animated,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import Top from '../../components/Top';
-import { useRef, useState, useEffect } from 'react';
-import { Picker } from '@react-native-picker/picker';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import colors from '../../constants/colors';
 // import { clearAllSavings } from '../../store/savingsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 // import Button from '../../components/Button';
@@ -11,7 +19,25 @@ export default function HistorySavings() {
   const { allGoals } = useSavingsStore();
   const [selectYear, setSelectYear] = useState('');
   const [availableYears, setAvailableYears] = useState<string[]>([]);
+  const [showYearDropdown, setShowYearDropdown] = useState(false);
   const fadeAnim = useRef(new Animated.Value(1)).current; // Start from 1 so calendar is visible
+  const hasResetRef = useRef(false); // Flag to track if we've reset in this session
+  const dropdownAnimation = useRef(new Animated.Value(0)).current;
+
+  // Reset view to default (all years) only on first focus
+  useFocusEffect(
+    useCallback(() => {
+      if (!hasResetRef.current) {
+        setSelectYear('');
+        hasResetRef.current = true;
+      }
+
+      // Reset the flag when leaving the screen so it resets on next visit
+      return () => {
+        hasResetRef.current = false;
+      };
+    }, []),
+  );
 
   useEffect(() => {
     if (allGoals && allGoals.length > 0) {
@@ -38,7 +64,34 @@ export default function HistorySavings() {
     }
   }, [allGoals]);
 
+  const toggleDropdown = () => {
+    if (showYearDropdown) {
+      // Close dropdown
+      Animated.timing(dropdownAnimation, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start(() => setShowYearDropdown(false));
+    } else {
+      // Open dropdown
+      setShowYearDropdown(true);
+      Animated.timing(dropdownAnimation, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+
   const handleYearChange = (year: string) => {
+    // Close dropdown first
+    Animated.timing(dropdownAnimation, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => setShowYearDropdown(false));
+
+    // Then animate calendar change
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 150,
@@ -62,16 +115,78 @@ export default function HistorySavings() {
           <Text style={styles.title}>Historia </Text>
           <Text style={styles.title}>oszczędności</Text>
         </View>
-        <View style={styles.picker}>
-          <Picker
-            selectedValue={selectYear}
-            onValueChange={value => handleYearChange(value)}
+        <View style={styles.dropdownContainer}>
+          <TouchableOpacity
+            style={[
+              styles.dropdownButton,
+              showYearDropdown && styles.dropdownButtonActive,
+            ]}
+            onPress={toggleDropdown}
+            activeOpacity={0.7}
           >
-            <Picker.Item label="Rok" />
-            {availableYears.map(year => (
-              <Picker.Item key={year} label={year} value={year} />
-            ))}
-          </Picker>
+            <View style={styles.dropdownButtonContent}>
+              <Text
+                style={[
+                  styles.dropdownButtonText,
+                  !selectYear && styles.placeholderText,
+                ]}
+              >
+                {selectYear || 'Rok'}
+              </Text>
+              <Text
+                style={[
+                  styles.dropdownArrow,
+                  showYearDropdown && styles.dropdownArrowUp,
+                ]}
+              >
+                ▼
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          {showYearDropdown && (
+            <Animated.View
+              style={[
+                styles.dropdownList,
+                {
+                  opacity: dropdownAnimation,
+                  transform: [
+                    {
+                      scale: dropdownAnimation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0.95, 1],
+                      }),
+                    },
+                  ],
+                },
+              ]}
+            >
+              {[
+                { label: 'Wszystkie lata', value: '' },
+                ...availableYears.map(year => ({ label: year, value: year })),
+              ].map((item, index) => (
+                <TouchableOpacity
+                  key={item.value || 'all'}
+                  style={[
+                    styles.dropdownItem,
+                    selectYear === item.value && styles.dropdownItemSelected,
+                    index === availableYears.length && styles.dropdownItemLast,
+                  ]}
+                  onPress={() => handleYearChange(item.value)}
+                >
+                  <Text
+                    style={[
+                      styles.dropdownItemText,
+                      selectYear === item.value &&
+                        styles.dropdownItemTextSelected,
+                    ]}
+                  >
+                    {item.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </Animated.View>
+          )}
         </View>
       </View>
       {/* 
@@ -105,16 +220,97 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
   },
-  picker: {
-    width: 100,
-    backgroundColor: 'white',
+  // Custom Dropdown Styles
+  dropdownContainer: {
+    position: 'relative',
+    width: 140,
+    zIndex: 1000,
     marginTop: 5,
-    display: 'flex',
-    justifyContent: 'center',
+    elevation: 10,
+  },
+  dropdownButton: {
     height: 40,
-    borderColor: 'black',
+    backgroundColor: colors.background.main,
+    borderColor: colors.border,
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+    shadowColor: colors.shadow,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  dropdownButtonActive: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+  },
+  dropdownButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dropdownButtonText: {
+    flex: 1,
+    fontSize: 16,
+    color: colors.text.primary,
+  },
+  placeholderText: {
+    color: colors.text.secondary,
+    fontStyle: 'italic',
+  },
+  dropdownArrow: {
+    fontSize: 12,
+    color: colors.text.secondary,
+    marginLeft: 8,
+    transform: [{ rotate: '0deg' }],
+  },
+  dropdownArrowUp: {
+    transform: [{ rotate: '180deg' }],
+  },
+  dropdownList: {
+    position: 'absolute',
+    top: 42,
+    left: 0,
+    right: 0,
+    backgroundColor: colors.background.main,
+    borderColor: colors.border,
+    borderWidth: 1,
+    borderRadius: 8,
+    maxHeight: 200,
+    shadowColor: colors.shadow,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 8,
+    zIndex: 1001,
+  },
+  dropdownItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  dropdownItemSelected: {
+    backgroundColor: colors.primary + '10', // Add transparency
+  },
+  dropdownItemText: {
+    fontSize: 16,
+    color: colors.text.primary,
+  },
+  dropdownItemTextSelected: {
+    color: colors.primary,
+    fontWeight: '600',
+  },
+  dropdownItemLast: {
+    borderBottomWidth: 0,
   },
   deleteButton: {
     marginLeft: 15,

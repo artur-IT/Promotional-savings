@@ -25,8 +25,6 @@ const mmkvStorage = {
 interface SavingsState {
   todayDate: string;
   allGoals: Goal[];
-  goal?: string;
-  targetAmount?: number;
   addNewGoal: (goal: Goal) => void;
   getActualGoal: () => Goal | null;
   getLastGoal: () => Goal | null;
@@ -46,20 +44,20 @@ interface SavingsState {
   isLatestSavingFromActiveGoal: (savingId: number) => boolean;
 }
 
+// Helper function to find active goal index
+const findActiveGoalIndex = (goals: Goal[]) => {
+  return goals.findIndex(goal => !goal.endDate);
+};
+
 const useSavingsStore = create<SavingsState>()(
   persist(
     (set, get) => ({
       allGoals: [],
 
       addNewGoal: (goal: Goal) => {
-        console.log('Zapisywanie nowego celu:', goal);
-        set(state => {
-          const newState = {
-            allGoals: [...state.allGoals, goal],
-          };
-          console.log('Nowy stan po dodaniu celu:', newState);
-          return newState;
-        });
+        set(state => ({
+          allGoals: [...state.allGoals, goal],
+        }));
       },
 
       getActualGoal: () => {
@@ -80,8 +78,7 @@ const useSavingsStore = create<SavingsState>()(
       deleteActualGoal: () => {
         set(state => {
           const currentGoals = [...state.allGoals];
-          // Usuń aktywny cel (bez endDate)
-          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
 
           if (activeGoalIndex !== -1) {
             currentGoals.splice(activeGoalIndex, 1);
@@ -118,18 +115,18 @@ const useSavingsStore = create<SavingsState>()(
       ) => {
         set(state => {
           const currentGoals = [...state.allGoals];
-          // Znajdź aktywny cel (bez endDate)
-          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
 
           if (activeGoalIndex !== -1) {
+            const currentGoal = currentGoals[activeGoalIndex];
             currentGoals[activeGoalIndex] = {
-              ...currentGoals[activeGoalIndex],
-              ...(newGoal !== undefined ? { goal: newGoal } : {}),
-              ...(newTargetAmount !== undefined
-                ? { targetAmount: newTargetAmount }
-                : {}),
+              ...currentGoal,
+              ...(newGoal !== undefined && { goal: newGoal }),
+              ...(newTargetAmount !== undefined && {
+                targetAmount: newTargetAmount,
+              }),
               savings: [
-                ...(currentGoals[activeGoalIndex].savings || []),
+                ...(currentGoal.savings || []),
                 ...(saving ? [saving] : []),
               ],
             };
@@ -141,8 +138,7 @@ const useSavingsStore = create<SavingsState>()(
       completeGoal: () => {
         set(state => {
           const currentGoals = [...state.allGoals];
-          // Znajdź aktywny cel (bez endDate)
-          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
 
           if (activeGoalIndex !== -1) {
             const currentGoal = currentGoals[activeGoalIndex];
@@ -194,8 +190,7 @@ const useSavingsStore = create<SavingsState>()(
         set(state => {
           const currentGoals = [...state.allGoals];
 
-          // Znajdź aktywny cel (bez endDate) i usuń z niego oszczędność
-          const activeGoalIndex = currentGoals.findIndex(goal => !goal.endDate);
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
 
           if (activeGoalIndex !== -1) {
             const activeGoal = currentGoals[activeGoalIndex];
@@ -239,7 +234,7 @@ const useSavingsStore = create<SavingsState>()(
         return false;
       },
 
-      todayDate: new Date().toISOString().split('T')[0].toString(), // Format YYYY-MM-DD
+      todayDate: new Date().toISOString().split('T')[0], // Format YYYY-MM-DD
     }),
     {
       name: GOAL_KEY,
@@ -248,21 +243,15 @@ const useSavingsStore = create<SavingsState>()(
         allGoals: state.allGoals,
       }),
       onRehydrateStorage: () => state => {
-        if (state) {
-          console.log('Stan został pomyślnie odtworzony z magazynu');
-
+        if (state && state.allGoals) {
           // Konwersja dat z powrotem na obiekty Date jeśli są przechowywane jako stringi
-          if (state.allGoals) {
-            state.allGoals = state.allGoals.map((goal: Goal) => ({
-              ...goal,
-              startDate:
-                typeof goal.startDate === 'string'
-                  ? goal.startDate
-                  : new Date(goal.startDate).toISOString(),
-            }));
-          }
-        } else {
-          console.log('Nie udało się odtworzyć stanu z magazynu');
+          state.allGoals = state.allGoals.map((goal: Goal) => ({
+            ...goal,
+            startDate:
+              typeof goal.startDate === 'string'
+                ? goal.startDate
+                : new Date(goal.startDate).toISOString(),
+          }));
         }
       },
     },
