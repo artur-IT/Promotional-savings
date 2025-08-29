@@ -17,6 +17,10 @@ Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem f
 - **🏆 Historia celów** - Przegląd wszystkich realizowanych celów
 - **💾 Lokalne przechowywanie** - Dane zapisywane lokalnie na urządzeniu
 
+### 🔄️ Przepływ da nych użytkownika
+
+![User Flow Diagram](./assets/images/user_flow_diagram.svg)
+
 ### 🏗️ Architektura aplikacji
 
 #### Ekrany (Screens)
