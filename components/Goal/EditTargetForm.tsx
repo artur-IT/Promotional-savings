@@ -134,7 +134,7 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 100,
+    top: 40,
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',

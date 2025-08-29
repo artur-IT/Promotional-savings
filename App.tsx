@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View } from 'react-native';
+import { Text, View, StatusBar } from 'react-native';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
 import Goal from './screens/Goal/Goal';
@@ -197,15 +197,25 @@ function BottomTabNavigator() {
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <StatusBar
+        backgroundColor="black"
+        // barStyle="dark-content"
+        translucent={false}
+      />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 

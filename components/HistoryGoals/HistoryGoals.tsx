@@ -1,12 +1,45 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { useState, useMemo, useEffect } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
 import ConfirmationModal from '../ConfirmationModal';
 
 export default function HistoryGoalsComponent() {
-  const { deleteAllGoals, getCompletedGoals } = useSavingsStore();
+  const { deleteAllGoals, completeGoal } = useSavingsStore();
   const [showAlert, setShowAlert] = useState(false);
+
+  // Get all goals directly from store state
+  const allGoals = useSavingsStore(state => state.allGoals);
+
+  // Check for achieved goals and mark them as completed
+  useEffect(() => {
+    let hasCompletedAnyGoal = false;
+
+    allGoals.forEach(goal => {
+      if (!goal.endDate && goal.savings && goal.savings.length > 0) {
+        const totalSum = goal.savings.reduce(
+          (sum, saving) => sum + (saving.promotion || 0),
+          0,
+        );
+        const targetAmount = goal.targetAmount || 0;
+        const isAchieved =
+          totalSum >= targetAmount && targetAmount > 0 && totalSum > 0;
+
+        if (isAchieved) {
+          hasCompletedAnyGoal = true;
+        }
+      }
+    });
+
+    if (hasCompletedAnyGoal) {
+      completeGoal();
+    }
+  }, [allGoals, completeGoal]);
+
+  // Memoize completed goals to prevent unnecessary recalculations
+  const completedGoals = useMemo(() => {
+    return allGoals.filter(goal => goal.endDate);
+  }, [allGoals]);
 
   const handleDeleteAllGoals = () => {
     setShowAlert(true);
@@ -61,8 +94,6 @@ export default function HistoryGoalsComponent() {
     return savings.reduce((sum, saving) => sum + saving.promotion, 0);
   }
 
-  const completedGoals = getCompletedGoals();
-
   return (
     <View style={styles.container}>
       <Button
@@ -74,51 +105,59 @@ export default function HistoryGoalsComponent() {
 
       <Text style={styles.title}>Historia Osiągniętych Celów</Text>
 
-      {completedGoals.length === 0 ? (
-        <Text style={styles.noGoalsText}>Brak osiągniętych celów</Text>
-      ) : (
-        completedGoals.map((item, index) => {
-          const totalPromotions = calculateTotalPromotions(item.savings);
-          const daysToAchieve = getDaysBetween(item);
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={true}
+      >
+        {completedGoals.length === 0 ? (
+          <Text style={styles.noGoalsText}>Brak osiągniętych celów</Text>
+        ) : (
+          completedGoals.map((item, index) => {
+            const totalPromotions = calculateTotalPromotions(item.savings);
+            const daysToAchieve = getDaysBetween(item);
 
-          return (
-            <View key={index} style={styles.goalAchived}>
-              <Text style={styles.text}>
-                Oszczędzałem na:{' '}
-                <Text style={styles.goalName}>{item.goal?.toUpperCase()}</Text>
-              </Text>
-              <Text style={styles.text}>
-                Cel:{' '}
-                <Text style={styles.greenValue}>{item.targetAmount} zł</Text>
-              </Text>
-              <Text style={styles.text}>
-                Suma wszystkich promocji:{' '}
-                <Text style={styles.blueValue}>
-                  {totalPromotions.toFixed(2)} zł
+            return (
+              <View key={item.id} style={styles.goalAchived}>
+                <Text style={styles.text}>
+                  Oszczędzałem na:{' '}
+                  <Text style={styles.goalName}>
+                    {item.goal?.toUpperCase()}
+                  </Text>
                 </Text>
-              </Text>
-              <Text style={styles.text}>
-                Zbierałem od:{' '}
-                <Text style={styles.dateValue}>
-                  {item.savings && item.savings.length > 0
-                    ? formatDate(item.savings[0].date)
-                    : formatDate(item.startDate)}
+                <Text style={styles.text}>
+                  Cel:{' '}
+                  <Text style={styles.greenValue}>{item.targetAmount} zł</Text>
                 </Text>
-              </Text>
-              <Text style={styles.text}>
-                Osiągnąłem cel:{' '}
-                <Text style={styles.dateValue}>
-                  {item.endDate ? formatDate(item.endDate) : 'Nie osiągnięto'}
+                <Text style={styles.text}>
+                  Suma wszystkich promocji:{' '}
+                  <Text style={styles.blueValue}>
+                    {totalPromotions.toFixed(2)} zł
+                  </Text>
                 </Text>
-              </Text>
-              <Text style={styles.text}>
-                Zajęło mi to:{' '}
-                <Text style={styles.daysValue}>{daysToAchieve} dni</Text>
-              </Text>
-            </View>
-          );
-        })
-      )}
+                <Text style={styles.text}>
+                  Zbierałem od:{' '}
+                  <Text style={styles.dateValue}>
+                    {item.savings && item.savings.length > 0
+                      ? formatDate(item.savings[0].date)
+                      : formatDate(item.startDate)}
+                  </Text>
+                </Text>
+                <Text style={styles.text}>
+                  Osiągnąłem cel:{' '}
+                  <Text style={styles.dateValue}>
+                    {item.endDate ? formatDate(item.endDate) : 'Nie osiągnięto'}
+                  </Text>
+                </Text>
+                <Text style={styles.text}>
+                  Zajęło mi to:{' '}
+                  <Text style={styles.daysValue}>{daysToAchieve} dni</Text>
+                </Text>
+              </View>
+            );
+          })
+        )}
+      </ScrollView>
 
       {/* Confirmation modal for deleting all goals */}
       <ConfirmationModal
@@ -143,6 +182,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 16,
+  },
+  scrollView: {
+    flex: 1,
+    width: '100%',
+  },
+  scrollContent: {
+    alignItems: 'center',
+    paddingBottom: 20,
   },
   title: {
     fontSize: 24,
