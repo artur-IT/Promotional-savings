@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Alert,
   FlatList,
   Animated,
 } from 'react-native';
@@ -13,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useState, forwardRef, useRef } from 'react';
 import Button from '../../components/Button';
+import ConfirmationModal from '../../components/ConfirmationModal';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { colors } from '../../constants/colors';
 
@@ -84,6 +84,10 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
     date?: string;
     category?: string;
   }>({});
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorModalConfig, setErrorModalConfig] = useState({
+    message: '',
+  });
 
   // Animations for dropdown
   const dropdownAnimation = useRef(new Animated.Value(0)).current;
@@ -243,7 +247,10 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
 
         // Check if there's an actual goal before saving
         if (!actualGoal) {
-          Alert.alert('Błąd', 'Musisz najpierw utworzyć cel oszczędzania!');
+          setErrorModalConfig({
+            message: 'Musisz najpierw utworzyć cel oszczędzania!',
+          });
+          setShowErrorModal(true);
           return;
         }
 
@@ -258,9 +265,11 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         console.log('Aktualny cel:', getActualGoal());
       } catch (error) {
         console.error('Error while saving data:', error);
-        Alert.alert(
-          'Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.',
-        );
+        setErrorModalConfig({
+          message:
+            'Wystąpił problem podczas zapisywania danych. Spróbuj ponownie.',
+        });
+        setShowErrorModal(true);
       }
     }
   };
@@ -472,6 +481,17 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           }}
         />
       </View>
+
+      {/* Error Modal */}
+      <ConfirmationModal
+        visible={showErrorModal}
+        message={errorModalConfig.message}
+        confirmText="OK"
+        onConfirm={() => setShowErrorModal(false)}
+        confirmButtonColor="green"
+        showCancelButton={false}
+        compact={true}
+      />
     </View>
   );
 });

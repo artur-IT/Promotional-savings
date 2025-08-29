@@ -1,3 +1,5 @@
+# PROJECT STILL IN PROGRESS...
+
 # 💰 Promocyjne Oszczędności
 
 Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem finansowym.
