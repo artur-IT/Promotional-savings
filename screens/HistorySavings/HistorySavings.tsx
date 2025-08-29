@@ -11,9 +11,7 @@ import Top from '../../components/Top';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import colors from '../../constants/colors';
-// import { clearAllSavings } from '../../store/savingsStore';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
-// import Button from '../../components/Button';
 
 export default function HistorySavings() {
   const { allGoals } = useSavingsStore();
@@ -66,14 +64,12 @@ export default function HistorySavings() {
 
   const toggleDropdown = () => {
     if (showYearDropdown) {
-      // Close dropdown
       Animated.timing(dropdownAnimation, {
         toValue: 0,
         duration: 200,
         useNativeDriver: true,
       }).start(() => setShowYearDropdown(false));
     } else {
-      // Open dropdown
       setShowYearDropdown(true);
       Animated.timing(dropdownAnimation, {
         toValue: 1,
@@ -84,7 +80,6 @@ export default function HistorySavings() {
   };
 
   const handleYearChange = (year: string) => {
-    // Close dropdown first
     Animated.timing(dropdownAnimation, {
       toValue: 0,
       duration: 200,
@@ -162,7 +157,7 @@ export default function HistorySavings() {
               ]}
             >
               {[
-                { label: 'Wszystkie lata', value: '' },
+                { label: 'Wybierz', value: '' },
                 ...availableYears.map(year => ({ label: year, value: year })),
               ].map((item, index) => (
                 <TouchableOpacity
@@ -189,10 +184,6 @@ export default function HistorySavings() {
           )}
         </View>
       </View>
-      {/* 
-      <View style={styles.deleteButton}>
-        <Button title="USUŃ" width={70} onPress={clearAllSavings} />
-      </View> */}
 
       <Animated.View style={{ opacity: fadeAnim }}>
         <HistoryCalendar selectedYear={selectYear} />
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
   // Custom Dropdown Styles
   dropdownContainer: {
     position: 'relative',
-    width: 140,
+    width: 100,
     zIndex: 1000,
     marginTop: 5,
     elevation: 10,

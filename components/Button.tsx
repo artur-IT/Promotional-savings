@@ -32,13 +32,11 @@ const Button: React.FC<ButtonProps> = ({
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
-      marginHorizontal: 5,
-      marginVertical: 5,
       backgroundColor: colors.background.blue,
     },
 
     text: {
-      fontSize: 18,
+      fontSize: 16,
       color: colors.text.button_W,
       textAlign: 'center',
       fontFamily: 'Quicksand',
@@ -52,11 +50,12 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
-      style={[
+      style={({ pressed }) => [
         styles.button,
         {
           backgroundColor: bgColor,
-          opacity: disabled ? 0.5 : 1,
+          opacity: disabled ? 0.5 : pressed ? 0.7 : 1,
+          transform: pressed ? [{ scale: 0.95 }] : [{ scale: 1 }],
         },
       ]}
       onPress={disabled ? undefined : onPress}

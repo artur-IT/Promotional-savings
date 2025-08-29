@@ -23,7 +23,6 @@ export default function HistoryCalendar({
   const {
     getAllSavings,
     deleteSaving,
-    isSavingFromActiveGoal,
     isLatestSavingFromActiveGoal,
     allGoals,
   } = useSavingsStore();

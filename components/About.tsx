@@ -64,7 +64,7 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#eee',
   },
   container: {
     padding: 20,
