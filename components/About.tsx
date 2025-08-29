@@ -13,18 +13,22 @@ export default function AboutScreen() {
         </Text>
 
         <Text style={styles.paragraph}>
-          Aplikacja zlicza Twoje zaoszczędzone na zakupach pieniądze i sumuje
-          je.
+          Aplikacja zlicza Twoje zaoszczędzone na różnych wydatkach pieniądze i
+          sumuje je.
         </Text>
 
         <Text style={styles.title}>Jak to działa</Text>
 
         <Text style={[styles.paragraph, styles.bold]}>
-          1. Wprowadź kwotę zaoszczędzoną oraz datę kiedy ta kwota była
-          uzyskana.
+          1. Musisz podać cel, na który kiedyś wydasz swoje oszczędności.
         </Text>
 
-        <Text style={[styles.paragraph, styles.bold]}>2. Zobaczysz:</Text>
+        <Text style={[styles.paragraph, styles.bold]}>
+          2. Wprowadź kwotę zaoszczędzoną na promocji, datę kiedy ta kwota była
+          uzyskana oraz na czym zaoszczędziłeś/aś.
+        </Text>
+
+        <Text style={[styles.paragraph, styles.bold]}>2. Teraz zobaczysz:</Text>
         <View style={styles.listContainer}>
           <Text style={styles.listItem}>
             • sumę kwot zaoszczędzonych w tym miesiącu
@@ -36,11 +40,8 @@ export default function AboutScreen() {
             • postęp w osiągnięciu swojego celu
           </Text>
           <Text style={styles.listItem}>• historię swoich oszczędności</Text>
+          <Text style={styles.listItem}>• historię osiągniętych celów</Text>
         </View>
-
-        <Text style={[styles.paragraph, styles.bold]}>
-          3. Możesz podać cel, na który kiedyś wydasz swoje pieniądze.
-        </Text>
 
         <View style={styles.paragraph}>
           <Text style={styles.bold}>Na przykład:</Text>
@@ -52,7 +53,8 @@ export default function AboutScreen() {
         </View>
 
         <Text style={[styles.paragraph, styles.bold]}>
-          Teraz naprawdę zobaczysz ile zaoszczędziłeś na różnych zakupach.
+          Teraz naprawdę zobaczysz ile zaoszczędziłeś na różnych zakupach lub
+          usługach.
         </Text>
       </View>
     </ScrollView>
