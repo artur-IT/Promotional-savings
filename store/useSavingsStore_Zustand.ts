@@ -6,19 +6,32 @@ import { Goal, GOAL_KEY } from '../constants/dataTypes';
 // Type for individual saving from Goal interface
 type Saving = NonNullable<Goal['savings']>[0];
 
-// Adapter dla MMKV do użycia z Zustand persist
-const mmkvStorage = {
-  getItem: (name: string) => {
-    const value = storage.getString(name);
-    return value ? Promise.resolve(value) : Promise.resolve(null);
+// Adapter dla AsyncStorage do użycia z Zustand persist
+const asyncStorageAdapter = {
+  getItem: async (name: string) => {
+    try {
+      const value = await storage.getString(name);
+      return value || null;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
   },
-  setItem: (name: string, value: string) => {
-    storage.set(name, value);
-    return Promise.resolve(true);
+  setItem: async (name: string, value: string) => {
+    try {
+      await storage.set(name, value);
+      return true;
+    } catch (error) {
+      console.error('Error setting item:', error);
+      return false;
+    }
   },
-  removeItem: (name: string) => {
-    storage.delete(name);
-    return Promise.resolve();
+  removeItem: async (name: string) => {
+    try {
+      await storage.delete(name);
+    } catch (error) {
+      console.error('Error removing item:', error);
+    }
   },
 };
 
@@ -238,7 +251,7 @@ const useSavingsStore = create<SavingsState>()(
     }),
     {
       name: GOAL_KEY,
-      storage: createJSONStorage(() => mmkvStorage),
+      storage: createJSONStorage(() => asyncStorageAdapter),
       partialize: state => ({
         allGoals: state.allGoals,
       }),
