@@ -14,10 +14,10 @@ Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem f
 - **🎯 Zarządzanie celami** - Ustawianie i monitorowanie celów finansowych
 - **📈 Statystyki** - Przegląd oszczędności miesięcznych i rocznych
 - **📅 Historia** - Pełna historia oszczędności z kalendarzem
-- **🏆 Historia celów** - Przegląd wszystkich realizowanych celów
+- **🏆 Historia celów** - Przegląd wszystkich zrealizowanych celów
 - **💾 Lokalne przechowywanie** - Dane zapisywane lokalnie na urządzeniu
 
-### 🔄️ Przepływ da nych użytkownika
+### 🔄️ Przepływ danych użytkownika
 
 ![User Flow Diagram](./assets/images/user_flow_diagram.svg)
 
@@ -63,57 +63,30 @@ Upewnij się, że masz skonfigurowane środowisko React Native zgodnie z [oficja
 
 1. **Sklonuj repozytorium**
 
-```bash
-git clone https://github.com/artur-IT/Promotional-savings.git
-cd Promotional-savings
-```
+`git clone https://github.com/artur-IT/Promotional-savings.git`
+
+`cd Promotional-savings`
 
 2. **Zainstaluj zależności** - `npm install`
 3. **Uruchom Metro bundler** - `npx react-native run-android` (Automatycznie uruchamia Metro w osobnym oknie node)
-4. **Kompilacja do pliku apk** - z głównego folderu `npx react-native build-android --mode=release`
+4. **Kompilacja do pliku apk** - w folderze android uruchom
 
-Przed pierwszym buildem upewnij się, że masz uruchomiony Metro bundler!
-`npx react-native start`
+`.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
+
+(Przed pierwszym buildem upewnij się, że masz uruchomiony Metro bundler!
+`npx react-native start`)
 
 Po zakończeniu budowania, plik APK będzie w:
 `android/app/build/outputs/apk/release/app-release.apk`
 
 Jeśli chcesz mniejszy APK, możesz zbudować tylko dla określonej architektury:
+
 cd android
 `./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
 
 ### 📱 Uruchamianie na urządzeniu
 
 - **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera i użyj emulatora z Android Studio lub wgraj plik apk i zainstaluj aplikację.
-
-## 📂 Struktura projektu
-
-```
-├── screens/                 # Ekrany aplikacji
-│   ├── Home/                # Ekran główny
-│   ├── AddSaving/           # Dodawanie oszczędności
-│   ├── Goal/                # Zarządzanie celami
-│   ├── HistorySavings/      # Historia oszczędności
-│   └── HistoryGoals/        # Historia celów
-├── components/              # Komponenty wielokrotnego użytku
-│   ├── AddSaving/           # Komponenty dodawania oszczędności
-│   ├── Goal/                # Komponenty celów
-│   ├── Home/                # Komponenty ekranu głównego
-│   └── HistorySaving/       # Komponenty historii
-├── store/                   # Zarządzanie stanem
-│   ├── useSavingsStore_Zustand.ts  # Store oszczędności
-│   ├── savingsStore.ts      # Dodatkowy store
-│   └── goalsStore.ts        # Store celów
-├── constants/               # Stałe aplikacji
-│   ├── colors.ts            # Paleta kolorów
-│   └── dataTypes.ts         # Typy danych
-├── utils/                   # Narzędzia pomocnicze
-│   └── storage.ts           # Konfiguracja MMKV
-├── assets/                  # Zasoby statyczne
-│   ├── fonts/               # Czcionki
-│   └── images/              # Obrazy i ikony
-└── types/                   # Definicje typów TypeScript
-```
 
 ## 🎨 Funkcjonalności szczegółowe
 
@@ -129,51 +102,37 @@ cd android
 - Śledzenie postępu w czasie rzeczywistym
 - Wizualizacja za pomocą paska postępu
 - Historia zakończonych celów
+- Histporia oszczędności
 
 ### Statystyki i raporty
 
 - Podsumowanie miesięczne i roczne
 - Ostatnio dodane oszczędności
-- Wizualny wykres postępu
 
 ### Przechowywanie danych
 
 - Wszystkie dane przechowywane lokalnie
 - Szybki dostęp dzięki MMKV
-- Automatyczne przywracanie stanu aplikacji
 
 ## 🔧 Rozwój aplikacji
 
-### Stylowanie
-
-- Kolory zdefiniowane w `constants/colors.ts`
-- Responsywny design dostosowany do różnych rozmiarów ekranów
-- Spójny system designu w całej aplikacji
+- Hmmmm
 
 ## 🐛 Rozwiązywanie problemów
 
 ### Typowe problemy
 
-1. **Metro bundler nie startuje**
+1. **Metro bundler nie startuje** - ` npx react-native start --reset-cache`
 
-   ```bash
-   npx react-native start --reset-cache
-   ```
-
-2. **Problemy z zależnościami**
-
-   ```bash
-   rm -rf node_modules
-   npm install
-   ```
+2. **Problemy z zależnościami** - `rm -rf node_modules
+npm install`
 
 3. **Problemy z Androidem**
-   ```bash
+
    cd android
-   ./gradlew clean
+   `./gradlew clean`
    cd ..
-   npm run android
-   ```
+   ` npm run android`
 
 Więcej informacji w [oficjalnej dokumentacji troubleshooting](https://reactnative.dev/docs/troubleshooting).
 
