@@ -32,6 +32,8 @@ const Button: React.FC<ButtonProps> = ({
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
+      marginHorizontal: 5,
+      marginVertical: 5,
       backgroundColor: colors.background.blue,
     },
 

@@ -64,7 +64,7 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
       };
     } else {
       return {
-        message: 'Czas zacząć oszczędzać! Możesz to zrobić!',
+        message: 'Czas zacząć oszczędzać!',
         emoji: '🚀',
         color: colors.accent,
       };

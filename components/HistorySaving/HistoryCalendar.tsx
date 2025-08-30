@@ -197,9 +197,10 @@ export default function HistoryCalendar({
                         {isLatestSavingFromActiveGoal(record.id) && (
                           <Text style={[styles.icon]}>
                             <Button
-                              title="usuń"
-                              width={60}
+                              title="❌"
+                              width={30}
                               height={30}
+                              bgColor="white"
                               onPress={() => {
                                 deleteSaving(record.id);
                               }}
