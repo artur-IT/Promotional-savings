@@ -1,4 +1,4 @@
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { Animated, StyleSheet, Text, View, ScrollView } from 'react-native';
 import React, { useRef, useState, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Top from '../../components/Top';
@@ -65,7 +65,10 @@ export default function Goal() {
   return (
     <>
       <Top />
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={styles.headerContainer}>
           <Text style={styles.title}>Mój Cel </Text>
 
@@ -96,16 +99,19 @@ export default function Goal() {
         <View style={styles.goal}>
           <GoalProgress variant="goal" />
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    height: '100%',
     backgroundColor: colors.background.main,
+    flex: 1,
+  },
+  contentContainer: {
+    minHeight: '100%',
+    paddingBottom: 50,
     marginTop: 10,
   },
   headerContainer: {

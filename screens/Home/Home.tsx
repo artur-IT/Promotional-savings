@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, ScrollView } from 'react-native';
 import { colors } from '../../constants/colors';
 import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
@@ -10,7 +10,10 @@ const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
 export default function HomeWithGoal() {
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Image source={TopImage} style={styles.topImage} />
       <Image source={PlaceholderImage} style={styles.image} />
       <View style={styles.titleContainer}>
@@ -28,19 +31,24 @@ export default function HomeWithGoal() {
       </View>
 
       <GoalProgress variant="home" />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     backgroundColor: colors.background.main,
-    height: '100%',
+    flex: 1,
+  },
+  contentContainer: {
+    alignItems: 'center',
+    minHeight: '100%',
+    paddingBottom: 50,
   },
   titleContainer: {
     marginTop: 30,
-    marginLeft: -200,
+    alignSelf: 'flex-start',
+    marginLeft: 20,
     display: 'flex',
     marginBottom: 30,
   },
@@ -53,19 +61,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -170,
     right: -10,
-    width: 400,
+    width: '100%',
+    maxWidth: 400,
     height: 400,
   },
   image: {
     position: 'absolute',
     top: 190,
-    width: 370,
+    width: '90%',
+    maxWidth: 370,
     height: 370,
     opacity: 0.3,
   },
   year: {
-    position: 'relative',
-    left: -100,
+    alignSelf: 'flex-start',
   },
   circles: {
     display: 'flex',

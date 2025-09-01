@@ -43,15 +43,13 @@ export default function YearSaving() {
   }, [allGoals]);
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.insideText}>
-          <Text style={styles.yearValue}>+{thisYearTotal} zł</Text>
-          <Text style={styles.infoText}>Zaoszczędzone</Text>
-          <Text style={styles.year}>{thisYear}</Text>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.insideText}>
+        <Text style={styles.yearValue}>+{thisYearTotal} zł</Text>
+        <Text style={styles.infoText}>Zaoszczędzone</Text>
+        <Text style={styles.year}>{thisYear}</Text>
       </View>
-    </>
+    </View>
   );
 }
 
@@ -61,7 +59,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 230,
-    borderRadius: 0,
+    borderBottomRightRadius: 20,
+    borderTopRightRadius: 20,
     backgroundColor: colors.background.orange,
   },
   year: {

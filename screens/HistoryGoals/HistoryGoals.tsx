@@ -1,11 +1,14 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import HistoryGoalsComponent from '../../components/HistoryGoals/HistoryGoals';
 
 export default function HistoryGoals() {
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <HistoryGoalsComponent />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -13,7 +16,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  contentContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: '100%',
+    paddingBottom: 50,
   },
 });

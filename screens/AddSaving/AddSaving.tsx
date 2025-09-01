@@ -1,11 +1,14 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Top from '../../components/Top';
 import DataSavings from '../../components/AddSaving/DataSavings';
 import { colors } from '../../constants/colors';
 
 export default function AddSavingScreen() {
   return (
-    <View style={styles.view}>
+    <ScrollView
+      style={styles.view}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Top />
       <View style={styles.container}>
         <Text style={styles.title}>Dzisiaj </Text>
@@ -13,14 +16,18 @@ export default function AddSavingScreen() {
       </View>
 
       <DataSavings />
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   view: {
     backgroundColor: colors.background.main,
-    height: '100%',
+    flex: 1,
+  },
+  contentContainer: {
+    minHeight: '100%',
+    paddingBottom: 50,
   },
   container: {
     display: 'flex',
