@@ -8,15 +8,32 @@ export default function AboutScreen() {
         <Text style={styles.title}>O aplikacji</Text>
 
         <Text style={styles.paragraph}>
-          Prosta aplikacja mobilna do śledzenia Twoich oszczędności. Pozwala
-          zapisywać kwoty, daty oraz kategorie na czym zaoszczędziłeś/aś
-          pieniądze.
+          Prosta aplikacja do śledzenia Twoich oszczędności. Zlicza
+          zaoszczędzone na różnych wydatkach pieniądze i sumuje je.
         </Text>
 
-        <Text style={styles.paragraph}>
-          Aplikacja zlicza Twoje zaoszczędzone na różnych wydatkach pieniądze i
-          sumuje je.
-        </Text>
+        <View style={styles.paragraph}>
+          <Text style={styles.bold}>Na przykład:</Text>
+          <Text style={styles.paragraph}>
+            Kupiłem w promocji 3 kostki masła płacąc za nie 10 zł zamiast 20 zł.
+            ZAOSZCZĘDZIŁEM na tej promocji 10 zł, ale nie widzę i nie skorzystam
+            z tych zaoszczędzonych 10 zł ponieważ zaraz o tym zapomnę.
+          </Text>
+          <Text style={[styles.bold, styles.listItem, { color: 'red' }]}>
+            🤔 Gdzie jest te 10 zł, które właśnie zaoszczędziłem?
+          </Text>
+          <Text style={[styles.bold, styles.listItem, { color: '#ff6c00' }]}>
+            💡 Ile takich małych kwot 'przepada' w naszej głowie?
+          </Text>
+          <Text style={[styles.bold, styles.listItem, { color: '#ff6c00' }]}>
+            ☝️ A gdyby notować te małe kwoty, uzbierać więcej i wydać je na coś
+            przyjemnego?
+          </Text>
+          <Text style={[styles.bold, styles.listItem, { color: 'green' }]}>
+            😊 Przedłuż radość z zaoszczędzonych pieniędzy! {'\n'} Notuj te małe
+            kwoty i wydaj je na bezkarnie! {'\n'}
+          </Text>
+        </View>
 
         <Text style={styles.title}>Jak to działa</Text>
 
@@ -25,11 +42,12 @@ export default function AboutScreen() {
         </Text>
 
         <Text style={[styles.paragraph, styles.bold]}>
-          2. Wprowadź kwotę zaoszczędzoną na promocji, datę kiedy ta kwota była
-          uzyskana oraz na czym zaoszczędziłeś/aś.
+          2. Wprowadź kwotę zaoszczędzoną na promocji lub usłudze.
         </Text>
 
-        <Text style={[styles.paragraph, styles.bold]}>2. Teraz zobaczysz:</Text>
+        <Text style={[styles.paragraph, styles.bold, { marginBottom: 0 }]}>
+          2. Teraz zobaczysz:
+        </Text>
         <View style={styles.listContainer}>
           <Text style={styles.listItem}>
             • sumę kwot zaoszczędzonych w tym miesiącu
@@ -41,25 +59,7 @@ export default function AboutScreen() {
             • postęp w osiągnięciu swojego celu
           </Text>
           <Text style={styles.listItem}>• historię swoich oszczędności</Text>
-          <Text style={styles.listItem}>• historię osiągniętych celów</Text>
-        </View>
-
-        <View style={styles.paragraph}>
-          <Text style={styles.bold}>Na przykład:</Text>
-          <Text style={styles.paragraph}>
-            Kupiłem w promocji 3 kostki masła płacąc za nie 10 zł zamiast 20 zł.
-            ZAOSZCZĘDZIŁEM na tej promocji 10 zł, ale nie widzę i nie skorzystam
-            z tych zaoszczędzonych 10 zł ponieważ zaraz o tym zapomnę. Gdzie
-            jest te 10 zł, które właśnie zaoszczędziłem? Ile takich małych kwot
-            'przepada' w naszej glowie? Gdyby nie zakup w promocji to musiałbym
-            wydać więcej. Przedłuż radość z zaoszczędzonych pieniędzy! Notuj te
-            małe kwoty i wydaj je na cos przyemnego, bo gdyby nie promocja to
-            musiałbym wyać więcej.
-          </Text>
-          <Text style={styles.paragraph}>
-            Teraz zapiszę te 10 zł do aplikacji i będę mógł je wydać na swój
-            cel!
-          </Text>
+          <Text style={styles.listItem}>• historię już osiągniętych celów</Text>
         </View>
 
         <Text>
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10,
     color: colors.text.primary,
+    marginBottom: 12,
   },
   paragraph: {
     color: colors.text.primary,
