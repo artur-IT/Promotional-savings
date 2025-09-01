@@ -6,7 +6,7 @@ import { Goal, GOAL_KEY } from '../constants/dataTypes';
 // Type for individual saving from Goal interface
 type Saving = NonNullable<Goal['savings']>[0];
 
-// Adapter dla AsyncStorage do użycia z Zustand persist
+// Adapter for AsyncStorage to use with Zustand persist
 const asyncStorageAdapter = {
   getItem: async (name: string) => {
     try {
@@ -75,7 +75,7 @@ const useSavingsStore = create<SavingsState>()(
 
       getActualGoal: () => {
         const { allGoals } = get();
-        // Zwraca tylko aktywny cel (bez endDate)
+        // Returns only active goal (without endDate)
         const activeGoals = allGoals.filter(goal => !goal.endDate);
         return activeGoals.length > 0
           ? activeGoals[activeGoals.length - 1]
@@ -84,7 +84,7 @@ const useSavingsStore = create<SavingsState>()(
 
       getLastGoal: () => {
         const { allGoals } = get();
-        // Zwraca ostatni cel (aktywny lub ukończony)
+        // Returns last goal (active or completed)
         return allGoals.length > 0 ? allGoals[allGoals.length - 1] : null;
       },
 
@@ -108,7 +108,7 @@ const useSavingsStore = create<SavingsState>()(
 
       getCompletedGoals: () => {
         const { allGoals } = get();
-        // Zwraca tylko ukończone cele (z endDate)
+        // Returns only completed goals (with endDate)
         return allGoals.filter(goal => goal.endDate);
       },
 
@@ -156,16 +156,16 @@ const useSavingsStore = create<SavingsState>()(
           if (activeGoalIndex !== -1) {
             const currentGoal = currentGoals[activeGoalIndex];
 
-            // Oblicz sumę wszystkich oszczędności
+            // Calculate sum of all savings
             const totalPromotionSum =
               currentGoal.savings?.reduce((sum, saving) => {
                 return sum + (saving.promotion || 0);
               }, 0) || 0;
 
-            // Znajdź datę ostatniej oszczędności (najnowszą datę)
-            let lastSavingDate = new Date().toISOString().split('T')[0]; // Domyślnie obecna data
+            // Find date of last saving (newest date)
+            let lastSavingDate = new Date().toISOString().split('T')[0]; // Default to current date
             if (currentGoal.savings && currentGoal.savings.length > 0) {
-              // Posortuj oszczędności według daty i weź ostatnią
+              // Sort savings by date and take the last one
               const sortedSavings = [...currentGoal.savings].sort(
                 (a, b) =>
                   new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -173,10 +173,10 @@ const useSavingsStore = create<SavingsState>()(
               lastSavingDate = sortedSavings[0].date;
             }
 
-            // Dodaj datę osiągnięcia celu i sumę oszczędności
+            // Add goal achievement date and savings sum
             currentGoals[activeGoalIndex] = {
               ...currentGoal,
-              endDate: lastSavingDate, // Użyj daty ostatniej oszczędności
+              endDate: lastSavingDate, // Use date of last saving
               totalPromotionSum: totalPromotionSum,
             };
           }
@@ -184,7 +184,7 @@ const useSavingsStore = create<SavingsState>()(
         });
       },
 
-      // Zwraca wszystkie oszczędności ze wszystkich celów
+      // Returns all savings from all goals
       getAllSavings: () => {
         const { allGoals } = get();
         const allSavings: Saving[] = [];
@@ -198,7 +198,7 @@ const useSavingsStore = create<SavingsState>()(
         return allSavings;
       },
 
-      // Usuwa konkretną oszczędność z celu (tylko z aktywnego celu)
+      // Removes specific saving from goal (only from active goal)
       deleteSaving: (savingId: number) => {
         set(state => {
           const currentGoals = [...state.allGoals];
@@ -218,7 +218,7 @@ const useSavingsStore = create<SavingsState>()(
         });
       },
 
-      // Sprawdza czy oszczędność należy do aktywnego celu
+      // Checks if saving belongs to active goal
       isSavingFromActiveGoal: (savingId: number) => {
         const { allGoals } = get();
         const activeGoal = allGoals.find(goal => !goal.endDate);
@@ -230,13 +230,13 @@ const useSavingsStore = create<SavingsState>()(
         return false;
       },
 
-      // Sprawdza czy oszczędność jest ostatnio dodaną w aktywnym celu
+      // Checks if saving is the latest added in active goal
       isLatestSavingFromActiveGoal: (savingId: number) => {
         const { allGoals } = get();
         const activeGoal = allGoals.find(goal => !goal.endDate);
 
         if (activeGoal && activeGoal.savings && activeGoal.savings.length > 0) {
-          // Znajdź oszczędność z najwyższym ID (ostatnio dodaną)
+          // Find saving with highest ID (latest added)
           const latestSaving = activeGoal.savings.reduce((latest, current) => {
             return current.id > latest.id ? current : latest;
           });
@@ -257,7 +257,7 @@ const useSavingsStore = create<SavingsState>()(
       }),
       onRehydrateStorage: () => state => {
         if (state && state.allGoals) {
-          // Konwersja dat z powrotem na obiekty Date jeśli są przechowywane jako stringi
+          // Convert dates back to Date objects if stored as strings
           state.allGoals = state.allGoals.map((goal: Goal) => ({
             ...goal,
             startDate:

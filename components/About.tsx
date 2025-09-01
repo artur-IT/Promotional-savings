@@ -47,13 +47,22 @@ export default function AboutScreen() {
         <View style={styles.paragraph}>
           <Text style={styles.bold}>Na przykład:</Text>
           <Text style={styles.paragraph}>
-            Zaoszczędziłem 17 zł na zakupie żywności, ale nie widzę i nie
-            skorzystam z tych zaoszczędzonych 17 zł ponieważ zaraz o tym
-            zapomnę. Gdzie jest te 17 zł, które właśnie zaoszczędziłem?
+            Kupiłem w promocji 3 kostki masła płacąc za nie 10 zł zamiast 20 zł.
+            ZAOSZCZĘDZIŁEM na tej promocji 10 zł, ale nie widzę i nie skorzystam
+            z tych zaoszczędzonych 10 zł ponieważ zaraz o tym zapomnę. Gdzie
+            jest te 10 zł, które właśnie zaoszczędziłem? Ile takich małych kwot
+            'przepada' w naszej glowie? Gdyby nie zakup w promocji to musiałbym
+            wydać więcej. Przedłuż radość z zaoszczędzonych pieniędzy! Notuj te
+            małe kwoty i wydaj je na cos przyemnego, bo gdyby nie promocja to
+            musiałbym wyać więcej.
+          </Text>
+          <Text style={styles.paragraph}>
+            Teraz zapiszę te 10 zł do aplikacji i będę mógł je wydać na swój
+            cel!
           </Text>
         </View>
 
-        <Text style={[styles.paragraph, styles.bold]}>
+        <Text>
           Teraz naprawdę zobaczysz ile zaoszczędziłeś na różnych zakupach lub
           usługach.
         </Text>
