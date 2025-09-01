@@ -1,22 +1,30 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import Top from '../../components/Top';
 import DataSavings from '../../components/AddSaving/DataSavings';
 import { colors } from '../../constants/colors';
 
 export default function AddSavingScreen() {
   return (
-    <ScrollView
+    <KeyboardAvoidingView
       style={styles.view}
-      contentContainerStyle={styles.contentContainer}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <Top />
-      <View style={styles.container}>
-        <Text style={styles.title}>Dzisiaj </Text>
-        <Text style={styles.title}>zaoszczędziłem</Text>
-      </View>
+      <View style={styles.contentContainer}>
+        <Top />
+        <View style={styles.container}>
+          <Text style={styles.title}>Dzisiaj </Text>
+          <Text style={styles.title}>zaoszczędziłem</Text>
+        </View>
 
-      <DataSavings />
-    </ScrollView>
+        <DataSavings />
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 

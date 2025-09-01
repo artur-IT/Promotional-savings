@@ -61,8 +61,11 @@ export default function HistoryGoalsComponent() {
       return 0;
     }
 
-    // Find the date of the first saving
-    const firstSavingDate = goal.savings[0]?.date;
+    // Find the date of the EARLIEST saving (not just first in array)
+    const sortedSavings = [...goal.savings].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+    const firstSavingDate = sortedSavings[0]?.date;
     const endDate = goal.endDate;
 
     if (!firstSavingDate || !endDate) {
@@ -140,7 +143,13 @@ export default function HistoryGoalsComponent() {
                   Zbierałem od:{' '}
                   <Text style={styles.dateValue}>
                     {item.savings && item.savings.length > 0
-                      ? formatDate(item.savings[0].date)
+                      ? formatDate(
+                          [...item.savings].sort(
+                            (a, b) =>
+                              new Date(a.date).getTime() -
+                              new Date(b.date).getTime(),
+                          )[0].date,
+                        )
                       : formatDate(item.startDate)}
                   </Text>
                 </Text>
