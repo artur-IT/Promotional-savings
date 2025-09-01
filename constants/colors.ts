@@ -1,40 +1,66 @@
-// Paleta kolorów aplikacji
 export const colors = {
-  // Kolory podstawowe
   primary: '#4A90E2',
   secondary: '#50C878',
   accent: '#FF6B6B',
 
-  // Tło
   background: {
     main: '#fff',
     card: '#c44601',
-    button: '#f57600',
     blue: '#0073e6',
+    orange: 'darkorange',
   },
 
-  // Tekst
   text: {
     primary: '#222222',
     secondary: '#555555',
     button_W: 'white',
-    button_B: 'black',
+    light: '#888',
+    title: '#0084CE',
   },
 
-  // Statusy
   status: {
     success: '#4CAF50',
-    warning: '#FFC107',
     error: '#F44336',
-    info: '#2196F3',
   },
 
-  // Inne
   border: '#DDDDDD',
   shadow: '#000000',
+
+  // Additional colors for better consistency
+  light: {
+    background: '#eee',
+  },
+
+  navigation: {
+    focused: '#4CAF50',
+    unfocused: '#757575',
+  },
+
+  calendar: {
+    blue: '#2563eb',
+    blueDark: '#1e40af',
+    blueLight: '#dbeafe',
+    blueVeryLight: '#eff6ff',
+    green: '#059669',
+    grayBorder: '#e5e7eb',
+    grayLight: '#f9fafb',
+    grayText: '#374151',
+    grayBackground: '#f3f4f6',
+  },
+
+  goals: {
+    purple: '#8B5CF6',
+    green: '#10B981',
+    blue: '#3B82F6',
+    orange: '#F59E0B',
+    red: '#EF4444',
+    lightGray: '#F9FAFB',
+    borderGray: '#777',
+    textGray: '#999',
+  },
 };
 
-// Motyw ciemny (opcjonalnie)
+// Dark mode colors - currently not used but ready for future implementation
 export const darkColors = {
   background: {
     main: '#121212',
@@ -47,7 +73,6 @@ export const darkColors = {
     light: '#999999',
     white: '#FFFFFF',
   },
-  // ... pozostałe kolory
 };
 
 export default colors;

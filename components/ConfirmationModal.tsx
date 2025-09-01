@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
+import { colors } from '../constants/colors';
 
 interface ConfirmationModalProps {
   visible: boolean;
@@ -90,13 +91,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background.main,
     borderRadius: 20,
     paddingTop: 25,
     paddingBottom: 25,
     paddingHorizontal: 20, // Normal padding for regular modal
     marginHorizontal: 10, // Normal margin
-    shadowColor: '#000',
+    shadowColor: colors.shadow,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -115,13 +116,13 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1F2937',
+    color: colors.text.primary,
     textAlign: 'center',
     marginBottom: 12,
   },
   modalMessage: {
     fontSize: 16,
-    color: '#4B5563',
+    color: colors.text.secondary,
     textAlign: 'center',
     marginBottom: 20,
     lineHeight: 22,
@@ -157,12 +158,12 @@ const styles = StyleSheet.create({
     // Color will be set dynamically via props
   },
   cancelButtonText: {
-    color: '#FFFFFF',
+    color: colors.text.button_W,
     fontSize: 16,
     fontWeight: '600',
   },
   confirmButtonText: {
-    color: '#FFFFFF',
+    color: colors.text.button_W,
     fontSize: 16,
     fontWeight: '600',
   },

@@ -194,7 +194,7 @@ export default function HistorySavings() {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
     height: '100%',
   },
   headerContainer: {
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
     marginBottom: 10,
     marginLeft: 20,
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   container: {
     display: 'flex',

@@ -339,16 +339,16 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginBottom: 100,
     fontSize: 18,
-    color: '#666',
+    color: colors.text.secondary,
     textAlign: 'center',
-    backgroundColor: 'none',
+    backgroundColor: 'transparent',
   },
   successContainer: {
     position: 'absolute',
     top: 200,
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   happy: {
     width: 150,
@@ -357,11 +357,11 @@ const styles = StyleSheet.create({
   success: {
     textAlign: 'center',
     fontSize: 30,
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   successValue: {
     fontSize: 30,
-    color: 'green',
+    color: colors.status.success,
     fontWeight: 'bold',
   },
 });

@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { colors } from '../../constants/colors';
 
 export default function MonthSaving() {
   const { getAllGoals, allGoals } = useSavingsStore();
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 3,
     borderRadius: 95,
-    backgroundColor: 'orange',
+    backgroundColor: colors.background.orange,
   },
   insideText: {
     display: 'flex',
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 0,
     fontSize: 36,
-    color: 'white',
+    color: colors.text.button_W,
   },
   monthName: {
     display: 'flex',
     margin: 0,
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'white',
+    color: colors.text.button_W,
   },
 });

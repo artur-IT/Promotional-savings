@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import Top from '../../components/Top';
 import DataSavings from '../../components/AddSaving/DataSavings';
+import { colors } from '../../constants/colors';
 
 export default function AddSavingScreen() {
   return (
@@ -18,7 +19,7 @@ export default function AddSavingScreen() {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.main,
     height: '100%',
   },
   container: {
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
     marginBottom: 30,
     marginLeft: 20,
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   title: {
     fontSize: 26,

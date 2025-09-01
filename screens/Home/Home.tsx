@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { colors } from '../../constants/colors';
 import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
@@ -34,7 +35,7 @@ export default function HomeWithGoal() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
     height: '100%',
   },
   titleContainer: {
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    color: '#0084CE',
+    color: colors.text.title,
   },
 
   topImage: {

@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
+import { colors } from '../../constants/colors';
 
 // Type for individual saving from Goal interface
 type Saving = NonNullable<Goal['savings']>[0];
@@ -255,18 +256,18 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'left',
-    color: '#2563eb', // blue-600
+    color: colors.calendar.blue,
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: '#dbeafe',
+    backgroundColor: colors.calendar.blueLight,
     padding: 12,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -274,79 +275,79 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontWeight: '600',
-    color: '#1e40af', // blue-800
+    color: colors.calendar.blueDark,
     // borderColor: 'black',
     // borderWidth: 1,
     // borderStyle: 'solid',
   },
   monthHeader: {
-    backgroundColor: '#eff6ff', // blue-50
+    backgroundColor: colors.calendar.blueVeryLight,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderLeftWidth: 4,
-    borderLeftColor: '#3b82f6', // blue-500
+    borderLeftColor: colors.primary,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   monthTitle: {
     fontWeight: 'bold',
-    color: '#1d4ed8', // blue-700
+    color: colors.calendar.blue,
   },
   monthTotalAmount: {
     fontWeight: '500',
-    color: '#059669', // green-600
+    color: colors.calendar.green,
   },
   recordRow: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb', // gray-200
+    borderBottomColor: colors.calendar.grayBorder,
   },
   yearRow: {
     flexDirection: 'row',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb', // gray-200
-    backgroundColor: '#f9fafb', // gray-50
+    borderBottomColor: colors.calendar.grayBorder,
+    backgroundColor: colors.calendar.grayLight,
   },
   yearText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1d4ed8', // blue-700
+    color: colors.calendar.blue,
   },
   yearAmount: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#059669', // green-600
+    color: colors.calendar.green,
   },
   evenRow: {
-    backgroundColor: '#f9fafb', // gray-50
+    backgroundColor: colors.calendar.grayLight,
   },
   oddRow: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   recordText: {
-    color: '#374151', // gray-700
+    color: colors.calendar.grayText,
   },
   amountText: {
     fontWeight: '500',
-    color: '#059669', // green-600
+    color: colors.calendar.green,
   },
   footer: {
     marginTop: 16,
-    backgroundColor: '#f3f4f6', // gray-100
+    backgroundColor: colors.calendar.grayBackground,
     padding: 12,
     borderRadius: 8,
   },
   footerText: {
     textAlign: 'center',
-    color: '#374151', // gray-700
+    color: colors.calendar.grayText,
   },
   totalAmount: {
     fontWeight: 'bold',
-    color: '#059669', // green-600
+    color: colors.calendar.green,
   },
   flex1: {
     flex: 1,

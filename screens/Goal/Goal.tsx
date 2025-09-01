@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
     marginTop: 10,
   },
   headerContainer: {

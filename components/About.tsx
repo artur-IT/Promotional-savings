@@ -1,4 +1,5 @@
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { colors } from '../constants/colors';
 
 export default function AboutScreen() {
   return (
@@ -64,7 +65,7 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: colors.light.background,
   },
   container: {
     padding: 20,
@@ -74,10 +75,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
-    color: '#222',
+    color: colors.text.primary,
   },
   paragraph: {
-    color: '#222',
+    color: colors.text.primary,
     marginBottom: 12,
     textAlign: 'justify',
     lineHeight: 22,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   listItem: {
-    color: '#222',
+    color: colors.text.primary,
     marginBottom: 2,
     lineHeight: 22,
   },

@@ -1,6 +1,7 @@
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { colors } from '../../constants/colors';
 
 export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 3,
     borderRadius: 95,
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   savingItem: {
     fontSize: 14,
@@ -79,6 +80,6 @@ const styles = StyleSheet.create({
   noData: {
     fontSize: 12,
     fontStyle: 'italic',
-    color: '#888',
+    color: colors.text.light,
   },
 });

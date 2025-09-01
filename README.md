@@ -68,7 +68,7 @@ Upewnij się, że masz skonfigurowane środowisko React Native zgodnie z [oficja
 `cd Promotional-savings`
 
 2. **Zainstaluj zależności** - `npm install`
-3. **Uruchom Metro bundler** - `npx react-native run-android` (Automatycznie uruchamia Metro w osobnym oknie node)
+3. **Uruchom Metro bundler** - `npx react-native run-android` (Automatycznie uruchamia Metro)
 4. **Kompilacja do pliku apk** - w folderze android uruchom
 
 `.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
@@ -79,7 +79,7 @@ Upewnij się, że masz skonfigurowane środowisko React Native zgodnie z [oficja
 Po zakończeniu budowania, plik APK będzie w:
 `android/app/build/outputs/apk/release/app-release.apk`
 
-Jeśli chcesz mniejszy APK, możesz zbudować tylko dla określonej architektury:
+Jeśli chcesz mniejszy APK, możesz zbudować tylko dla określonej architektury (przykład dla Androida):
 
 cd android
 `./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`

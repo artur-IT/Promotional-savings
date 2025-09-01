@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
 import ConfirmationModal from '../ConfirmationModal';
+import { colors } from '../../constants/colors';
 
 export default function HistoryGoalsComponent() {
   const { deleteAllGoals, completeGoal } = useSavingsStore();
@@ -178,7 +179,7 @@ export default function HistoryGoalsComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.main,
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 16,
@@ -196,59 +197,59 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 40,
     marginBottom: 10,
-    color: '#333',
+    color: colors.text.primary,
   },
   subtitle: {
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 16,
-    color: '#666',
+    color: colors.text.secondary,
   },
   text: {
     fontSize: 16,
     fontWeight: '500',
     marginTop: 4,
-    color: '#333',
+    color: colors.text.primary,
   },
   goalName: {
-    color: '#8B5CF6',
+    color: colors.goals.purple,
     fontWeight: 'bold',
   },
   greenValue: {
-    color: '#10B981',
+    color: colors.goals.green,
     fontWeight: 'bold',
   },
   blueValue: {
-    color: '#3B82F6',
+    color: colors.goals.blue,
     fontWeight: 'bold',
   },
   dateValue: {
-    color: '#F59E0B',
+    color: colors.goals.orange,
     fontWeight: 'bold',
   },
   daysValue: {
-    color: '#EF4444',
+    color: colors.goals.red,
     fontWeight: 'bold',
   },
   separator: {
     fontSize: 14,
-    color: '#999',
+    color: colors.goals.textGray,
     marginTop: 8,
     textAlign: 'center',
   },
   goalAchived: {
     marginTop: 20,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: colors.goals.lightGray,
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#777',
+    borderColor: colors.goals.borderGray,
     width: '100%',
     maxWidth: 350,
   },
   noGoalsText: {
     fontSize: 18,
-    color: '#666',
+    color: colors.text.secondary,
     textAlign: 'center',
     marginTop: 40,
     fontStyle: 'italic',

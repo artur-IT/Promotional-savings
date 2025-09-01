@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, View, StatusBar } from 'react-native';
+import { colors } from './constants/colors';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
 import Goal from './screens/Goal/Goal';
@@ -74,7 +75,7 @@ function BottomTabNavigator() {
         },
         // Tab bar styling
         tabBarStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: colors.background.main,
           borderTopWidth: 1,
           // borderTopColor: '#000',
           // borderLeftColor: '#000',
@@ -98,7 +99,9 @@ function BottomTabNavigator() {
               style={{
                 fontSize: focused ? 14 : 12,
                 fontWeight: focused ? 'bold' : 'normal',
-                color: focused ? '#4CAF50' : '#757575',
+                color: focused
+                  ? colors.navigation.focused
+                  : colors.navigation.unfocused,
               }}
             >
               Dom
@@ -115,7 +118,9 @@ function BottomTabNavigator() {
               style={{
                 fontSize: focused ? 14 : 12,
                 fontWeight: focused ? 'bold' : 'normal',
-                color: focused ? '#4CAF50' : '#757575',
+                color: focused
+                  ? colors.navigation.focused
+                  : colors.navigation.unfocused,
               }}
             >
               Cel
@@ -132,7 +137,9 @@ function BottomTabNavigator() {
               style={{
                 fontSize: focused ? 14 : 12,
                 fontWeight: focused ? 'bold' : 'normal',
-                color: focused ? '#4CAF50' : '#757575',
+                color: focused
+                  ? colors.navigation.focused
+                  : colors.navigation.unfocused,
               }}
             >
               Dodaj
@@ -149,7 +156,9 @@ function BottomTabNavigator() {
               style={{
                 fontSize: focused ? 14 : 12,
                 fontWeight: focused ? 'bold' : 'normal',
-                color: focused ? '#4CAF50' : '#757575',
+                color: focused
+                  ? colors.navigation.focused
+                  : colors.navigation.unfocused,
               }}
             >
               Osiągnięte
@@ -166,7 +175,9 @@ function BottomTabNavigator() {
               style={{
                 fontSize: focused ? 14 : 12,
                 fontWeight: focused ? 'bold' : 'normal',
-                color: focused ? '#4CAF50' : '#757575',
+                color: focused
+                  ? colors.navigation.focused
+                  : colors.navigation.unfocused,
               }}
             >
               Historia
@@ -183,7 +194,9 @@ function BottomTabNavigator() {
               style={{
                 fontSize: focused ? 14 : 12,
                 fontWeight: focused ? 'bold' : 'normal',
-                color: focused ? '#4CAF50' : '#757575',
+                color: focused
+                  ? colors.navigation.focused
+                  : colors.navigation.unfocused,
               }}
             >
               Info

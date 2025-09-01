@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { colors } from '../../constants/colors';
 
 export default function YearSaving() {
   const { getAllGoals, allGoals } = useSavingsStore();
@@ -9,19 +10,17 @@ export default function YearSaving() {
 
   // Function to calculate the sum of deposits from this year
   const calculateThisYearSavings = () => {
-    const allGoals = getAllGoals(); // Get goals inside the function
-    const currentYear = new Date().getFullYear(); // Get current year
+    const allGoals = getAllGoals();
+    const currentYear = new Date().getFullYear();
     setThisYear(currentYear);
     let totalSavings = 0;
 
-    // Check if there are any goals before processing
     if (allGoals.length === 0) {
       return 0;
     }
 
     // Go through each goal
     allGoals.forEach(goal => {
-      // Check if goal has savings
       if (goal.savings) {
         // Go through each saving in the goal
         goal.savings.forEach(saving => {
@@ -63,12 +62,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 230,
     borderRadius: 0,
-    backgroundColor: 'darkorange',
+    backgroundColor: colors.background.orange,
   },
   year: {
     margin: 0,
     fontSize: 20,
-    color: 'white',
+    color: colors.text.button_W,
   },
   insideText: {
     display: 'flex',
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 15,
     marginBottom: 15,
-    color: 'white',
+    color: colors.text.button_W,
   },
   yearValue: {
     display: 'flex',
@@ -84,12 +83,12 @@ const styles = StyleSheet.create({
     margin: 0,
     fontSize: 40,
     fontWeight: 'bold',
-    color: 'white',
+    color: colors.text.button_W,
   },
   infoText: {
     display: 'flex',
     margin: 0,
     fontSize: 25,
-    color: 'white',
+    color: colors.text.button_W,
   },
 });
