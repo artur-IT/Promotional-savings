@@ -36,8 +36,12 @@ export default function Goal() {
     return totalPromotionSum >= currentGoal.targetAmount;
   }, [currentGoal]);
 
-  const addHandle = (buttonTitle: string) => {
-    buttonTitle === 'edit' ? setEditMode(true) : setEditMode(false);
+  // Determine button title and action based on goal state
+  const buttonTitle = !currentGoal || isGoalAchieved ? 'Nowy' : 'Edytuj';
+  const isEditMode = buttonTitle === 'Edytuj';
+
+  const addHandle = () => {
+    setEditMode(isEditMode);
 
     if (showForm) {
       Animated.timing(fadeAnim, {
@@ -65,64 +69,48 @@ export default function Goal() {
   return (
     <>
       <Top />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.headerContainer}>
+
+      <View style={styles.headerContainer}>
+        <View style={styles.headerContent}>
           <Text style={styles.title}>Mój Cel </Text>
-
-          {/* Show 'New' button only when there's no current goal OR goal is achieved */}
-          {(!currentGoal || isGoalAchieved) && (
-            <Button title="Nowy" onPress={() => addHandle('new')} />
-          )}
-
-          {/* Show 'Edit' button only when there's a current goal AND it's not achieved */}
-          {currentGoal && !isGoalAchieved && (
-            <Button title="Edytuj" onPress={() => addHandle('edit')} />
-          )}
-
+          <Button title={buttonTitle} onPress={addHandle} />
           <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
-
-        {showForm && (
-          <View style={styles.showForm}>
-            <Animated.View style={{ opacity: fadeAnim }}>
-              <EditTargetForm
-                onFormClose={() => setShowForm(false)}
-                editGoal={editMode}
-              />
-            </Animated.View>
-          </View>
-        )}
 
         <View style={styles.goal}>
           <GoalProgress variant="goal" />
         </View>
-      </ScrollView>
+      </View>
+
+      {showForm && (
+        <View style={styles.showForm}>
+          <Animated.View style={{ opacity: fadeAnim }}>
+            <EditTargetForm
+              onFormClose={() => setShowForm(false)}
+              editGoal={editMode}
+            />
+          </Animated.View>
+        </View>
+      )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background.main,
-    flex: 1,
-  },
-  contentContainer: {
-    minHeight: '100%',
-    paddingBottom: 50,
-    marginTop: 10,
-  },
   headerContainer: {
-    position: 'relative',
-    top: 40,
-    width: 100,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
     fontSize: 26,
     marginBottom: 10,
-    marginLeft: 20,
     backgroundColor: colors.background.main,
-    zIndex: 10,
+    zIndex: 0,
+  },
+  headerContent: {
+    top: 120,
+    marginLeft: 20,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 26,
@@ -130,10 +118,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   goal: {
-    marginTop: -20,
-    marginBottom: 30,
+    marginTop: 70,
   },
   showForm: {
-    zIndex: 100,
+    zIndex: 10,
   },
 });

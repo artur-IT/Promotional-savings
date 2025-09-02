@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 70,
-    backgroundColor: 'white',
+    backgroundColor: colors.background.main,
   },
   motivationalContainer: {
     alignItems: 'center',
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   },
   successValue: {
     fontSize: 30,
-    color: colors.status.success,
+    color: 'green',
     fontWeight: 'bold',
   },
 });

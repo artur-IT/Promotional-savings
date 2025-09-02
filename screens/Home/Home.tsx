@@ -5,7 +5,6 @@ import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Goal/GoalProgress';
 
-const TopImage = require('../../assets/images/top_bg.gif');
 const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
 export default function HomeWithGoal() {
@@ -14,7 +13,7 @@ export default function HomeWithGoal() {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      <Image source={TopImage} style={styles.topImage} />
+      {/* <Image source={TopImage} style={styles.topImage} /> */}
       <Image source={PlaceholderImage} style={styles.image} />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Promocyjne </Text>
@@ -47,16 +46,17 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginTop: 30,
-    alignSelf: 'flex-start',
-    marginLeft: 20,
+    alignSelf: 'center',
     display: 'flex',
-    marginBottom: 30,
+    marginBottom: 40,
   },
   title: {
-    fontSize: 32,
+    fontFamily: 'PoiretOne', // Prosta nazwa pliku
     color: colors.text.title,
+    textAlign: 'center',
+    fontSize: 32,
+    letterSpacing: 1, // Dodatkowo dla piękna
   },
-
   topImage: {
     position: 'absolute',
     top: -170,

@@ -22,6 +22,7 @@
     "react-native-progress": "^5.0.1",
     "react-native-safe-area-context": "^5.5.0",
     "react-native-screens": "^4.11.1",
+    "react-native-svg": "^15.12.1",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -39,6 +40,7 @@
     "@types/react-test-renderer": "^19.1.0",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
+    "react-native-asset": "^2.1.1",
     "react-test-renderer": "19.1.0",
     "typescript": "5.0.4"
   },
