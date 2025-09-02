@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   headerContent: {
-    top: 120,
+    top: 150,
     marginLeft: 20,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   goal: {
-    marginTop: 70,
+    marginTop: 90,
   },
   showForm: {
     zIndex: 10,

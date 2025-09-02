@@ -4,6 +4,7 @@ import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
 import ConfirmationModal from '../ConfirmationModal';
 import { colors } from '../../constants/colors';
+import Top from '../Top';
 
 export default function HistoryGoalsComponent() {
   const { deleteAllGoals, completeGoal } = useSavingsStore();
@@ -100,12 +101,9 @@ export default function HistoryGoalsComponent() {
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Usuń wszystkie cele!"
-        width={200}
-        bgColor="red"
-        onPress={handleDeleteAllGoals}
-      />
+      <View style={styles.topContainer}>
+        <Top />
+      </View>
 
       <Text style={styles.title}>Historia Osiągniętych Celów</Text>
 
@@ -169,6 +167,13 @@ export default function HistoryGoalsComponent() {
         )}
       </ScrollView>
 
+      <Button
+        title="Usuń wszystkie cele!"
+        width={170}
+        bgColor="red"
+        onPress={handleDeleteAllGoals}
+      />
+
       {/* Confirmation modal for deleting all goals */}
       <ConfirmationModal
         visible={showAlert}
@@ -187,11 +192,13 @@ export default function HistoryGoalsComponent() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colors.background.main,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    padding: 16,
+  },
+  topContainer: {
+    position: 'absolute',
+    width: '100%',
   },
   scrollView: {
     flex: 1,
@@ -204,7 +211,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 40,
+    marginTop: 150,
     marginBottom: 10,
     color: colors.text.primary,
   },

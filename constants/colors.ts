@@ -60,19 +60,4 @@ export const colors = {
   },
 };
 
-// Dark mode colors - currently not used but ready for future implementation
-export const darkColors = {
-  background: {
-    main: '#121212',
-    card: '#1E1E1E',
-    dark: '#2C2C2C',
-  },
-  text: {
-    primary: '#FFFFFF',
-    secondary: '#CCCCCC',
-    light: '#999999',
-    white: '#FFFFFF',
-  },
-};
-
 export default colors;
