@@ -2,6 +2,7 @@ import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../constants/colors';
+import { fonts } from '../../constants/fonts';
 
 export default function LastAdd() {
   const [lastTwoSavings, setLastTwoSavings] = useState<number[]>([]);
@@ -46,7 +47,7 @@ export default function LastAdd() {
 
   return (
     <View style={styles.section}>
-      <Text>Ostatnio:</Text>
+      <Text style={styles.savingItem}>Ostatnio:</Text>
       {lastTwoSavings.length > 0 ? (
         lastTwoSavings.map((saving, index) => (
           <Text key={index} style={styles.savingItem}>
@@ -76,10 +77,12 @@ const styles = StyleSheet.create({
   savingItem: {
     fontSize: 14,
     marginVertical: 2,
+    fontFamily: fonts.family.secondary,
   },
   noData: {
     fontSize: 12,
     fontStyle: 'italic',
     color: colors.text.light,
+    fontFamily: fonts.family.secondary,
   },
 });

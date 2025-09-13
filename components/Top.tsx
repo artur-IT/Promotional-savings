@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: 20,
     fontFamily: fonts.family.primary,
-    color: '#ffffff',
+    color: '#fff',
     fontSize: 24,
   },
   image: {

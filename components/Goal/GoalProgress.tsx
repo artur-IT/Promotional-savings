@@ -3,6 +3,7 @@ import ProgressBar from 'react-native-progress/Bar';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { useEffect, useRef, useCallback, useMemo } from 'react';
 import { colors } from '../../constants/colors';
+import { fonts } from '../../constants/fonts';
 
 interface GoalProgressProps {
   variant?: 'home' | 'goal';
@@ -251,9 +252,9 @@ const styles = StyleSheet.create({
   },
   motivationalText: {
     fontSize: 18,
-    fontWeight: '600',
     textAlign: 'center',
     lineHeight: 24,
+    fontFamily: fonts.family.roboto,
   },
   homeContainer: {
     justifyContent: 'center',
@@ -276,11 +277,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'left',
     marginTop: 10,
+    fontFamily: fonts.family.roboto,
   },
   homeGoal: {
     width: 250,
     fontSize: 30,
     textAlign: 'left',
+    fontFamily: fonts.family.roboto,
   },
   homeHappy: {
     position: 'absolute',
@@ -323,12 +326,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'right',
     marginTop: 10,
+    fontFamily: fonts.family.roboto,
   },
-  descriptionTitle: { fontSize: 30, textAlign: 'right' },
+  descriptionTitle: {
+    fontSize: 30,
+    textAlign: 'right',
+    fontFamily: fonts.family.roboto,
+  },
   goal: {
     width: 250,
     fontSize: 30,
     textAlign: 'left',
+    fontFamily: fonts.family.roboto,
   },
   progressSection: {
     width: 250,
@@ -342,6 +351,7 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textAlign: 'center',
     backgroundColor: 'transparent',
+    fontFamily: fonts.family.roboto,
   },
   successContainer: {
     position: 'absolute',
@@ -358,6 +368,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     backgroundColor: colors.background.main,
+    fontFamily: fonts.family.roboto,
   },
   successValue: {
     fontSize: 30,

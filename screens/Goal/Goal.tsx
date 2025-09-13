@@ -7,6 +7,7 @@ import GoalProgress from '../../components/Goal/GoalProgress';
 import Button from '../../components/Button';
 import colors from '../../constants/colors';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { fonts } from '../../constants/fonts';
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     marginLeft: 10,
     marginBottom: 10,
+    fontFamily: fonts.family.roboto,
   },
   goal: {
     marginTop: 90,
