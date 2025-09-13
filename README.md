@@ -2,18 +2,15 @@
 
 # 💰 Promocyjne Oszczędności
 
-Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem finansowym.
+Darmowa aplikacja mobilna na telefony z Androidem, która pomaga użytkownikom śledzić pieniądze zaoszczędzone dzięki promocjom i okazjom. Aplikacja umożliwia ustawianie celów finansowych i monitorowanie postępów w ich realizacji.
 
-## 📱 O aplikacji
-
-**Promocyjne Oszczędności** to intuicyjna aplikacja mobilna, która pomaga użytkownikom śledzić pieniądze zaoszczędzone dzięki promocjom i okazjom. Aplikacja umożliwia ustawianie celów finansowych i monitorowanie postępów w ich realizacji.
+Działa offline!
 
 ### ✨ Główne funkcjonalności
 
 - **📊 Śledzenie oszczędności** - Dodawanie i kategoryzowanie zaoszczędzonych kwot
-- **🎯 Zarządzanie celami** - Ustawianie i monitorowanie celów finansowych
-- **📈 Statystyki** - Przegląd oszczędności miesięcznych i rocznych
-- **📅 Historia** - Pełna historia oszczędności z kalendarzem
+- **🎯 Zarządzanie celami** - Ustawianie i monitorowanie celu finansowego
+- **📅 Historia** - Historia oszczędności miesiecznych i rocznych
 - **🏆 Historia celów** - Przegląd wszystkich zrealizowanych celów
 - **💾 Lokalne przechowywanie** - Dane zapisywane lokalnie na urządzeniu
 
@@ -29,13 +26,12 @@ Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem f
 - **AddSaving** - Dodawanie nowych oszczędności
 - **Goal** - Zarządzanie celem finansowym
 - **HistorySavings** - Historia wszystkich oszczędności
-- **HistoryGoals** - Historia celów finansowych
+- **HistoryGoals** - Historia osiągniętych celów finansowych
 
 #### Zarządzanie stanem
 
 - **Zustand** - Główny store dla oszczędności
 - **MMKV** - Szybkie, lokalne przechowywanie danych
-- **Persist middleware** - Automatyczne zapisywanie stanu
 
 #### Komponenty
 
@@ -48,16 +44,12 @@ Aplikacja mobilna do śledzenia oszczędności z promocji i zarządzania celem f
 - **TypeScript** - Typowanie statyczne
 - **React Navigation** - Nawigacja między ekranami
 - **Zustand** - Zarządzanie stanem aplikacji
-- **MMKV** - Szybkie przechowywanie danych
+- **ASync Storage** - Szybkie przechowywanie danych
 - **React Native Calendars** - Komponenty kalendarza
 - **React Native Progress** - Paski postępu
 - **Date-fns** - Manipulacja datami
 
 ## 🚀 Instalacja i uruchomienie
-
-### Wymagania wstępne
-
-Upewnij się, że masz skonfigurowane środowisko React Native zgodnie z [oficjalnym przewodnikiem](https://reactnative.dev/docs/set-up-your-environment).
 
 ### Instalacja
 
@@ -72,9 +64,6 @@ Upewnij się, że masz skonfigurowane środowisko React Native zgodnie z [oficja
 4. **Kompilacja do pliku apk** - w folderze android uruchom
 
 `.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
-
-(Przed pierwszym buildem upewnij się, że masz uruchomiony Metro bundler!
-`npx react-native start`)
 
 Po zakończeniu budowania, plik APK będzie w:
 `android/app/build/outputs/apk/release/app-release.apk`
@@ -98,25 +87,21 @@ cd android
 
 ### Cele finansowe
 
+- Nazwa celu finansowego
 - Ustawianie docelowej kwoty
 - Śledzenie postępu w czasie rzeczywistym
 - Wizualizacja za pomocą paska postępu
 - Historia zakończonych celów
-- Histporia oszczędności
+- Historia oszczędności
 
 ### Statystyki i raporty
 
 - Podsumowanie miesięczne i roczne
 - Ostatnio dodane oszczędności
 
-### Przechowywanie danych
-
-- Wszystkie dane przechowywane lokalnie
-- Szybki dostęp dzięki MMKV
-
 ## 🔧 Rozwój aplikacji
 
-- Hmmmm
+- Hmmm
 
 ## 🐛 Rozwiązywanie problemów
 
@@ -137,3 +122,6 @@ npm install`
 Więcej informacji w [oficjalnej dokumentacji troubleshooting](https://reactnative.dev/docs/troubleshooting).
 
 ---
+
+<span style="font-size: 24px">👌</span> Jeśli Ci się podoba, możesz kupić nam 💑 kawę
+<a href="https://buycoffee.to/artur-dev" target="_blank"><span style="font-size: 32px">☕</span></a>

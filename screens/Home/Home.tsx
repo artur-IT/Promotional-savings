@@ -1,9 +1,10 @@
-import { Image, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Image, StyleSheet, View, ScrollView } from 'react-native';
 import { colors } from '../../constants/colors';
 import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Goal/GoalProgress';
+import Top from '../../components/Top';
 
 const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
@@ -13,11 +14,9 @@ export default function HomeWithGoal() {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      {/* <Image source={TopImage} style={styles.topImage} /> */}
       <Image source={PlaceholderImage} style={styles.image} />
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Promocyjne </Text>
-        <Text style={styles.title}>oszczędności</Text>
+        <Top hideImage={true} />
       </View>
 
       <View style={styles.year}>
@@ -37,7 +36,6 @@ export default function HomeWithGoal() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background.main,
-    flex: 1,
   },
   contentContainer: {
     alignItems: 'center',
@@ -45,10 +43,10 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   titleContainer: {
-    marginTop: 30,
     alignSelf: 'center',
     display: 'flex',
     marginBottom: 40,
+    width: '100%',
   },
   title: {
     fontFamily: 'PoiretOne', // Prosta nazwa pliku
@@ -74,6 +72,7 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   year: {
+    marginTop: 100,
     alignSelf: 'flex-start',
   },
   circles: {

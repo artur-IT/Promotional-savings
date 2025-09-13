@@ -31,7 +31,7 @@ export default function AboutScreen() {
           </Text>
           <Text style={[styles.bold, styles.listItem, { color: 'green' }]}>
             😊 Przedłuż radość z zaoszczędzonych pieniędzy! {'\n'} Notuj te małe
-            kwoty i wydaj je na bezkarnie! {'\n'}
+            kwoty i wydaj je bezkarnie na co chcesz! {'\n'}
           </Text>
         </View>
 

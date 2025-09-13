@@ -1,9 +1,15 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { fonts } from '../constants/fonts';
 
 const PlaceholderImage = require('../assets/images/money-bag_big.png');
 
-export default function Header() {
+// Props interface - definiuje jakie właściwości może przyjąć komponent
+interface TopProps {
+  hideImage?: boolean; // ? oznacza, że to opcjonalne
+}
+
+export default function Header({ hideImage = false }: TopProps) {
   return (
     <View style={styles.container}>
       {/* SVG background */}
@@ -22,9 +28,14 @@ export default function Header() {
         />
       </Svg>
 
-      <Text style={styles.slogan}>Promocyjne</Text>
-      <Image source={PlaceholderImage} style={styles.image} />
-      <Text style={styles.slogan}>oszczędności</Text>
+      <Text style={styles.slogan}>
+        {hideImage ? 'PROMOCYJNE' : 'Promocyjne'}
+      </Text>
+      {/* Pokazuj obrazek tylko gdy hideImage nie jest true */}
+      {!hideImage && <Image source={PlaceholderImage} style={styles.image} />}
+      <Text style={styles.slogan}>
+        {hideImage ? ' OSZCZĘDNOŚCI' : 'Oszczędności'}
+      </Text>
     </View>
   );
 }
@@ -47,8 +58,9 @@ const styles = StyleSheet.create({
   slogan: {
     position: 'relative',
     top: 20,
-    fontSize: 24,
+    fontFamily: fonts.family.primary,
     color: '#ffffff',
+    fontSize: 24,
   },
   image: {
     position: 'relative',

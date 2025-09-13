@@ -2,6 +2,14 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "assets/fonts/GowunDodum.ttf",
+      "sha1": "4b91808b18651885d28f0ac16ef26b3db7936b6b"
+    },
+    {
+      "path": "assets/fonts/Lexend.ttf",
+      "sha1": "b5a534661dfdea2134cfdaf85343b95d2aa251a9"
+    },
+    {
       "path": "assets/fonts/PoiretOne.ttf",
       "sha1": "75769d8c5e3ff4a2cd158b8c1ed59bb5ecea8c8a"
     },

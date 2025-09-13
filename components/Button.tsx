@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
 import colors from '../constants/colors';
+import { fonts } from '../constants/fonts';
 
 interface ButtonProps {
   bgColor?: string;
@@ -41,12 +42,11 @@ const Button: React.FC<ButtonProps> = ({
       fontSize: 16,
       color: colors.text.button_W,
       textAlign: 'center',
-      fontFamily: 'Quicksand',
+      fontFamily: fonts.family.roboto,
     },
     text2: {
-      // fontSize: 18,
       color: colors.text.button_W,
-      fontFamily: 'Lexend',
+      fontFamily: fonts.family.primary,
     },
   });
 

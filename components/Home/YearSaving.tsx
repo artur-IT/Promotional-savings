@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { colors } from '../../constants/colors';
+import { fonts } from '../../constants/fonts';
 
 export default function YearSaving() {
   const { getAllGoals, allGoals } = useSavingsStore();
@@ -65,8 +66,9 @@ const styles = StyleSheet.create({
   },
   year: {
     margin: 0,
-    fontSize: 20,
+    fontFamily: fonts.family.primary,
     color: colors.text.button_W,
+    fontSize: 20,
   },
   insideText: {
     display: 'flex',
@@ -80,14 +82,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-end',
     margin: 0,
-    fontSize: 40,
-    fontWeight: 'bold',
+    fontFamily: fonts.family.primary,
     color: colors.text.button_W,
+    fontSize: 40,
   },
   infoText: {
     display: 'flex',
     margin: 0,
-    fontSize: 25,
+    fontFamily: fonts.family.primary,
     color: colors.text.button_W,
+    fontSize: 32,
   },
 });
