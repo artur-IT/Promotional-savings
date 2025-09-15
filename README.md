@@ -1,41 +1,13 @@
 ## 📱 Screenshots
 
-<table align="center" style="width: 100%; border: none; border-collapse: collapse;">
-  <tr>
-    <td align="center" style="border: none; padding: 10px;">
-      <img src="./assets/images/screenshot_home.png" width="200" alt="Home Screen" />
-      <br />
-      <strong>Home Screen</strong>
-    </td>
-    <td align="center" style="border: none; padding: 10px;">
-      <img src="./assets/images/screenshot_goal.png" width="200" alt="Goal Screen" />
-      <br />
-      <strong>Goal Management</strong>
-    </td>
-    <td align="center" style="border: none; padding: 10px;">
-      <img src="./assets/images/screenshot_add_saving.png" width="200" alt="Add Saving Screen" />
-      <br />
-      <strong>Add Savings</strong>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" style="border: none; padding: 10px;">
-      <img src="./assets/images/screenshot_history_savings.png" width="200" alt="Savings History" />
-      <br />
-      <strong>Savings History</strong>
-    </td>
-    <td align="center" style="border: none; padding: 10px;">
-      <img src="./assets/images/screenshot_history_goals.png" width="200" alt="Goals History" />
-      <br />
-      <strong>Goals History</strong>
-    </td>
-    <td align="center" style="border: none; padding: 10px;">
-      <img src="./assets/images/screenshot_about.png" width="200" alt="About Screen" />
-      <br />
-      <strong>About Screen</strong>
-    </td>
-  </tr>
-</table>
+<div align="center">
+
+|                                                                                                                        |                                                                                                                  |                                                                                                                 |
+| :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
+|          <img src="./assets/images/screenshot_home.png" width="200" alt="Home Screen" /><br/>**Home Screen**           |     <img src="./assets/images/screenshot_goal.png" width="200" alt="Goal Screen" /><br/>**Goal Management**      | <img src="./assets/images/screenshot_add_saving.png" width="200" alt="Add Saving Screen" /><br/>**Add Savings** |
+| <img src="./assets/images/screenshot_history_savings.png" width="200" alt="Savings History" /><br/>**Savings History** | <img src="./assets/images/screenshot_history_goals.png" width="200" alt="Goals History" /><br/>**Goals History** |     <img src="./assets/images/screenshot_about.png" width="200" alt="About Screen" /><br/>**About Screen**      |
+
+</div>
 
 <br />
 
