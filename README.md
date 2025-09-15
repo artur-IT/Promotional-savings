@@ -1,6 +1,6 @@
 ## 📱 Screenshots
 
-<div style="display: flex; flex-wrap: nowrap; justify-content: center; gap: 0px;">
+<div style="display: flex; flex-wrap: nowrap; justify-content: center; gap: 0px; width:100%">
   <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
     <img src="./assets/images/screenshot_home.png" style="width: 30%;" alt="Home Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Home Screen</strong></p>
