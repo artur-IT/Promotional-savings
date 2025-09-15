@@ -27,7 +27,7 @@ Works offline!
 
 <div align="center">
   <a href="./assets/images/user_flow_diagram.svg" target="_blank">
-    <img src="./assets/images/user_flow_diagram.svg" style="width: 70%; max-width: 600px;" alt="User Flow Diagram" />
+    <img src="./assets/images/user_flow_diagram.svg" style="width: 50%; max-width: 600px;" alt="User Flow Diagram" />
   </a>
 </div>
 
