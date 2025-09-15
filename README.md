@@ -1,127 +1,129 @@
-# PROJECT STILL IN PROGRESS...
+## 📱 Screenshots
 
-# 💰 Promocyjne Oszczędności
+![Home Screen](./assets/images/screenshot_home.png)
+![Goal Screen](./assets/images/screenshot_goal.png)
+![Add Saving Screen](./assets/images/screenshot_add_saving.png)
+![Savings History](./assets/images/screenshot_history_savings.png)
+![Goals History](./assets/images/screenshot_history_goals.png)
+![About Screen](./assets/images/screenshot_about.png)
 
-Darmowa aplikacja mobilna na telefony z Androidem, która pomaga użytkownikom śledzić pieniądze zaoszczędzone dzięki promocjom i okazjom. Aplikacja umożliwia ustawianie celów finansowych i monitorowanie postępów w ich realizacji.
+# 💰 Promotional Savings [PL]
 
-Działa offline!
+A free mobile application for Android phones that helps users track money saved through promotions and deals. The app allows setting financial goals and monitoring progress in achieving them.
 
-### ✨ Główne funkcjonalności
+Works offline!
 
-- **📊 Śledzenie oszczędności** - Dodawanie i kategoryzowanie zaoszczędzonych kwot
-- **🎯 Zarządzanie celami** - Ustawianie i monitorowanie celu finansowego
-- **📅 Historia** - Historia oszczędności miesiecznych i rocznych
-- **🏆 Historia celów** - Przegląd wszystkich zrealizowanych celów
-- **💾 Lokalne przechowywanie** - Dane zapisywane lokalnie na urządzeniu
+### ✨ Main Features
 
-### 🔄️ Przepływ danych użytkownika
+- **📊 Savings tracking** - Adding and categorizing saved amounts
+- **🎯 Goal management** - Setting and monitoring financial goals
+- **📅 History** - Monthly and yearly savings history
+- **🏆 Goal history** - Overview of all achieved goals
+- **💾 Local storage** - Data stored locally on the device
+
+### 🔄️ User Data Flow
 
 ![User Flow Diagram](./assets/images/user_flow_diagram.svg)
 
-### 🏗️ Architektura aplikacji
+### 🏗️ Application Architecture
 
-#### Ekrany (Screens)
+#### Screens
 
-- **Home** - Ekran główny z podsumowaniem i nawigacją
-- **AddSaving** - Dodawanie nowych oszczędności
-- **Goal** - Zarządzanie celem finansowym
-- **HistorySavings** - Historia wszystkich oszczędności
-- **HistoryGoals** - Historia osiągniętych celów finansowych
+- **Home** - Main screen with summary and navigation
+- **AddSaving** - Adding new savings
+- **Goal** - Managing financial goals
+- **HistorySavings** - History of all savings
+- **HistoryGoals** - History of achieved financial goals
 
-#### Zarządzanie stanem
+#### State Management
 
-- **Zustand** - Główny store dla oszczędności
-- **MMKV** - Szybkie, lokalne przechowywanie danych
+- **Zustand** - Main store for savings
+- **ASync Storage** - Fast, local data storage
 
-#### Komponenty
+#### Components
 
-- **Komponenty UI** - Przyciski, formularze, pasek postępu
-- **Komponenty biznesowe** - Logika związana z oszczędnościami i celami
+- **UI Components** - Buttons, forms, progress bars
+- **Business Components** - Logic related to savings and goals
 
-## 🛠️ Technologie
+## 🛠️ Technologies
 
-- **React Native 0.80.0** - Framework mobilny
-- **TypeScript** - Typowanie statyczne
-- **React Navigation** - Nawigacja między ekranami
-- **Zustand** - Zarządzanie stanem aplikacji
-- **ASync Storage** - Szybkie przechowywanie danych
-- **React Native Calendars** - Komponenty kalendarza
-- **React Native Progress** - Paski postępu
-- **Date-fns** - Manipulacja datami
+- **React Native 0.80.0** - Mobile framework
+- **TypeScript** - Static typing
+- **React Navigation** - Screen navigation
+- **Zustand** - Application state management
+- **ASync Storage** - Fast data storage
+- **React Native Calendars** - Calendar components
+- **React Native Progress** - Progress bars
+- **Date-fns** - Date manipulation
 
-## 🚀 Instalacja i uruchomienie
+## 🚀 Installation and Setup
 
-### Instalacja
+### Installation
 
-1. **Sklonuj repozytorium**
+1. **Clone the repository**
 
 `git clone https://github.com/artur-IT/Promotional-savings.git`
 
 `cd Promotional-savings`
 
-2. **Zainstaluj zależności** - `npm install`
-3. **Uruchom Metro bundler** - `npx react-native run-android` (Automatycznie uruchamia Metro)
-4. **Kompilacja do pliku apk** - w folderze android uruchom
+2. **Install dependencies** - `npm install`
+3. **Run Metro bundler** - `npx react-native run-android` (Automatically starts Metro)
+4. **Compile to APK file** - in the android folder run
 
 `.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
 
-Po zakończeniu budowania, plik APK będzie w:
+After the build completes, the APK file will be at:
 `android/app/build/outputs/apk/release/app-release.apk`
 
-Jeśli chcesz mniejszy APK, możesz zbudować tylko dla określonej architektury (przykład dla Androida):
+### 📱 Running on Device
 
-cd android
-`./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
+- **Android**: Connect device via USB with developer mode enabled and use Android Studio emulator or upload the APK file and install the app.
 
-### 📱 Uruchamianie na urządzeniu
+## 🎨 Detailed Features
 
-- **Android**: Podłącz urządzenie przez USB z włączonym trybem dewelopera i użyj emulatora z Android Studio lub wgraj plik apk i zainstaluj aplikację.
+### Adding Savings
 
-## 🎨 Funkcjonalności szczegółowe
+- Enter saved amount
+- Choose savings category
+- Select savings date
 
-### Dodawanie oszczędności
+### Financial Goals
 
-- Wprowadzanie kwoty zaoszczędzonej
-- Wybór kategorii oszczędności
-- Wybór daty oszczędności
+- Financial goal name
+- Setting target amount
+- Real-time progress tracking
+- Progress bar visualization
+- History of completed goals
+- Savings history
 
-### Cele finansowe
+### Statistics
 
-- Nazwa celu finansowego
-- Ustawianie docelowej kwoty
-- Śledzenie postępu w czasie rzeczywistym
-- Wizualizacja za pomocą paska postępu
-- Historia zakończonych celów
-- Historia oszczędności
+- Monthly and yearly summaries
+- Recently added savings
 
-### Statystyki i raporty
-
-- Podsumowanie miesięczne i roczne
-- Ostatnio dodane oszczędności
-
-## 🔧 Rozwój aplikacji
+## 🔧 App Development
 
 - Hmmm
 
-## 🐛 Rozwiązywanie problemów
+## 🐛 Troubleshooting
 
-### Typowe problemy
+### Common Issues
 
-1. **Metro bundler nie startuje** - ` npx react-native start --reset-cache`
+1. **Metro bundler won't start** - ` npx react-native start --reset-cache`
 
-2. **Problemy z zależnościami** - `rm -rf node_modules
+2. **Dependency issues** - `rm -rf node_modules
 npm install`
 
-3. **Problemy z Androidem**
+3. **Android issues**
 
    cd android
    `./gradlew clean`
    cd ..
    ` npm run android`
 
-Więcej informacji w [oficjalnej dokumentacji troubleshooting](https://reactnative.dev/docs/troubleshooting).
+More information in the [official troubleshooting documentation](https://reactnative.dev/docs/troubleshooting).
 
 ---
 
-<span style="font-size: 24px">👌</span> Jeśli Ci się podoba, możesz kupić nam 💑 kawę
+<span style="font-size: 24px">👌</span> If you like it, you can buy us 💑 coffee
 <a href="https://buycoffee.to/artur-dev" target="_blank"><span style="font-size: 32px">☕</span></a>

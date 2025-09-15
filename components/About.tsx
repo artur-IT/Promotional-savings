@@ -66,6 +66,8 @@ export default function AboutScreen() {
           Teraz naprawdę zobaczysz ile zaoszczędziłeś na różnych zakupach lub
           usługach.
         </Text>
+
+        <Text style={styles.footer}>Promotional Savings v. 1.0</Text>
       </View>
     </ScrollView>
   );
@@ -103,5 +105,11 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
+  },
+  footer: {
+    color: colors.primary,
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
