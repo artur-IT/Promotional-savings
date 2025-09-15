@@ -1,31 +1,41 @@
 ## 📱 Screenshots
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <img src="./assets/images/screenshot_home.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Home Screen" />
-    <p style="text-align: center; margin: 0; font-weight: bold;">Home Screen</p>
-  </div>
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <img src="./assets/images/screenshot_goal.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Goal Screen" />
-    <p style="text-align: center; margin: 0; font-weight: bold;">Goal Management</p>
-  </div>
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <img src="./assets/images/screenshot_add_saving.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Add Saving Screen" />
-    <p style="text-align: center; margin: 0; font-weight: bold;">Add Savings</p>
-  </div>
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <img src="./assets/images/screenshot_history_savings.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Savings History" />
-    <p style="text-align: center; margin: 0; font-weight: bold;">Savings History</p>
-  </div>
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <img src="./assets/images/screenshot_history_goals.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Goals History" />
-    <p style="text-align: center; margin: 0; font-weight: bold;">Goals History</p>
-  </div>
-  <div style="display: flex; flex-direction: column; align-items: center;">
-    <img src="./assets/images/screenshot_about.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="About Screen" />
-    <p style="text-align: center; margin: 0; font-weight: bold;">About Screen</p>
-  </div>
-</div>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="./assets/images/screenshot_home.png" width="200" alt="Home Screen" />
+      <br />
+      <strong>Home Screen</strong>
+    </td>
+    <td align="center">
+      <img src="./assets/images/screenshot_goal.png" width="200" alt="Goal Screen" />
+      <br />
+      <strong>Goal Management</strong>
+    </td>
+    <td align="center">
+      <img src="./assets/images/screenshot_add_saving.png" width="200" alt="Add Saving Screen" />
+      <br />
+      <strong>Add Savings</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./assets/images/screenshot_history_savings.png" width="200" alt="Savings History" />
+      <br />
+      <strong>Savings History</strong>
+    </td>
+    <td align="center">
+      <img src="./assets/images/screenshot_history_goals.png" width="200" alt="Goals History" />
+      <br />
+      <strong>Goals History</strong>
+    </td>
+    <td align="center">
+      <img src="./assets/images/screenshot_about.png" width="200" alt="About Screen" />
+      <br />
+      <strong>About Screen</strong>
+    </td>
+  </tr>
+</table>
 
 <br />
 
