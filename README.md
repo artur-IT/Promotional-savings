@@ -26,7 +26,7 @@ Works offline!
 ### 🔄️ User Data Flow
 
 <div align="center">
-  <a href="./assets/images/user_flow_diagram.svg" target="_blank">
+  <a href="./assets/images/user_flow_diagram.svg" target="_blank" rel="noopener noreferrer">
     <img src="./assets/images/user_flow_diagram.svg" style="width: 50%; max-width: 600px;" alt="User Flow Diagram" />
   </a>
 </div>
@@ -132,4 +132,4 @@ More information in the [official troubleshooting documentation](https://reactna
 ---
 
 <span style="font-size: 24px">👌</span> If you like it, you can buy us 💑 coffee
-<a href="https://buycoffee.to/artur-dev" target="_blank"><span style="font-size: 32px">☕</span></a>
+<a href="https://buycoffee.to/artur-dev" target="_blank" rel="noopener noreferrer"><span style="font-size: 32px">☕</span></a>

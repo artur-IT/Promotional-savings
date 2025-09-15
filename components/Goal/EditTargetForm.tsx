@@ -70,7 +70,6 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
         ? updateCurrentGoal(goalName || '', parseFloat(`${targetAmount}`))
         : addNewGoal(newGoal);
 
-      console.log('All goals after adding:', getAllGoals());
       (navigation as any).navigate('Home');
       onFormClose();
     }
