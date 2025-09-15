@@ -70,7 +70,7 @@ const categoryOptions = [
 
 // Using forwardRef to enable passing reference to this component
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
-  const { updateCurrentGoal, getActualGoal, todayDate } = useSavingsStore();
+  const { updateCurrentGoal, getActualGoal } = useSavingsStore();
   const navigation = useNavigation();
 
   const [promotion, setPromotion] = useState<number>();

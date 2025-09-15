@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import HistoryGoalsComponent from '../../components/HistoryGoals/HistoryGoals';
 
 export default function HistoryGoals() {

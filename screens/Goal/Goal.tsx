@@ -1,4 +1,4 @@
-import { Animated, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Top from '../../components/Top';
