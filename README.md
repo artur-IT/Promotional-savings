@@ -1,33 +1,35 @@
 ## 📱 Screenshots
 
-<div style="display: flex; flex-wrap: nowrap; justify-content: center; gap: 0px; width:100%">
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_home.png" style="width: 30%;" alt="Home Screen" />
-    <p style="text-align: center; margin-top: 5px;"><strong>Home Screen</strong></p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./assets/images/screenshot_home.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Home Screen" />
+    <p style="text-align: center; margin: 0; font-weight: bold;">Home Screen</p>
   </div>
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_goal.png" style="width: 30%;" alt="Goal Screen" />
-    <p style="text-align: center; margin-top: 5px;"><strong>Goal Screen</strong></p>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./assets/images/screenshot_goal.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Goal Screen" />
+    <p style="text-align: center; margin: 0; font-weight: bold;">Goal Management</p>
   </div>
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_add_saving.png" style="width: 30%;" alt="Add Saving Screen" />
-    <p style="text-align: center; margin-top: 5px;"><strong>Add Saving Screen</strong></p>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./assets/images/screenshot_add_saving.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Add Saving Screen" />
+    <p style="text-align: center; margin: 0; font-weight: bold;">Add Savings</p>
   </div>
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_history_savings.png" style="width: 30%;" alt="Savings History" />
-    <p style="text-align: center; margin-top: 5px;"><strong>Savings History</strong></p>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./assets/images/screenshot_history_savings.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Savings History" />
+    <p style="text-align: center; margin: 0; font-weight: bold;">Savings History</p>
   </div>
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_history_goals.png" style="width: 30%;" alt="Goals History" />
-    <p style="text-align: center; margin-top: 5px;"><strong>Goals History</strong></p>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./assets/images/screenshot_history_goals.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="Goals History" />
+    <p style="text-align: center; margin: 0; font-weight: bold;">Goals History</p>
   </div>
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_about.png" style="width: 30%;" alt="About Screen" />
-    <p style="text-align: center; margin-top: 5px;"><strong>About Screen</strong></p>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="./assets/images/screenshot_about.png" style="width: 250px; max-width: 100%; margin-bottom: 10px;" alt="About Screen" />
+    <p style="text-align: center; margin: 0; font-weight: bold;">About Screen</p>
   </div>
 </div>
 
-# 💰 Promotional Savings [PL Aapp]
+<br />
+
+# 💰 Promotional Savings [PL]
 
 A free mobile application for Android phones that helps users track money saved through promotions and deals. The app allows setting financial goals and monitoring progress in achieving them.
 
