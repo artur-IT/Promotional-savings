@@ -1,15 +1,33 @@
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" />
-  <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" />
-  <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Add Saving Screen" />
-  <img src="./assets/images/screenshot_history_savings.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Savings History" />
-  <img src="./assets/images/screenshot_history_goals.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goals History" />
-  <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="About Screen" />
+  <div style="display: inline-block; margin: 10px;">
+    <img src="./assets/images/screenshot_home.png" style="width: 100%; max-width: 250px;" alt="Home Screen" />
+    <p style="text-align: center; margin-top: 5px;"><strong>Home Screen</strong></p>
+  </div>
+  <div style="display: inline-block; margin: 10px;">
+    <img src="./assets/images/screenshot_goal.png" style="width: 100%; max-width: 250px;" alt="Goal Screen" />
+    <p style="text-align: center; margin-top: 5px;"><strong>Goal Screen</strong></p>
+  </div>
+  <div style="display: inline-block; margin: 10px;">
+    <img src="./assets/images/screenshot_add_saving.png" style="width: 100%; max-width: 250px;" alt="Add Saving Screen" />
+    <p style="text-align: center; margin-top: 5px;"><strong>Add Saving Screen</strong></p>
+  </div>
+  <div style="display: inline-block; margin: 10px;">
+    <img src="./assets/images/screenshot_history_savings.png" style="width: 100%; max-width: 250px;" alt="Savings History" />
+    <p style="text-align: center; margin-top: 5px;"><strong>Savings History</strong></p>
+  </div>
+  <div style="display: inline-block; margin: 10px;">
+    <img src="./assets/images/screenshot_history_goals.png" style="width: 100%; max-width: 250px;" alt="Goals History" />
+    <p style="text-align: center; margin-top: 5px;"><strong>Goals History</strong></p>
+  </div>
+  <div style="display: inline-block; margin: 10px;">
+    <img src="./assets/images/screenshot_about.png" style="width: 100%; max-width: 250px;" alt="About Screen" />
+    <p style="text-align: center; margin-top: 5px;"><strong>About Screen</strong></p>
+  </div>
 </div>
 
-# 💰 Promotional Savings [PL]
+# 💰 Promotional Savings [PL Aapp]
 
 A free mobile application for Android phones that helps users track money saved through promotions and deals. The app allows setting financial goals and monitoring progress in achieving them.
 
@@ -109,11 +127,7 @@ After the build completes, the APK file will be at:
 - Monthly and yearly summaries
 - Recently added savings
 
-## 🔧 App Development
-
-- Hmmm
-
-## 🐛 Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common Issues
 
