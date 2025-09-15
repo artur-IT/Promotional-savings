@@ -18,8 +18,8 @@ export default function AddSavingScreen() {
       <View style={styles.contentContainer}>
         <Top />
         <View style={styles.container}>
-          <Text style={styles.title}>Dzisiaj </Text>
-          <Text style={styles.title}>zaoszczędziłem</Text>
+          <Text style={styles.title}>Na czym ostatnio </Text>
+          <Text style={styles.title}>zaoszczędziłem?</Text>
         </View>
 
         <DataSavings />

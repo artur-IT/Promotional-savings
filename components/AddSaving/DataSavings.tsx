@@ -292,6 +292,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
               style={[styles.inputWithIcon]}
               keyboardType="numeric"
               value={promotion?.toString() || ''}
+              maxLength={4}
               onChangeText={handlePromotionalChange}
               onFocus={() => {
                 setFocusedField('amount');
