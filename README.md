@@ -1,28 +1,28 @@
 ## 📱 Screenshots
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-  <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_home.png" style="width: 100%;" alt="Home Screen" />
+  <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 250px;">
+    <img src="./assets/images/screenshot_home.png" style="width: 30%;" alt="Home Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Home Screen</strong></p>
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_goal.png" style="width: 100%;" alt="Goal Screen" />
+    <img src="./assets/images/screenshot_goal.png" style="width: 30%;" alt="Goal Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Goal Screen</strong></p>
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_add_saving.png" style="width: 100%;" alt="Add Saving Screen" />
+    <img src="./assets/images/screenshot_add_saving.png" style="width: 30%;" alt="Add Saving Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Add Saving Screen</strong></p>
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_history_savings.png" style="width: 100%;" alt="Savings History" />
+    <img src="./assets/images/screenshot_history_savings.png" style="width: 30%;" alt="Savings History" />
     <p style="text-align: center; margin-top: 5px;"><strong>Savings History</strong></p>
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_history_goals.png" style="width: 100%;" alt="Goals History" />
+    <img src="./assets/images/screenshot_history_goals.png" style="width: 30%;" alt="Goals History" />
     <p style="text-align: center; margin-top: 5px;"><strong>Goals History</strong></p>
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; width: 30%; max-width: 250px;">
-    <img src="./assets/images/screenshot_about.png" style="width: 100%;" alt="About Screen" />
+    <img src="./assets/images/screenshot_about.png" style="width: 30%;" alt="About Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>About Screen</strong></p>
   </div>
 </div>
