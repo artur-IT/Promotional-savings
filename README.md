@@ -1,15 +1,13 @@
 ## 📱 Screenshots
 
 <div align="center">
-
-|                                                                                                                        |                                                                                                                  |                                                                                                                 |
-| :--------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-|          <img src="./assets/images/screenshot_home.png" width="200" alt="Home Screen" /><br/>**Home Screen**           |     <img src="./assets/images/screenshot_goal.png" width="200" alt="Goal Screen" /><br/>**Goal Management**      | <img src="./assets/images/screenshot_add_saving.png" width="200" alt="Add Saving Screen" /><br/>**Add Savings** |
-| <img src="./assets/images/screenshot_history_savings.png" width="200" alt="Savings History" /><br/>**Savings History** | <img src="./assets/images/screenshot_history_goals.png" width="200" alt="Goals History" /><br/>**Goals History** |     <img src="./assets/images/screenshot_about.png" width="200" alt="About Screen" /><br/>**About Screen**      |
-
+  <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" /><span align="center"> Home view </span>
+  <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" />Goal view
+  <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Add Saving Screen" />Add n ew saving view
+  <img src="./assets/images/screenshot_history_savings.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Savings History" />
+  <img src="./assets/images/screenshot_history_goals.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goals History" />
+  <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="About Screen" />
 </div>
-
-<br />
 
 # 💰 Promotional Savings [PL]
 
