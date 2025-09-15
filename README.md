@@ -53,14 +53,16 @@ Works offline!
 
 ## 🛠️ Technologies
 
-- **React Native 0.80.0** - Mobile framework
-- **TypeScript** - Static typing
-- **React Navigation** - Screen navigation
-- **Zustand** - Application state management
-- **ASync Storage** - Fast data storage
-- **React Native Calendars** - Calendar components
-- **React Native Progress** - Progress bars
-- **Date-fns** - Date manipulation
+- **React Native 0.81.4** - Mobile framework
+- **TypeScript 5.9.2** - Static typing
+- **React 19.1.0** - UI library
+- **React Navigation 7.x** - Screen navigation
+- **Zustand 5.0.6** - Application state management
+- **ASync Storage 2.2.0** - Fast data storage
+- **React Native Calendars 1.1313.0** - Calendar components
+- **React Native Progress 5.0.1** - Progress bars
+- **Date-fns 4.1.0** - Date manipulation
+- **ESLint 8.57.1** - Code linting
 
 ## 🚀 Installation and Setup
 
