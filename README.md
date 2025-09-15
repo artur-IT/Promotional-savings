@@ -25,7 +25,11 @@ Works offline!
 
 ### 🔄️ User Data Flow
 
-![User Flow Diagram](./assets/images/user_flow_diagram.svg)
+<div align="center">
+  <a href="./assets/images/user_flow_diagram.svg" target="_blank">
+    <img src="./assets/images/user_flow_diagram.svg" style="width: 70%; max-width: 600px;" alt="User Flow Diagram" />
+  </a>
+</div>
 
 ### 🏗️ Application Architecture
 
