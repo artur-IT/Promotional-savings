@@ -76,7 +76,8 @@ Works offline!
 
 2. **Install dependencies** - `npm install`
 3. **Run Metro bundler** - `npx react-native run-android` (Automatically starts Metro)
-4. **Compile to APK file** - in the android folder run
+4. **compile to .aab** - `./gradlew bundleRelease` (for Google Play Store)
+5. **Compile to APK file** - in the android folder run
 
 `.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
 
