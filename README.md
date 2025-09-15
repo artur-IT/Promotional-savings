@@ -1,9 +1,9 @@
 ## 📱 Screenshots
 
 <div align="center">
-  <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" /><p align="center"> Home view </p>
-  <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" /><p align="center"> Goal view </p>
-  <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Add Saving Screen" /><p align="center"> Home view </p>
+  <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" />
+  <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" />
+  <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Add Saving Screen" />
   <img src="./assets/images/screenshot_history_savings.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Savings History" />
   <img src="./assets/images/screenshot_history_goals.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goals History" />
   <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="About Screen" />
