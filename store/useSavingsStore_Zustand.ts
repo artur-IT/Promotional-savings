@@ -1,97 +1,274 @@
-import { storage } from "@/utils/storage";
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
-// import { MMKV } from "react-native-mmkv";
-import { Saving, SAVINGS_KEY } from "@/constants/dataTypes";
+import { storage } from '../utils/storage';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { Goal, GOAL_KEY } from '../constants/dataTypes';
 
-// Inicjalizacja instancji MMKV
-// const storage = new MMKV({
-//   id: "savings-app-storage",
-// });
+// Type for individual saving from Goal interface
+type Saving = NonNullable<Goal['savings']>[0];
 
-// Adapter dla MMKV do użycia z Zustand persist
-const mmkvStorage = {
-  getItem: (name: string) => {
-    const value = storage.getString(name);
-    return value ? Promise.resolve(value) : Promise.resolve(null);
+// Adapter for AsyncStorage to use with Zustand persist
+const asyncStorageAdapter = {
+  getItem: async (name: string) => {
+    try {
+      const value = await storage.getString(name);
+      return value || null;
+    } catch (error) {
+      console.error('Error getting item:', error);
+      return null;
+    }
   },
-  setItem: (name: string, value: string) => {
-    storage.set(name, value);
-    return Promise.resolve(true);
+  setItem: async (name: string, value: string) => {
+    try {
+      await storage.set(name, value);
+      return true;
+    } catch (error) {
+      console.error('Error setting item:', error);
+      return false;
+    }
   },
-  removeItem: (name: string) => {
-    storage.delete(name);
-    return Promise.resolve();
+  removeItem: async (name: string) => {
+    try {
+      await storage.delete(name);
+    } catch (error) {
+      console.error('Error removing item:', error);
+    }
   },
 };
 
 interface SavingsState {
-  allSavings: Saving[];
-  addSaving: (saving: Saving) => void;
-  deleteSaving: (id: string) => void;
-  updateSaving: (id: string, updatedSaving: Partial<Saving>) => void;
-  getTotalSavings: () => number;
-  getSavingsByCategory: (category: string) => Saving[];
-  clearAllSavings: () => void;
+  todayDate: string;
+  allGoals: Goal[];
+  addNewGoal: (goal: Goal) => void;
+  getActualGoal: () => Goal | null;
+  getLastGoal: () => Goal | null;
+  deleteActualGoal: () => void;
+  getAllGoals: () => Goal[];
+  getCompletedGoals: () => Goal[];
+  deleteAllGoals: () => void;
+  updateCurrentGoal: (
+    newGoal?: string,
+    newTargetAmount?: number,
+    saving?: { id: number; promotion: number; date: string; category: string },
+  ) => void;
+  completeGoal: () => void;
+  getAllSavings: () => Saving[];
+  deleteSaving: (savingId: number) => void;
+  isSavingFromActiveGoal: (savingId: number) => boolean;
+  isLatestSavingFromActiveGoal: (savingId: number) => boolean;
 }
+
+// Helper function to find active goal index
+const findActiveGoalIndex = (goals: Goal[]) => {
+  return goals.findIndex(goal => !goal.endDate);
+};
 
 const useSavingsStore = create<SavingsState>()(
   persist(
     (set, get) => ({
-      allSavings: [],
+      allGoals: [],
 
-      addSaving: (saving: Saving) =>
-        set((state) => ({
-          allSavings: [...state.allSavings, saving],
-        })),
+      addNewGoal: (goal: Goal) => {
+        set(state => ({
+          allGoals: [...state.allGoals, goal],
+        }));
+      },
 
-      deleteSaving: (id: string) =>
-        set((state) => ({
-          allSavings: state.allSavings.filter((saving) => saving.id !== id),
-        })),
+      getActualGoal: () => {
+        const { allGoals } = get();
+        // Returns only active goal (without endDate)
+        const activeGoals = allGoals.filter(goal => !goal.endDate);
+        return activeGoals.length > 0
+          ? activeGoals[activeGoals.length - 1]
+          : null;
+      },
 
-      updateSaving: (id: string, updatedSaving: Partial<Saving>) =>
-        set((state) => ({
-          allSavings: state.allSavings.map((saving) => (saving.id === id ? { ...saving, ...updatedSaving } : saving)),
-        })),
+      getLastGoal: () => {
+        const { allGoals } = get();
+        // Returns last goal (active or completed)
+        return allGoals.length > 0 ? allGoals[allGoals.length - 1] : null;
+      },
 
-      getTotalSavings: () => {
-        const { allSavings } = get();
-        if (!Array.isArray(allSavings)) {
-          console.warn("allSavings nie jest tablicą:", allSavings);
-          return 0;
+      deleteActualGoal: () => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
+
+          if (activeGoalIndex !== -1) {
+            currentGoals.splice(activeGoalIndex, 1);
+          }
+
+          return { allGoals: currentGoals };
+        });
+      },
+
+      getAllGoals: () => {
+        const { allGoals } = get();
+        return allGoals;
+      },
+
+      getCompletedGoals: () => {
+        const { allGoals } = get();
+        // Returns only completed goals (with endDate)
+        return allGoals.filter(goal => goal.endDate);
+      },
+
+      deleteAllGoals: () => {
+        set({ allGoals: [] });
+      },
+
+      updateCurrentGoal: (
+        newGoal?: string,
+        newTargetAmount?: number,
+        saving?: {
+          id: number;
+          promotion: number;
+          date: string;
+          category: string;
+        },
+      ) => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
+
+          if (activeGoalIndex !== -1) {
+            const currentGoal = currentGoals[activeGoalIndex];
+            currentGoals[activeGoalIndex] = {
+              ...currentGoal,
+              ...(newGoal !== undefined && { goal: newGoal }),
+              ...(newTargetAmount !== undefined && {
+                targetAmount: newTargetAmount,
+              }),
+              savings: [
+                ...(currentGoal.savings || []),
+                ...(saving ? [saving] : []),
+              ],
+            };
+          }
+          return { allGoals: currentGoals };
+        });
+      },
+
+      completeGoal: () => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
+
+          if (activeGoalIndex !== -1) {
+            const currentGoal = currentGoals[activeGoalIndex];
+
+            // Calculate sum of all savings
+            const totalPromotionSum =
+              currentGoal.savings?.reduce((sum, saving) => {
+                return sum + (saving.promotion || 0);
+              }, 0) || 0;
+
+            // Find date of last saving (newest date)
+            let lastSavingDate = new Date().toISOString().split('T')[0]; // Default to current date
+            if (currentGoal.savings && currentGoal.savings.length > 0) {
+              // Sort savings by date and take the last one
+              const sortedSavings = [...currentGoal.savings].sort(
+                (a, b) =>
+                  new Date(b.date).getTime() - new Date(a.date).getTime(),
+              );
+              lastSavingDate = sortedSavings[0].date;
+            }
+
+            // Add goal achievement date and savings sum
+            currentGoals[activeGoalIndex] = {
+              ...currentGoal,
+              endDate: lastSavingDate, // Use date of last saving
+              totalPromotionSum: totalPromotionSum,
+            };
+          }
+          return { allGoals: currentGoals };
+        });
+      },
+
+      // Returns all savings from all goals
+      getAllSavings: () => {
+        const { allGoals } = get();
+        const allSavings: Saving[] = [];
+
+        allGoals.forEach(goal => {
+          if (goal.savings) {
+            allSavings.push(...goal.savings);
+          }
+        });
+
+        return allSavings;
+      },
+
+      // Removes specific saving from goal (only from active goal)
+      deleteSaving: (savingId: number) => {
+        set(state => {
+          const currentGoals = [...state.allGoals];
+
+          const activeGoalIndex = findActiveGoalIndex(currentGoals);
+
+          if (activeGoalIndex !== -1) {
+            const activeGoal = currentGoals[activeGoalIndex];
+            if (activeGoal.savings) {
+              activeGoal.savings = activeGoal.savings.filter(
+                saving => saving.id !== savingId,
+              );
+            }
+          }
+
+          return { allGoals: currentGoals };
+        });
+      },
+
+      // Checks if saving belongs to active goal
+      isSavingFromActiveGoal: (savingId: number) => {
+        const { allGoals } = get();
+        const activeGoal = allGoals.find(goal => !goal.endDate);
+
+        if (activeGoal && activeGoal.savings) {
+          return activeGoal.savings.some(saving => saving.id === savingId);
         }
-        return allSavings.reduce((sum, saving) => sum + saving.promotion, 0);
+
+        return false;
       },
 
-      getSavingsByCategory: (category: string) => {
-        const { allSavings } = get();
-        return allSavings.filter((saving) => saving.category === category);
+      // Checks if saving is the latest added in active goal
+      isLatestSavingFromActiveGoal: (savingId: number) => {
+        const { allGoals } = get();
+        const activeGoal = allGoals.find(goal => !goal.endDate);
+
+        if (activeGoal && activeGoal.savings && activeGoal.savings.length > 0) {
+          // Find saving with highest ID (latest added)
+          const latestSaving = activeGoal.savings.reduce((latest, current) => {
+            return current.id > latest.id ? current : latest;
+          });
+
+          return latestSaving.id === savingId;
+        }
+
+        return false;
       },
 
-      clearAllSavings: () => set({ allSavings: [] }),
+      todayDate: new Date().toISOString().split('T')[0], // Format YYYY-MM-DD
     }),
     {
-      name: SAVINGS_KEY,
-      storage: createJSONStorage(() => mmkvStorage),
-      partialize: (state) => ({ allSavings: state.allSavings }),
-      onRehydrateStorage: () => (state) => {
-        if (state) {
-          console.log("Stan został pomyślnie odtworzony z magazynu");
-
-          // Konwersja dat z powrotem na obiekty Date jeśli są przechowywane jako stringi
-          if (state.allSavings) {
-            state.allSavings = state.allSavings.map((saving: Saving) => ({
-              ...saving,
-              date: typeof saving.date === "string" ? saving.date : new Date(saving.date).toISOString(),
-            }));
-          }
-        } else {
-          console.log("Nie udało się odtworzyć stanu z magazynu");
+      name: GOAL_KEY,
+      storage: createJSONStorage(() => asyncStorageAdapter),
+      partialize: state => ({
+        allGoals: state.allGoals,
+      }),
+      onRehydrateStorage: () => state => {
+        if (state && state.allGoals) {
+          // Convert dates back to Date objects if stored as strings
+          state.allGoals = state.allGoals.map((goal: Goal) => ({
+            ...goal,
+            startDate:
+              typeof goal.startDate === 'string'
+                ? goal.startDate
+                : new Date(goal.startDate).toISOString(),
+          }));
         }
       },
-    }
-  )
+    },
+  ),
 );
 
 export default useSavingsStore;

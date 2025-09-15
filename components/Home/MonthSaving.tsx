@@ -1,12 +1,14 @@
-import { StyleSheet, View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import useSavingsStore from "@/store/useSavingsStore_Zustand";
+import { StyleSheet, View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { colors } from '../../constants/colors';
+import { fonts } from '../../constants/fonts';
 
 export default function MonthSaving() {
-  const { allSavings } = useSavingsStore();
+  const { getAllGoals, allGoals } = useSavingsStore();
 
   const [currentMonthSavings, setCurrentMonthSavings] = useState(0);
-  const [currentMonthName, setCurrentMonthName] = useState("");
+  const [currentMonthName, setCurrentMonthName] = useState('');
 
   useEffect(() => {
     const getCurrentMonthData = () => {
@@ -15,28 +17,38 @@ export default function MonthSaving() {
       const currentYear = now.getFullYear();
 
       const monthNames = [
-        "Styczeń",
-        "Luty",
-        "Marzec",
-        "Kwiecień",
-        "Maj",
-        "Czerwiec",
-        "Lipiec",
-        "Sierpień",
-        "Wrzesień",
-        "Październik",
-        "Listopad",
-        "Grudzień",
+        'Styczeń',
+        'Luty',
+        'Marzec',
+        'Kwiecień',
+        'Maj',
+        'Czerwiec',
+        'Lipiec',
+        'Sierpień',
+        'Wrzesień',
+        'Październik',
+        'Listopad',
+        'Grudzień',
       ];
 
       setCurrentMonthName(monthNames[currentMonth]);
 
-      // Oblicz sumę oszczędności z bieżącego miesiąca
+      // Get all goals and calculate sum of savings from current month
+      const allGoals = getAllGoals();
       let sum = 0;
-      allSavings.forEach((saving) => {
-        const savingDate = new Date(saving.date);
-        if (savingDate.getMonth() === currentMonth && savingDate.getFullYear() === currentYear) {
-          sum += saving.promotion;
+
+      // Loop through all goals and their savings
+      allGoals.forEach(goal => {
+        if (goal.savings) {
+          goal.savings.forEach(saving => {
+            const savingDate = new Date(saving.date);
+            if (
+              savingDate.getMonth() === currentMonth &&
+              savingDate.getFullYear() === currentYear
+            ) {
+              sum += saving.promotion;
+            }
+          });
         }
       });
 
@@ -44,7 +56,7 @@ export default function MonthSaving() {
     };
 
     getCurrentMonthData();
-  }, [allSavings]);
+  }, [allGoals]);
 
   return (
     <View style={styles.section}>
@@ -59,38 +71,42 @@ export default function MonthSaving() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   section: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 190,
     height: 190,
-    borderColor: "red",
-    borderStyle: "solid",
+    borderColor: 'red',
+    borderStyle: 'solid',
     borderWidth: 3,
     borderRadius: 95,
-    backgroundColor: "orange",
+    backgroundColor: colors.background.orange,
   },
   insideText: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   monthValue: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     margin: 0,
     fontSize: 36,
+    color: colors.text.button_W,
+    fontFamily: fonts.family.secondary,
   },
   monthName: {
-    display: "flex",
+    display: 'flex',
     margin: 0,
     fontSize: 25,
-    fontWeight: "bold",
+    fontFamily: fonts.family.secondary,
+    // fontWeight: 'bold',
+    color: colors.text.button_W,
   },
 });

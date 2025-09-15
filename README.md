@@ -1,50 +1,135 @@
-# Welcome to your Expo app 👋
+## 📱 Screenshots
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<div align="center">
+  <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" />
+  <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" />
+  <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Add Saving Screen" />
+  <img src="./assets/images/screenshot_history_savings.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Savings History" />
+  <img src="./assets/images/screenshot_history_goals.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goals History" />
+  <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="About Screen" />
+</div>
 
-## Get started
+# 💰 Promotional Savings [PL]
 
-1. Install dependencies
+A free mobile application for Android phones that helps users track money saved through promotions and deals. The app allows setting financial goals and monitoring progress in achieving them.
 
-   ```bash
-   npm install
-   ```
+Works offline!
 
-2. Start the app
+### ✨ Main Features
 
-   ```bash
-    npx expo start
-   ```
+- **📊 Savings tracking** - Adding and categorizing saved amounts
+- **🎯 Goal management** - Setting and monitoring financial goals
+- **📅 History** - Monthly and yearly savings history
+- **🏆 Goal history** - Overview of all achieved goals
+- **💾 Local storage** - Data stored locally on the device
 
-In the output, you'll find options to open the app in a
+### 🔄️ User Data Flow
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+<div align="center">
+  <a href="./assets/images/user_flow_diagram.svg" target="_blank">
+    <img src="./assets/images/user_flow_diagram.svg" style="width: 50%; max-width: 600px;" alt="User Flow Diagram" />
+  </a>
+</div>
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 🏗️ Application Architecture
 
-## Get a fresh project
+#### Screens
 
-When you're ready, run:
+- **Home** - Main screen with summary and navigation
+- **AddSaving** - Adding new savings
+- **Goal** - Managing financial goals
+- **HistorySavings** - History of all savings
+- **HistoryGoals** - History of achieved financial goals
 
-```bash
-npm run reset-project
-```
+#### State Management
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- **Zustand** - Main store for savings
+- **ASync Storage** - Fast, local data storage
 
-## Learn more
+#### Components
 
-To learn more about developing your project with Expo, look at the following resources:
+- **UI Components** - Buttons, forms, progress bars
+- **Business Components** - Logic related to savings and goals
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🛠️ Technologies
 
-## Join the community
+- **React Native 0.80.0** - Mobile framework
+- **TypeScript** - Static typing
+- **React Navigation** - Screen navigation
+- **Zustand** - Application state management
+- **ASync Storage** - Fast data storage
+- **React Native Calendars** - Calendar components
+- **React Native Progress** - Progress bars
+- **Date-fns** - Date manipulation
 
-Join our community of developers creating universal apps.
+## 🚀 Installation and Setup
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Installation
+
+1. **Clone the repository**
+
+`git clone https://github.com/artur-IT/Promotional-savings.git`
+
+`cd Promotional-savings`
+
+2. **Install dependencies** - `npm install`
+3. **Run Metro bundler** - `npx react-native run-android` (Automatically starts Metro)
+4. **Compile to APK file** - in the android folder run
+
+`.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
+
+After the build completes, the APK file will be at:
+`android/app/build/outputs/apk/release/app-release.apk`
+
+### 📱 Running on Device
+
+- **Android**: Connect device via USB with developer mode enabled and use Android Studio emulator or upload the APK file and install the app.
+
+## 🎨 Detailed Features
+
+### Adding Savings
+
+- Enter saved amount
+- Choose savings category
+- Select savings date
+
+### Financial Goals
+
+- Financial goal name
+- Setting target amount
+- Real-time progress tracking
+- Progress bar visualization
+- History of completed goals
+- Savings history
+
+### Statistics
+
+- Monthly and yearly summaries
+- Recently added savings
+
+## 🔧 App Development
+
+- Hmmm
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Metro bundler won't start** - ` npx react-native start --reset-cache`
+
+2. **Dependency issues** - `rm -rf node_modules
+npm install`
+
+3. **Android issues**
+
+   cd android
+   `./gradlew clean`
+   cd ..
+   ` npm run android`
+
+More information in the [official troubleshooting documentation](https://reactnative.dev/docs/troubleshooting).
+
+---
+
+<span style="font-size: 24px">👌</span> If you like it, you can buy us 💑 coffee
+<a href="https://buycoffee.to/artur-dev" target="_blank"><span style="font-size: 32px">☕</span></a>

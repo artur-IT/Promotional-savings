@@ -1,23 +1,23 @@
-import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import YearSaving from "../../components/Home/YearSaving";
-import MonthSaving from "../../components/Home/MonthSaving";
-import LastAdd from "../../components/Home/LastAdd";
-import GoalProgress from "../../components/Home/GoalProgress";
-import { router } from "expo-router";
-import Button from "@/components/Button";
+import { Image, StyleSheet, View, ScrollView } from 'react-native';
+import { colors } from '../../constants/colors';
+import YearSaving from '../../components/Home/YearSaving';
+import MonthSaving from '../../components/Home/MonthSaving';
+import LastAdd from '../../components/Home/LastAdd';
+import GoalProgress from '../../components/Goal/GoalProgress';
+import Top from '../../components/Top';
 
-const TopImage = require("@/assets/images/top_bg.svg");
-const PlaceholderImage = require("@/assets/images/money-bag.svg");
+const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
 export default function HomeWithGoal() {
   return (
-    <View style={styles.container}>
-      <Image source={TopImage} style={styles.topImage} />
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <Image source={PlaceholderImage} style={styles.image} />
-      <Text style={styles.slogan}>
-        Promocyjne <br />
-        oszczędności
-      </Text>
+      <View style={styles.titleContainer}>
+        <Top hideImage={true} />
+      </View>
 
       <View style={styles.year}>
         <YearSaving />
@@ -28,49 +28,57 @@ export default function HomeWithGoal() {
         <LastAdd />
       </View>
 
-      <GoalProgress />
-
-      <TouchableHighlight underlayColor="#DDDDDD" style={styles.link}>
-        <Button title="Dodaj oszczędność" onPress={() => router.push("/(tabs)/(hidden)/addSaving")} width={150} />
-      </TouchableHighlight>
-    </View>
+      <GoalProgress variant="home" />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    backgroundColor: colors.background.main,
   },
-  link: { marginTop: 30, padding: 10, borderRadius: 5 },
-  slogan: {
-    marginLeft: -170,
+  contentContainer: {
+    alignItems: 'center',
+    minHeight: '100%',
+    paddingBottom: 50,
+  },
+  titleContainer: {
+    alignSelf: 'center',
+    display: 'flex',
+    marginBottom: 40,
+    width: '100%',
+  },
+  title: {
+    fontFamily: 'PoiretOne', // Prosta nazwa pliku
+    color: colors.text.title,
+    textAlign: 'center',
     fontSize: 32,
-    lineHeight: 40,
-    marginTop: 30,
-    marginBottom: 30,
-    color: "#0084CE",
+    letterSpacing: 1, // Dodatkowo dla piękna
   },
   topImage: {
-    position: "absolute",
-    top: -150,
-    width: 400,
+    position: 'absolute',
+    top: -170,
+    right: -10,
+    width: '100%',
+    maxWidth: 400,
     height: 400,
   },
   image: {
-    position: "absolute",
+    position: 'absolute',
     top: 190,
-    width: 370,
+    width: '90%',
+    maxWidth: 370,
     height: 370,
     opacity: 0.3,
   },
   year: {
-    position: "relative",
-    left: -90,
+    marginTop: 100,
+    alignSelf: 'flex-start',
   },
   circles: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "flex-end",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     marginTop: 40,
   },
 });

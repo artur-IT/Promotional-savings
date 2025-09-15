@@ -1,96 +1,128 @@
-import { Alert, Animated, StyleSheet, Text, View } from "react-native";
-import React, { useRef, useState } from "react";
-import Top from "@/components/Top";
-import EditTargetForm from "@/components/Goal/EditTargetForm";
-import GoalProgress from "@/components/Goal/GoalProgress";
-import Button from "@/components/Button";
-import colors from "@/constants/colors";
-import { clearAllGoals, getAllGoals } from "@/store/goalsStore";
+import { Animated, StyleSheet, Text, View, ScrollView } from 'react-native';
+import React, { useRef, useState, useMemo } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import Top from '../../components/Top';
+import EditTargetForm from '../../components/Goal/EditTargetForm';
+import GoalProgress from '../../components/Goal/GoalProgress';
+import Button from '../../components/Button';
+import colors from '../../constants/colors';
+import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import { fonts } from '../../constants/fonts';
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const goal = getAllGoals();
+  const navigation = useNavigation();
+  const { getActualGoal } = useSavingsStore();
+  const [editMode, setEditMode] = useState(false);
+
+  // Get current goal
+  const currentGoal = getActualGoal();
+
+  // Memoized function checking if goal was achieved
+  const isGoalAchieved = useMemo(() => {
+    if (
+      !currentGoal ||
+      !currentGoal.targetAmount ||
+      currentGoal.targetAmount === 0
+    ) {
+      return false;
+    }
+
+    const totalPromotionSum =
+      currentGoal.savings?.reduce((sum, saving) => {
+        return sum + (saving.promotion || 0);
+      }, 0) || 0;
+
+    return totalPromotionSum >= currentGoal.targetAmount;
+  }, [currentGoal]);
+
+  // Determine button title and action based on goal state
+  const buttonTitle = !currentGoal || isGoalAchieved ? 'Nowy' : 'Edytuj';
+  const isEditMode = buttonTitle === 'Edytuj';
 
   const addHandle = () => {
+    setEditMode(isEditMode);
+
     if (showForm) {
       Animated.timing(fadeAnim, {
         toValue: 0,
-        duration: 300,
+        duration: 500,
         useNativeDriver: true,
       }).start(() => {
         setShowForm(false);
       });
     } else {
       setShowForm(true);
+
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 300,
+        duration: 500,
         useNativeDriver: true,
       }).start();
     }
   };
 
-  const cancelHandle = () => {
-    Alert.alert("Czy na pewno chcesz usunąć wszystkie cele?", "Usunięcie celu spowoduje usunięcie wszystkich zapisanych celów.", [
-      {
-        text: "Nie",
-        style: "cancel",
-      },
-      {
-        text: "Tak",
-        onPress: () => clearAllGoals(),
-      },
-    ]);
-    clearAllGoals();
+  const historylHandle = () => {
+    (navigation as any).navigate('HistoryGoals');
   };
 
   return (
     <>
       <Top />
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
+
+      <View style={styles.headerContainer}>
+        <View style={styles.headerContent}>
           <Text style={styles.title}>Mój Cel </Text>
-          <Button title={`${goal.length != 0 ? "Edytuj" : "Dodaj"}`} onPress={addHandle} />
-          <Button title="CLEAR GOAL" height={25} onPress={cancelHandle} />
+          <Button title={buttonTitle} onPress={addHandle} />
+          <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
 
         <View style={styles.goal}>
-          <GoalProgress />
+          <GoalProgress variant="goal" />
         </View>
-
-        {showForm && (
-          <Animated.View style={{ opacity: fadeAnim }}>
-            <EditTargetForm onFormClose={() => setShowForm(false)} />
-          </Animated.View>
-        )}
       </View>
+
+      {showForm && (
+        <View style={styles.showForm}>
+          <Animated.View style={{ opacity: fadeAnim }}>
+            <EditTargetForm
+              onFormClose={() => setShowForm(false)}
+              editGoal={editMode}
+            />
+          </Animated.View>
+        </View>
+      )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    height: "100%",
-    // justifyContent: "center",
-    marginTop: 80,
-  },
   headerContainer: {
-    width: 100,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
     fontSize: 26,
-    // marginTop: 50,
     marginBottom: 10,
-    marginLeft: 20,
     backgroundColor: colors.background.main,
+    zIndex: 0,
+  },
+  headerContent: {
+    top: 150,
+    marginLeft: 20,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 26,
     marginLeft: 10,
     marginBottom: 10,
+    fontFamily: fonts.family.roboto,
   },
   goal: {
-    marginTop: -10,
-    marginBottom: 30,
+    marginTop: 90,
+  },
+  showForm: {
+    zIndex: 10,
   },
 });
