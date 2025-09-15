@@ -2,27 +2,27 @@
 
 <div align="center">
   <div style="display: inline-block; margin: 10px;">
-    <img src="./assets/images/screenshot_home.png" style="width: 100%; max-width: 250px;" alt="Home Screen" />
+    <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px;" alt="Home Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Home Screen</strong></p>
   </div>
   <div style="display: inline-block; margin: 10px;">
-    <img src="./assets/images/screenshot_goal.png" style="width: 100%; max-width: 250px;" alt="Goal Screen" />
+    <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px;" alt="Goal Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Goal Screen</strong></p>
   </div>
   <div style="display: inline-block; margin: 10px;">
-    <img src="./assets/images/screenshot_add_saving.png" style="width: 100%; max-width: 250px;" alt="Add Saving Screen" />
+    <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px;" alt="Add Saving Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>Add Saving Screen</strong></p>
   </div>
   <div style="display: inline-block; margin: 10px;">
-    <img src="./assets/images/screenshot_history_savings.png" style="width: 100%; max-width: 250px;" alt="Savings History" />
+    <img src="./assets/images/screenshot_history_savings.png" style="width: 30%; max-width: 250px;" alt="Savings History" />
     <p style="text-align: center; margin-top: 5px;"><strong>Savings History</strong></p>
   </div>
   <div style="display: inline-block; margin: 10px;">
-    <img src="./assets/images/screenshot_history_goals.png" style="width: 100%; max-width: 250px;" alt="Goals History" />
+    <img src="./assets/images/screenshot_history_goals.png" style="width: 30%; max-width: 250px;" alt="Goals History" />
     <p style="text-align: center; margin-top: 5px;"><strong>Goals History</strong></p>
   </div>
   <div style="display: inline-block; margin: 10px;">
-    <img src="./assets/images/screenshot_about.png" style="width: 100%; max-width: 250px;" alt="About Screen" />
+    <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px;" alt="About Screen" />
     <p style="text-align: center; margin-top: 5px;"><strong>About Screen</strong></p>
   </div>
 </div>
