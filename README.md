@@ -132,8 +132,7 @@ npm install`
 More information in the [official troubleshooting documentation](https://reactnative.dev/docs/troubleshooting).
 
 <br />
-<br />
 
-# <span style="font-size: 24px">👌</span>Do you like it?
+## <span style="font-size: 24px">🙂</span>Do you like it?
 
-You can buy us 💑 coffee <a href="https://buycoffee.to/artur-dev" target="_blank" rel="noopener noreferrer"><span style="font-size: 32px">☕</span></a>
+You can buy for us 💑 coffee <a href="https://buycoffee.to/artur-dev" target="_blank" rel="noopener noreferrer"><span style="font-size: 32px">☕</span></a>
