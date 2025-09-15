@@ -1,11 +1,13 @@
 ## 📱 Screenshots
 
-![Home Screen](./assets/images/screenshot_home.png)
-![Goal Screen](./assets/images/screenshot_goal.png)
-![Add Saving Screen](./assets/images/screenshot_add_saving.png)
-![Savings History](./assets/images/screenshot_history_savings.png)
-![Goals History](./assets/images/screenshot_history_goals.png)
-![About Screen](./assets/images/screenshot_about.png)
+<div align="center">
+  <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" />
+  <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" />
+  <img src="./assets/images/screenshot_add_saving.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Add Saving Screen" />
+  <img src="./assets/images/screenshot_history_savings.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Savings History" />
+  <img src="./assets/images/screenshot_history_goals.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goals History" />
+  <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="About Screen" />
+</div>
 
 # 💰 Promotional Savings [PL]
 
