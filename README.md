@@ -1,5 +1,3 @@
-## 📱 Screenshots
-
 <div align="center">
   <img src="./assets/images/screenshot_home.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Home Screen" />
   <img src="./assets/images/screenshot_goal.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="Goal Screen" />
@@ -9,7 +7,7 @@
   <img src="./assets/images/screenshot_about.png" style="width: 30%; max-width: 250px; margin: 10px;" alt="About Screen" />
 </div>
 
-# 💰 Promotional Savings [PL]
+# 💰 Promotional Savings [PL App]
 
 A free mobile application for Android phones that helps users track money saved through promotions and deals. The app allows setting financial goals and monitoring progress in achieving them.
 
