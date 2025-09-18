@@ -1,6 +1,4 @@
 ---
-description: Opis projektu
-globs: '**/*.tsx, **/*.jsx'
 alwaysApply: false
 ---
 

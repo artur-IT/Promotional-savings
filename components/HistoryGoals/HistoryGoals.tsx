@@ -169,7 +169,7 @@ export default function HistoryGoalsComponent() {
 
       <Button
         title="Usuń wszystkie cele!"
-        width={170}
+        width={185}
         bgColor="red"
         onPress={handleDeleteAllGoals}
       />

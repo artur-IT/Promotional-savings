@@ -55,16 +55,16 @@ function BottomTabNavigator() {
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: size + 30,
+                  width: 'auto',
+                  // backgroundColor: 'red',
                   height: size + 32,
                   paddingBottom: 12,
                 }}
               >
                 <Text
                   style={{
-                    fontSize: focused ? size * 1.15 : size * 1.0,
+                    fontSize: size,
                     textAlign: 'center',
-                    transform: focused ? [{ scaleX: 1.1 }] : [{ scaleX: 1 }],
                   }}
                 >
                   {icon}
@@ -77,16 +77,13 @@ function BottomTabNavigator() {
         tabBarStyle: {
           backgroundColor: colors.background.main,
           borderTopWidth: 1,
-          // borderTopColor: '#000',
-          // borderLeftColor: '#000',
-          // borderRightColor: '#000',
           borderLeftWidth: 1,
           borderRightWidth: 1,
           borderTopLeftRadius: 25,
           borderTopRightRadius: 25,
-          height: 70,
+          height: 80,
           paddingBottom: 10,
-          paddingTop: 10,
+          paddingTop: 15,
         },
       })}
     >
@@ -97,7 +94,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: focused ? 14 : 12,
+                fontSize: 12,
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -116,7 +113,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: focused ? 14 : 12,
+                fontSize: 12,
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -135,7 +132,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: focused ? 14 : 12,
+                fontSize: 12,
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -154,7 +151,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: focused ? 14 : 12,
+                fontSize: 12,
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -173,7 +170,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: focused ? 14 : 12,
+                fontSize: 12,
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -192,7 +189,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: focused ? 14 : 12,
+                fontSize: 12,
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused

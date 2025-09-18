@@ -7,8 +7,9 @@ export default function AboutScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>O aplikacji</Text>
 
+        {/* 'textIndent' is not supported in React Native styles, so we can simulate indentation by adding spaces at the start of the text */}
         <Text style={styles.paragraph}>
-          Prosta aplikacja do śledzenia Twoich oszczędności. Zlicza
+          {'         '}Prosta aplikacja do śledzenia Twoich oszczędności. Zlicza
           zaoszczędzone na różnych wydatkach pieniądze i sumuje je.
         </Text>
 
@@ -26,8 +27,7 @@ export default function AboutScreen() {
             💡 Ile takich małych kwot 'przepada' w naszej głowie?
           </Text>
           <Text style={[styles.bold, styles.listItem, { color: '#ff6c00' }]}>
-            ☝️ A gdyby notować te małe kwoty, uzbierać więcej i wydać je na coś
-            przyjemnego?
+            ☝️ A gdyby notować te małe kwoty i wydać je na coś przyjemnego?
           </Text>
           <Text style={[styles.bold, styles.listItem, { color: 'green' }]}>
             😊 Przedłuż radość z zaoszczędzonych pieniędzy! {'\n'} Notuj te małe
@@ -56,7 +56,7 @@ export default function AboutScreen() {
             • sumę kwot zaoszczędzonych w bieżącym roku
           </Text>
           <Text style={styles.listItem}>
-            • postęp w osiągnięciu swojego celu
+            • postęp w realizacji swojego celu
           </Text>
           <Text style={styles.listItem}>• historię swoich oszczędności</Text>
           <Text style={styles.listItem}>• historię już osiągniętych celów</Text>
@@ -67,7 +67,7 @@ export default function AboutScreen() {
           usługach.
         </Text>
 
-        <Text style={styles.footer}>Promotional Savings v. 1.0</Text>
+        <Text style={styles.footer}>Promotional Savings v. 1.1</Text>
       </View>
     </ScrollView>
   );

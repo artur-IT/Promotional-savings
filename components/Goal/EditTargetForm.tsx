@@ -38,6 +38,10 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
     if (!goalName?.trim()) {
       newErrors.goalName = 'Podaj cel oszczędzania';
       isValid = false;
+    } else if (!isNaN(Number(goalName.trim()))) {
+      newErrors.goalName = 'Cel nie może być liczbą';
+      setGoalName(''); // Clear the numeric value
+      isValid = false;
     }
 
     if (!`${targetAmount}`.trim()) {
@@ -45,8 +49,12 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
       isValid = false;
     } else {
       const amount = parseFloat(`${targetAmount}`);
-      if (isNaN(amount) || amount <= 0) {
-        newErrors.goalValue = 'Kwota musi być liczbą większą od zera';
+      if (isNaN(amount)) {
+        newErrors.goalValue = 'Kwota musi być liczbą';
+        setTargetAmount(''); // Clear the non-numeric value
+        isValid = false;
+      } else if (amount <= 0) {
+        newErrors.goalValue = 'Kwota musi być większa od zera';
         isValid = false;
       }
     }
@@ -91,7 +99,8 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
           value={goalName}
           onChangeText={setGoalName}
           onFocus={handleGoalNameFocus}
-          placeholder="Na co zbierasz?"
+          placeholder={errors.goalName || 'Na co zbierasz?'}
+          placeholderTextColor={errors.goalName ? 'red' : 'gray'}
           maxLength={25}
         />
         <Button title="usuń" width={60} onPress={clearGoalName} />
@@ -107,7 +116,8 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
           ]}
           keyboardType="numeric"
           value={`${targetAmount}`}
-          placeholder="Ile chcesz zaoszczędzić?"
+          placeholder={errors.goalValue || 'Ile chcesz zaoszczędzić?'}
+          placeholderTextColor={errors.goalValue ? 'red' : 'gray'}
           maxLength={4}
           onChangeText={setTargetAmount}
           onFocus={handleTargetAmountFocus}
@@ -131,8 +141,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
-    padding: 25,
-    height: 210,
+    padding: 10,
+    height: 180,
     backgroundColor: colors.background.card,
     borderRadius: 10,
     zIndex: 100,
@@ -140,10 +150,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
   },
   label: {
-    width: 50,
+    width: 60,
     fontSize: 16,
     color: colors.text.button_W,
   },
@@ -164,13 +173,14 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
   deleteIcon: {
     marginLeft: 5,
   },
   errorBg: {
     width: 210,
+    height: 40,
     paddingHorizontal: 8,
     borderRadius: 4,
     backgroundColor: 'yellow',

@@ -406,7 +406,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
                 keyExtractor={item => item.value}
                 scrollEnabled={true}
                 nestedScrollEnabled={true}
-                showsVerticalScrollIndicator={false}
+                showsVerticalScrollIndicator={true}
                 renderItem={({ item, index }) => (
                   <TouchableOpacity
                     style={[
@@ -505,34 +505,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 12,
+    width: 300,
   },
   label: {
-    width: 90,
+    width: 95,
     fontSize: 16,
     paddingHorizontal: 8,
     paddingVertical: 8,
-  },
-
-  input: {
-    width: 180,
-    height: 40,
-    backgroundColor: colors.background.main,
-    borderColor: colors.border,
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    fontSize: 16,
-    color: colors.text.primary,
-    display: 'flex',
-    justifyContent: 'center',
-    shadowColor: colors.shadow,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
   },
   inputError: {
     borderColor: colors.status.error,
@@ -550,7 +529,7 @@ const styles = StyleSheet.create({
   },
   // Enhanced Input Styles
   inputContainer: {
-    width: 180,
+    width: 190,
   },
   inputWrapper: {
     flexDirection: 'row',
@@ -590,7 +569,7 @@ const styles = StyleSheet.create({
   },
   // Date Button Styles
   dateButton: {
-    width: 180,
+    width: 190,
     height: 40,
     backgroundColor: colors.background.main,
     borderColor: colors.border,
@@ -625,7 +604,7 @@ const styles = StyleSheet.create({
   // Custom Dropdown Styles
   dropdownContainer: {
     position: 'relative',
-    width: 180,
+    width: 190,
     zIndex: 1000,
     // Ensure dropdown is above other elements
     elevation: 10,
@@ -680,14 +659,14 @@ const styles = StyleSheet.create({
   },
   dropdownList: {
     position: 'absolute',
-    top: 42,
+    bottom: 42, // Changed from top to bottom to expand upward
     left: 0,
     right: 0,
     backgroundColor: colors.background.main,
     borderColor: colors.border,
     borderWidth: 1,
     borderRadius: 8,
-    maxHeight: 250, // Increased height to show all items
+    maxHeight: 'auto', // Keep automatic height
     shadowColor: colors.shadow,
     shadowOffset: {
       width: 0,
@@ -752,7 +731,7 @@ const styles = StyleSheet.create({
   buttons: {
     display: 'flex',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 10,
   },
 });
 

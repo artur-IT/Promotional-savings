@@ -12,7 +12,7 @@ export default function HomeWithGoal() {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={styles.contentContainer}
+      // contentContainerStyle={styles.contentContainer}
     >
       <Image source={PlaceholderImage} style={styles.image} />
       <View style={styles.titleContainer}>
@@ -28,7 +28,9 @@ export default function HomeWithGoal() {
         <LastAdd />
       </View>
 
-      <GoalProgress variant="home" />
+      <View style={styles.goalProgress}>
+        <GoalProgress variant="home" />
+      </View>
     </ScrollView>
   );
 }
@@ -38,31 +40,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.main,
   },
   contentContainer: {
+    flexGrow: 1,
     alignItems: 'center',
-    minHeight: '100%',
-    paddingBottom: 50,
+    // minHeight: '100%',
+    // paddingBottom: 50,
   },
   titleContainer: {
     alignSelf: 'center',
-    display: 'flex',
-    marginBottom: 40,
+    // display: 'flex',
+    flex: 1,
+    // marginBottom: 40,
     width: '100%',
   },
-  title: {
-    fontFamily: 'PoiretOne', // Prosta nazwa pliku
-    color: colors.text.title,
-    textAlign: 'center',
-    fontSize: 32,
-    letterSpacing: 1, // Dodatkowo dla piękna
-  },
-  topImage: {
-    position: 'absolute',
-    top: -170,
-    right: -10,
-    width: '100%',
-    maxWidth: 400,
-    height: 400,
-  },
+
   image: {
     position: 'absolute',
     top: 190,
@@ -72,13 +62,20 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   year: {
-    marginTop: 100,
+    position: 'relative',
+    top: 130,
     alignSelf: 'flex-start',
   },
   circles: {
+    position: 'relative',
+    top: 180,
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'flex-end',
-    marginTop: 40,
+  },
+  goalProgress: {
+    position: 'relative',
+    top: 240,
   },
 });

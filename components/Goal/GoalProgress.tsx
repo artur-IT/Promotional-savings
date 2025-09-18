@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   homeContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    // marginTop: 40,
   },
   homeNumbers: {
     width: 400,
