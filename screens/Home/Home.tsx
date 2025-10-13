@@ -12,7 +12,7 @@ export default function HomeWithGoal() {
   return (
     <ScrollView
       style={styles.container}
-      // contentContainerStyle={styles.contentContainer}
+      contentContainerStyle={styles.contentContainer}
     >
       <Image source={PlaceholderImage} style={styles.image} />
       <View style={styles.titleContainer}>
@@ -37,13 +37,13 @@ export default function HomeWithGoal() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: colors.background.main,
   },
   contentContainer: {
     flexGrow: 1,
     alignItems: 'center',
-    // minHeight: '100%',
-    // paddingBottom: 50,
+    paddingBottom: 50,
   },
   titleContainer: {
     alignSelf: 'center',
@@ -62,20 +62,17 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   year: {
-    position: 'relative',
-    top: 130,
+    marginTop: 130,
     alignSelf: 'flex-start',
   },
   circles: {
-    position: 'relative',
-    top: 180,
+    marginTop: 50,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   goalProgress: {
-    position: 'relative',
-    top: 240,
+    marginTop: 60,
   },
 });

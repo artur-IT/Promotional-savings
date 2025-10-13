@@ -22,9 +22,8 @@ function BottomTabNavigator() {
         // Hide header for all screens
         headerShown: false,
         // Configure tab bar icons
-        tabBarIcon: ({ focused, size }) => {
+        tabBarIcon: ({  size }) => {
           let icon: string;
-
           if (route.name === 'Home') {
             icon = '🏠';
           } else if (route.name === 'Goal') {

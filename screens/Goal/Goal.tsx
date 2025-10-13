@@ -1,4 +1,4 @@
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Top from '../../components/Top';
@@ -68,7 +68,7 @@ export default function Goal() {
   };
 
   return (
-    <>
+    <ScrollView style={styles.scrollContainer}>
       <Top />
 
       <View style={styles.headerContainer}>
@@ -93,22 +93,24 @@ export default function Goal() {
           </Animated.View>
         </View>
       )}
-    </>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: colors.background.main,
+  },
   headerContainer: {
-    position: 'absolute',
     width: '100%',
-    height: '100%',
     fontSize: 26,
     marginBottom: 10,
     backgroundColor: colors.background.main,
     zIndex: 0,
   },
   headerContent: {
-    top: 150,
+    top: 70,
     marginLeft: 20,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -120,9 +122,14 @@ const styles = StyleSheet.create({
     fontFamily: fonts.family.roboto,
   },
   goal: {
-    marginTop: 90,
+    marginTop: 10,
   },
   showForm: {
+    position: 'absolute',
     zIndex: 10,
+    top: 50,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
