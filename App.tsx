@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, StatusBar } from 'react-native';
+import { Text, View, StatusBar, Dimensions } from 'react-native';
 import { colors } from './constants/colors';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
@@ -15,14 +15,40 @@ import About from './components/About';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+// Hook to get responsive font size
+const useResponsiveFontSize = () => {
+  const [screenData, setScreenData] = useState(Dimensions.get('window'));
+
+  useEffect(() => {
+    const onChange = (result: any) => {
+      setScreenData(result.window);
+    };
+
+    const subscription = Dimensions.addEventListener('change', onChange);
+    return () => subscription?.remove();
+  }, []);
+
+  const getResponsiveFontSize = (baseFontSize: number): number => {
+    const { width } = screenData;
+
+    if (width <= 360) return Math.round(baseFontSize * 0.8);
+    else if (width < 414) return baseFontSize;
+    else if (width < 768) return Math.round(baseFontSize * 1);
+    else return Math.round(baseFontSize * 1.2);
+  };
+  return getResponsiveFontSize;
+};
+
 function BottomTabNavigator() {
+  const getResponsiveFontSize = useResponsiveFontSize();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         // Hide header for all screens
         headerShown: false,
         // Configure tab bar icons
-        tabBarIcon: ({  size }) => {
+        tabBarIcon: ({ size }) => {
           let icon: string;
           if (route.name === 'Home') {
             icon = '🏠';
@@ -93,7 +119,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: 12,
+                fontSize: getResponsiveFontSize(12),
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -112,7 +138,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: 12,
+                fontSize: getResponsiveFontSize(12),
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -131,7 +157,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: 12,
+                fontSize: getResponsiveFontSize(12),
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -150,7 +176,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: 12,
+                fontSize: getResponsiveFontSize(12),
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -169,7 +195,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: 12,
+                fontSize: getResponsiveFontSize(12),
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused
@@ -188,7 +214,7 @@ function BottomTabNavigator() {
           tabBarLabel: ({ focused }) => (
             <Text
               style={{
-                fontSize: 12,
+                fontSize: getResponsiveFontSize(12),
                 fontWeight: focused ? 'bold' : 'normal',
                 color: focused
                   ? colors.navigation.focused

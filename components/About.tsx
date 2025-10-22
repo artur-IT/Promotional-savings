@@ -9,7 +9,7 @@ export default function AboutScreen() {
 
         {/* 'textIndent' is not supported in React Native styles, so we can simulate indentation by adding spaces at the start of the text */}
         <Text style={styles.paragraph}>
-          {'         '}Prosta aplikacja do śledzenia Twoich oszczędności. Zlicza
+          {'  '}Prosta aplikacja do śledzenia Twoich oszczędności. Zlicza
           zaoszczędzone na różnych wydatkach pieniądze i sumuje je.
         </Text>
 
@@ -67,7 +67,7 @@ export default function AboutScreen() {
           usługach.
         </Text>
 
-        <Text style={styles.footer}>Promotional Savings v. 1.1</Text>
+        <Text style={styles.footer}>Promotional Savings v. 1.2</Text>
       </View>
     </ScrollView>
   );
