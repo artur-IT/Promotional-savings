@@ -76,13 +76,13 @@ Works offline!
 
 2. **Install dependencies** - `npm install`
 3. **Run Metro bundler** - `npx react-native run-android` (Automatically starts Metro)
-4. **compile to .aab** - `./gradlew bundleRelease` (for Google Play Store)
-5. **Compile to APK file** - in the android folder run
-
-`.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
+4. **compile to .aab** - in android folder run `./gradlew bundleRelease` (for Google Play Store)
+5. **Compile to APK file** - in android folder run `.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
+6. Before public in Google Play change version in \app\.build.gradle
 
 After the build completes, the APK file will be at:
 `android/app/build/outputs/apk/release/app-release.apk`
+`android\app\build\outputs\bundle\release\app-release.aab`
 
 ### 📱 Running on Device
 

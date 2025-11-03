@@ -67,7 +67,7 @@ export default function AboutScreen() {
           usługach.
         </Text>
 
-        <Text style={styles.footer}>Promotional Savings v. 1.2</Text>
+        <Text style={styles.footer}>Promotional Savings v. 1.3</Text>
       </View>
     </ScrollView>
   );

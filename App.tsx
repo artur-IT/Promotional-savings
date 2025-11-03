@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, StatusBar, Dimensions } from 'react-native';
+import { Text, View, StatusBar, Dimensions, StyleSheet } from 'react-native';
 import { colors } from './constants/colors';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
@@ -39,6 +39,36 @@ const useResponsiveFontSize = () => {
   return getResponsiveFontSize;
 };
 
+// Icon mapping for tab navigation
+const routeIconMap: Record<string, string> = {
+  Home: '🏠',
+  Goal: '🏆',
+  AddSaving: '➕',
+  HistoryGoals: '⏰',
+  HistorySavings: '📊',
+  About: 'ℹ️',
+};
+
+// Helper function to render tab bar label
+const createTabBarLabel = (label: string, getResponsiveFontSize: (size: number) => number) => {
+  return ({ focused }: { focused: boolean }) => (
+    <Text
+      style={[
+        styles.tabBarLabel,
+        focused ? styles.tabBarLabelFocused : styles.tabBarLabelUnfocused,
+        {
+          fontSize: getResponsiveFontSize(12),
+          color: focused
+            ? colors.navigation.focused
+            : colors.navigation.unfocused,
+        },
+      ]}
+    >
+      {label}
+    </Text>
+  );
+};
+
 function BottomTabNavigator() {
   const getResponsiveFontSize = useResponsiveFontSize();
 
@@ -49,181 +79,60 @@ function BottomTabNavigator() {
         headerShown: false,
         // Configure tab bar icons
         tabBarIcon: ({ size }) => {
-          let icon: string;
-          if (route.name === 'Home') {
-            icon = '🏠';
-          } else if (route.name === 'Goal') {
-            icon = '🏆';
-          } else if (route.name === 'AddSaving') {
-            icon = '➕';
-          } else if (route.name === 'HistoryGoals') {
-            icon = '⏰';
-          } else if (route.name === 'HistorySavings') {
-            icon = '📊';
-          } else if (route.name === 'About') {
-            icon = 'ℹ️';
-          } else {
-            icon = '❓';
-          }
+          const icon = routeIconMap[route.name] || '❓';
 
           return (
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: size + 16,
-                height: size + 16,
-                backgroundColor: 'transparent',
-              }}
-            >
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: 'auto',
-                  // backgroundColor: 'red',
-                  height: size + 32,
-                  paddingBottom: 12,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: size,
-                    textAlign: 'center',
-                  }}
-                >
-                  {icon}
-                </Text>
+            <View style={[styles.iconOuter, { width: size + 16, height: size + 16 }]}>
+              <View style={[styles.iconInner, { height: size + 32 }]}>
+                <Text style={[styles.iconText, { fontSize: size }]}>{icon}</Text>
               </View>
             </View>
           );
         },
         // Tab bar styling
-        tabBarStyle: {
-          backgroundColor: colors.background.main,
-          borderTopWidth: 1,
-          borderLeftWidth: 1,
-          borderRightWidth: 1,
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-          height: 80,
-          paddingBottom: 10,
-          paddingTop: 15,
-        },
+        tabBarStyle: styles.tabBarStyle,
       })}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: ({ focused }) => (
-            <Text
-              style={{
-                fontSize: getResponsiveFontSize(12),
-                fontWeight: focused ? 'bold' : 'normal',
-                color: focused
-                  ? colors.navigation.focused
-                  : colors.navigation.unfocused,
-              }}
-            >
-              Dom
-            </Text>
-          ),
+          tabBarLabel: createTabBarLabel('Dom', getResponsiveFontSize),
         }}
       />
       <Tab.Screen
         name="Goal"
         component={Goal}
         options={{
-          tabBarLabel: ({ focused }) => (
-            <Text
-              style={{
-                fontSize: getResponsiveFontSize(12),
-                fontWeight: focused ? 'bold' : 'normal',
-                color: focused
-                  ? colors.navigation.focused
-                  : colors.navigation.unfocused,
-              }}
-            >
-              Cel
-            </Text>
-          ),
+          tabBarLabel: createTabBarLabel('Cel', getResponsiveFontSize),
         }}
       />
       <Tab.Screen
         name="AddSaving"
         component={AddSaving}
         options={{
-          tabBarLabel: ({ focused }) => (
-            <Text
-              style={{
-                fontSize: getResponsiveFontSize(12),
-                fontWeight: focused ? 'bold' : 'normal',
-                color: focused
-                  ? colors.navigation.focused
-                  : colors.navigation.unfocused,
-              }}
-            >
-              Dodaj
-            </Text>
-          ),
+          tabBarLabel: createTabBarLabel('Dodaj', getResponsiveFontSize),
         }}
       />
       <Tab.Screen
         name="HistoryGoals"
         component={HistoryGoals}
         options={{
-          tabBarLabel: ({ focused }) => (
-            <Text
-              style={{
-                fontSize: getResponsiveFontSize(12),
-                fontWeight: focused ? 'bold' : 'normal',
-                color: focused
-                  ? colors.navigation.focused
-                  : colors.navigation.unfocused,
-              }}
-            >
-              Osiągnięte
-            </Text>
-          ),
+          tabBarLabel: createTabBarLabel('Osiągnięte', getResponsiveFontSize),
         }}
       />
       <Tab.Screen
         name="HistorySavings"
         component={HistorySavings}
         options={{
-          tabBarLabel: ({ focused }) => (
-            <Text
-              style={{
-                fontSize: getResponsiveFontSize(12),
-                fontWeight: focused ? 'bold' : 'normal',
-                color: focused
-                  ? colors.navigation.focused
-                  : colors.navigation.unfocused,
-              }}
-            >
-              Historia
-            </Text>
-          ),
+          tabBarLabel: createTabBarLabel('Historia', getResponsiveFontSize),
         }}
       />
       <Tab.Screen
         name="About"
         component={About}
         options={{
-          tabBarLabel: ({ focused }) => (
-            <Text
-              style={{
-                fontSize: getResponsiveFontSize(12),
-                fontWeight: focused ? 'bold' : 'normal',
-                color: focused
-                  ? colors.navigation.focused
-                  : colors.navigation.unfocused,
-              }}
-            >
-              Info
-            </Text>
-          ),
+          tabBarLabel: createTabBarLabel('Info', getResponsiveFontSize),
         }}
       />
     </Tab.Navigator>
@@ -242,9 +151,7 @@ function App() {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            contentStyle: {
-              backgroundColor: 'transparent',
-            },
+            contentStyle: styles.stackContentStyle,
           }}
         >
           <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
@@ -255,3 +162,42 @@ function App() {
 }
 
 export default App;
+
+export const styles = StyleSheet.create({
+  iconOuter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  iconInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 'auto',
+    paddingBottom: 10,
+  },
+  iconText: {
+    textAlign: 'center',
+  },
+  tabBarStyle: {
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    height: 80,
+    paddingTop: 10,
+  },
+  tabBarLabel: {
+    textAlign: 'center',
+  },
+  tabBarLabelFocused: {
+    fontWeight: 'bold',
+  },
+  tabBarLabelUnfocused: {
+    fontWeight: 'normal',
+  },
+  stackContentStyle: {
+    backgroundColor: 'transparent',
+  },
+});

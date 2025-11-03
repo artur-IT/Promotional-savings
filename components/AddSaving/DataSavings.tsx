@@ -276,7 +276,9 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
 
   return (
     <View style={styles.container}>
-      {/* VALUE */}
+
+    <View style={styles.containerInputs}>
+     {/* VALUE */}
       <View style={styles.row}>
         <Text style={styles.label}>Kwota</Text>
         <View style={styles.inputContainer}>
@@ -444,6 +446,9 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         </View>
       </View>
 
+    </View>
+ 
+
       {/* Modal with calendar */}
       <Modal visible={showCalendar} transparent={true} animationType="slide">
         <View style={styles.modalContainer}>
@@ -472,6 +477,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           </View>
         </View>
       </Modal>
+
       <View style={styles.buttons}>
         <Button title="Zapisz" onPress={handleSave} />
         <Button
@@ -501,17 +507,22 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
   },
+  containerInputs: {
+
+    alignItems: 'center',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 12,
-    width: 300,
+    width: 'auto',
   },
   label: {
-    width: 95,
+    width: 100,
     fontSize: 16,
-    paddingHorizontal: 8,
-    paddingVertical: 8,
+    display: 'flex',
+    alignSelf: 'center',
+    // paddingVertical: 2,
   },
   inputError: {
     borderColor: colors.status.error,
