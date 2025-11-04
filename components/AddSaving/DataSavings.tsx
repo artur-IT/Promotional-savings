@@ -277,177 +277,177 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   return (
     <View style={styles.container}>
 
-    <View style={styles.containerInputs}>
-     {/* VALUE */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Kwota</Text>
-        <View style={styles.inputContainer}>
-          <View
-            style={[
-              styles.inputWrapper,
-              errors.promotion ? styles.inputError : null,
-              focusedField === 'amount' ? styles.inputFocus : null,
-            ]}
-          >
-            <Text style={styles.inputIcon}>💰</Text>
-            <TextInput
-              style={[styles.inputWithIcon]}
-              keyboardType="numeric"
-              value={promotion?.toString() || ''}
-              maxLength={4}
-              onChangeText={handlePromotionalChange}
-              onFocus={() => {
-                setFocusedField('amount');
-                setPromotion(promotion);
-              }}
-              onBlur={() => setFocusedField('')}
-              placeholder="0"
-              placeholderTextColor={colors.text.secondary}
-            />
-            <Text style={styles.currencySymbol}>zł</Text>
-          </View>
-          {errors.promotion && (
-            <Text style={styles.errorText}>{errors.promotion}</Text>
-          )}
-        </View>
-      </View>
-
-      {/* DATE */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Data</Text>
-        <View style={styles.inputContainer}>
-          <TouchableOpacity
-            style={[
-              styles.dateButton,
-              errors.date ? styles.inputError : null,
-              focusedField === 'date' ? styles.inputFocus : null,
-            ]}
-            onPress={() => {
-              setFocusedField('date');
-              setShowCalendar(true);
-            }}
-            onBlur={() => setFocusedField('')}
-          >
-            <View style={styles.dateButtonContent}>
-              <Text style={styles.inputIcon}>📅</Text>
-              <Text
-                style={[
-                  styles.dateButtonText,
-                  !date ? styles.placeholderText : null,
-                ]}
-              >
-                {formatDate(date)}
-              </Text>
-              <Text style={styles.dateArrow}>📍</Text>
-            </View>
-          </TouchableOpacity>
-          {errors.date && <Text style={styles.errorText}>{errors.date}</Text>}
-        </View>
-      </View>
-
-      {/* CATEGORY - Custom Dropdown */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Kategoria</Text>
-
-        <View style={styles.dropdownContainer}>
-          {/* Dropdown Button */}
-          <TouchableOpacity
-            style={[
-              styles.dropdownButton,
-              errors.category ? styles.inputError : null,
-              showCategoryDropdown ? styles.dropdownButtonActive : null,
-            ]}
-            onPress={toggleCategoryDropdown}
-          >
-            <View style={styles.dropdownButtonContent}>
-              <Text style={styles.dropdownButtonEmoji}>
-                {getCurrentCategoryInfo().emoji}
-              </Text>
-              <Text
-                style={[
-                  styles.dropdownButtonText,
-                  !category ? styles.placeholderText : null,
-                ]}
-              >
-                {getCurrentCategoryInfo().label}
-              </Text>
-              <Text
-                style={[
-                  styles.dropdownArrow,
-                  showCategoryDropdown ? styles.dropdownArrowUp : null,
-                ]}
-              >
-                ▼
-              </Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* Dropdown List */}
-          {showCategoryDropdown && (
-            <Animated.View
+      <View style={styles.containerInputs}>
+        {/* VALUE */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Kwota</Text>
+          <View style={styles.inputContainer}>
+            <View
               style={[
-                styles.dropdownList,
-                {
-                  opacity: dropdownAnimation,
-                  transform: [
-                    {
-                      translateY: slideAnimation,
-                    },
-                    {
-                      scale: dropdownAnimation.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0.95, 1],
-                      }),
-                    },
-                  ],
-                },
+                styles.inputWrapper,
+                errors.promotion ? styles.inputError : null,
+                focusedField === 'amount' ? styles.inputFocus : null,
               ]}
             >
-              <FlatList
-                data={categoryOptions}
-                keyExtractor={item => item.value}
-                scrollEnabled={true}
-                nestedScrollEnabled={true}
-                showsVerticalScrollIndicator={true}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity
-                    style={[
-                      styles.dropdownItem,
-                      category === item.value
-                        ? styles.dropdownItemSelected
-                        : null,
-                      // Remove border from last item
-                      index === categoryOptions.length - 1
-                        ? styles.dropdownItemLast
-                        : null,
-                    ]}
-                    onPress={() => handleCategoryChange(item.value)}
-                  >
-                    <Text style={styles.dropdownItemEmoji}>{item.emoji}</Text>
-                    <Text
+              <Text style={styles.inputIcon}>💰</Text>
+              <TextInput
+                style={[styles.inputWithIcon]}
+                keyboardType="numeric"
+                value={promotion?.toString() || ''}
+                maxLength={4}
+                onChangeText={handlePromotionalChange}
+                onFocus={() => {
+                  setFocusedField('amount');
+                  setPromotion(promotion);
+                }}
+                onBlur={() => setFocusedField('')}
+                placeholder="0"
+                placeholderTextColor={colors.text.secondary}
+              />
+              <Text style={styles.currencySymbol}>zł</Text>
+            </View>
+            {errors.promotion && (
+              <Text style={styles.errorText}>{errors.promotion}</Text>
+            )}
+          </View>
+        </View>
+
+        {/* DATE */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Data</Text>
+          <View style={styles.inputContainer}>
+            <TouchableOpacity
+              style={[
+                styles.dateButton,
+                errors.date ? styles.inputError : null,
+                focusedField === 'date' ? styles.inputFocus : null,
+              ]}
+              onPress={() => {
+                setFocusedField('date');
+                setShowCalendar(true);
+              }}
+              onBlur={() => setFocusedField('')}
+            >
+              <View style={styles.dateButtonContent}>
+                <Text style={styles.inputIcon}>📅</Text>
+                <Text
+                  style={[
+                    styles.dateButtonText,
+                    !date ? styles.placeholderText : null,
+                  ]}
+                >
+                  {formatDate(date)}
+                </Text>
+                <Text style={styles.dateArrow}>📍</Text>
+              </View>
+            </TouchableOpacity>
+            {errors.date && <Text style={styles.errorText}>{errors.date}</Text>}
+          </View>
+        </View>
+
+        {/* CATEGORY - Custom Dropdown */}
+        <View style={styles.row}>
+          <Text style={styles.label}>Kategoria</Text>
+
+          <View style={styles.dropdownContainer}>
+            {/* Dropdown Button */}
+            <TouchableOpacity
+              style={[
+                styles.dropdownButton,
+                errors.category ? styles.inputError : null,
+                showCategoryDropdown ? styles.dropdownButtonActive : null,
+              ]}
+              onPress={toggleCategoryDropdown}
+            >
+              <View style={styles.dropdownButtonContent}>
+                <Text style={styles.dropdownButtonEmoji}>
+                  {getCurrentCategoryInfo().emoji}
+                </Text>
+                <Text
+                  style={[
+                    styles.dropdownButtonText,
+                    !category ? styles.placeholderText : null,
+                  ]}
+                >
+                  {getCurrentCategoryInfo().label}
+                </Text>
+                <Text
+                  style={[
+                    styles.dropdownArrow,
+                    showCategoryDropdown ? styles.dropdownArrowUp : null,
+                  ]}
+                >
+                  ▼
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            {/* Dropdown List */}
+            {showCategoryDropdown && (
+              <Animated.View
+                style={[
+                  styles.dropdownList,
+                  {
+                    opacity: dropdownAnimation,
+                    transform: [
+                      {
+                        translateY: slideAnimation,
+                      },
+                      {
+                        scale: dropdownAnimation.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0.95, 1],
+                        }),
+                      },
+                    ],
+                  },
+                ]}
+              >
+                <FlatList
+                  data={categoryOptions}
+                  keyExtractor={item => item.value}
+                  scrollEnabled={true}
+                  nestedScrollEnabled={true}
+                  showsVerticalScrollIndicator={true}
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity
                       style={[
-                        styles.dropdownItemText,
+                        styles.dropdownItem,
                         category === item.value
-                          ? styles.dropdownItemTextSelected
+                          ? styles.dropdownItemSelected
+                          : null,
+                        // Remove border from last item
+                        index === categoryOptions.length - 1
+                          ? styles.dropdownItemLast
                           : null,
                       ]}
+                      onPress={() => handleCategoryChange(item.value)}
                     >
-                      {item.label}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </Animated.View>
-          )}
+                      <Text style={styles.dropdownItemEmoji}>{item.emoji}</Text>
+                      <Text
+                        style={[
+                          styles.dropdownItemText,
+                          category === item.value
+                            ? styles.dropdownItemTextSelected
+                            : null,
+                        ]}
+                      >
+                        {item.label}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </Animated.View>
+            )}
 
-          {errors.category && (
-            <Text style={styles.errorText}>{errors.category}</Text>
-          )}
+            {errors.category && (
+              <Text style={styles.errorText}>{errors.category}</Text>
+            )}
+          </View>
         </View>
+
       </View>
 
-    </View>
- 
 
       {/* Modal with calendar */}
       <Modal visible={showCalendar} transparent={true} animationType="slide">
