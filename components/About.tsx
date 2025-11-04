@@ -1,7 +1,15 @@
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { useState, useEffect } from 'react';
 import { colors } from '../constants/colors';
+import { getVersionString } from '../constants/version';
 
 export default function AboutScreen() {
+  const [version, setVersion] = useState('');
+
+  useEffect(() => {
+    getVersionString().then(setVersion);
+  }, []);
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
@@ -67,7 +75,7 @@ export default function AboutScreen() {
           usługach.
         </Text>
 
-        <Text style={styles.footer}>Promotional Savings v. 1.3</Text>
+        <Text style={styles.footer}>Promotional Savings {version}</Text>
       </View>
     </ScrollView>
   );
