@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useState, useEffect, useRef } from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, View, StatusBar, Dimensions, StyleSheet } from 'react-native';
+import PagerView from 'react-native-pager-view';
 import { colors } from './constants/colors';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
@@ -69,6 +70,74 @@ const createTabBarLabel = (label: string, getResponsiveFontSize: (size: number) 
   );
 };
 
+// Screen names array - order matters for swipe navigation
+const screenNames = ['Home', 'Goal', 'AddSaving', 'HistoryGoals', 'HistorySavings', 'About'];
+
+// Component that wraps each screen with swipeable functionality
+function SwipeableScreen({ children, screenIndex }: { children: React.ReactNode; screenIndex: number }) {
+  const navigation = useNavigation();
+  const pagerRef = useRef<PagerView>(null);
+  const [currentIndex, setCurrentIndex] = useState(screenIndex);
+
+  // Handle page change from swipe
+  const handlePageSelected = (e: any) => {
+    const index = e.nativeEvent.position;
+    setCurrentIndex(index);
+    // Navigate to corresponding tab when swiped
+    const targetRoute = screenNames[index];
+    if (targetRoute) {
+      (navigation as any).navigate(targetRoute);
+    }
+  };
+
+  // Listen to navigation changes and sync PagerView
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('state', () => {
+      const state = navigation.getState();
+      if (state) {
+        const tabState = state.routes[0]?.state;
+        if (tabState && tabState.index !== undefined) {
+          const index = tabState.index;
+          if (index !== currentIndex && pagerRef.current) {
+            setCurrentIndex(index);
+            pagerRef.current.setPage(index);
+          }
+        }
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation, currentIndex]);
+
+  return (
+    <PagerView
+      ref={pagerRef}
+      style={styles.pagerView}
+      initialPage={screenIndex}
+      onPageSelected={handlePageSelected}
+    >
+      <View key="0">
+        <Home />
+      </View>
+      <View key="1">
+        <Goal />
+      </View>
+      <View key="2">
+        <AddSaving />
+      </View>
+      <View key="3">
+        <HistoryGoals />
+      </View>
+      <View key="4">
+        <HistorySavings />
+      </View>
+      <View key="5">
+        <About />
+      </View>
+    </PagerView>
+  );
+}
+
 function BottomTabNavigator() {
   const getResponsiveFontSize = useResponsiveFontSize();
 
@@ -95,46 +164,52 @@ function BottomTabNavigator() {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
         options={{
           tabBarLabel: createTabBarLabel('Dom', getResponsiveFontSize),
         }}
-      />
+      >
+        {() => <SwipeableScreen screenIndex={0}><Home /></SwipeableScreen>}
+      </Tab.Screen>
       <Tab.Screen
         name="Goal"
-        component={Goal}
         options={{
           tabBarLabel: createTabBarLabel('Cel', getResponsiveFontSize),
         }}
-      />
+      >
+        {() => <SwipeableScreen screenIndex={1}><Goal /></SwipeableScreen>}
+      </Tab.Screen>
       <Tab.Screen
         name="AddSaving"
-        component={AddSaving}
         options={{
           tabBarLabel: createTabBarLabel('Dodaj', getResponsiveFontSize),
         }}
-      />
+      >
+        {() => <SwipeableScreen screenIndex={2}><AddSaving /></SwipeableScreen>}
+      </Tab.Screen>
       <Tab.Screen
         name="HistoryGoals"
-        component={HistoryGoals}
         options={{
           tabBarLabel: createTabBarLabel('Osiągnięte', getResponsiveFontSize),
         }}
-      />
+      >
+        {() => <SwipeableScreen screenIndex={3}><HistoryGoals /></SwipeableScreen>}
+      </Tab.Screen>
       <Tab.Screen
         name="HistorySavings"
-        component={HistorySavings}
         options={{
           tabBarLabel: createTabBarLabel('Historia', getResponsiveFontSize),
         }}
-      />
+      >
+        {() => <SwipeableScreen screenIndex={4}><HistorySavings /></SwipeableScreen>}
+      </Tab.Screen>
       <Tab.Screen
         name="About"
-        component={About}
         options={{
           tabBarLabel: createTabBarLabel('Info', getResponsiveFontSize),
         }}
-      />
+      >
+        {() => <SwipeableScreen screenIndex={5}><About /></SwipeableScreen>}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
@@ -199,5 +274,8 @@ export const styles = StyleSheet.create({
   },
   stackContentStyle: {
     backgroundColor: 'transparent',
+  },
+  pagerView: {
+    flex: 1,
   },
 });
