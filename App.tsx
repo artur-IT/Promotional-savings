@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, StatusBar, Dimensions, StyleSheet } from 'react-native';
-import PagerView from 'react-native-pager-view';
+import { Text, View, StatusBar, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { TabView, SceneMap } from 'react-native-tab-view';
 import { colors } from './constants/colors';
 import Home from './screens/Home/Home';
 import AddSaving from './screens/AddSaving/AddSaving';
@@ -12,8 +11,7 @@ import HistoryGoals from './screens/HistoryGoals/HistoryGoals';
 import HistorySavings from './screens/HistorySavings/HistorySavings';
 import About from './components/About';
 
-// Create navigators
-const Tab = createBottomTabNavigator();
+// Create stack navigator
 const Stack = createNativeStackNavigator();
 
 // Hook to get responsive font size
@@ -40,177 +38,92 @@ const useResponsiveFontSize = () => {
   return getResponsiveFontSize;
 };
 
-// Icon mapping for tab navigation
-const routeIconMap: Record<string, string> = {
-  Home: '🏠',
-  Goal: '🏆',
-  AddSaving: '➕',
-  HistoryGoals: '⏰',
-  HistorySavings: '📊',
-  About: 'ℹ️',
-};
+// Tab configuration
+const tabs = [
+  { key: 'home', title: 'Dom', icon: '🏠', component: Home },
+  { key: 'goal', title: 'Cel', icon: '🏆', component: Goal },
+  { key: 'addSaving', title: 'Dodaj', icon: '➕', component: AddSaving },
+  { key: 'historyGoals', title: 'Osiągnięte', icon: '⏰', component: HistoryGoals },
+  { key: 'historySavings', title: 'Historia', icon: '📊', component: HistorySavings },
+  { key: 'about', title: 'Info', icon: 'ℹ️', component: About },
+];
 
-// Helper function to render tab bar label
-const createTabBarLabel = (label: string, getResponsiveFontSize: (size: number) => number) => {
-  return ({ focused }: { focused: boolean }) => (
-    <Text
-      style={[
-        styles.tabBarLabel,
-        focused ? styles.tabBarLabelFocused : styles.tabBarLabelUnfocused,
-        {
-          fontSize: getResponsiveFontSize(12),
-          color: focused
-            ? colors.navigation.focused
-            : colors.navigation.unfocused,
-        },
-      ]}
-    >
-      {label}
-    </Text>
-  );
-};
+// Create scene map for TabView
+const renderScene = SceneMap({
+  home: Home,
+  goal: Goal,
+  addSaving: AddSaving,
+  historyGoals: HistoryGoals,
+  historySavings: HistorySavings,
+  about: About,
+});
 
-// Screen names array - order matters for swipe navigation
-const screenNames = ['Home', 'Goal', 'AddSaving', 'HistoryGoals', 'HistorySavings', 'About'];
-
-// Component that wraps each screen with swipeable functionality
-function SwipeableScreen({ children, screenIndex }: { children: React.ReactNode; screenIndex: number }) {
-  const navigation = useNavigation();
-  const pagerRef = useRef<PagerView>(null);
-  const [currentIndex, setCurrentIndex] = useState(screenIndex);
-
-  // Handle page change from swipe
-  const handlePageSelected = (e: any) => {
-    const index = e.nativeEvent.position;
-    setCurrentIndex(index);
-    // Navigate to corresponding tab when swiped
-    const targetRoute = screenNames[index];
-    if (targetRoute) {
-      (navigation as any).navigate(targetRoute);
-    }
-  };
-
-  // Listen to navigation changes and sync PagerView
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('state', () => {
-      const state = navigation.getState();
-      if (state) {
-        const tabState = state.routes[0]?.state;
-        if (tabState && tabState.index !== undefined) {
-          const index = tabState.index;
-          if (index !== currentIndex && pagerRef.current) {
-            setCurrentIndex(index);
-            pagerRef.current.setPage(index);
-          }
-        }
-      }
-    });
-
-    return unsubscribe;
-  }, [navigation, currentIndex]);
-
-  return (
-    <PagerView
-      ref={pagerRef}
-      style={styles.pagerView}
-      initialPage={screenIndex}
-      onPageSelected={handlePageSelected}
-    >
-      <View key="0">
-        <Home />
-      </View>
-      <View key="1">
-        <Goal />
-      </View>
-      <View key="2">
-        <AddSaving />
-      </View>
-      <View key="3">
-        <HistoryGoals />
-      </View>
-      <View key="4">
-        <HistorySavings />
-      </View>
-      <View key="5">
-        <About />
-      </View>
-    </PagerView>
-  );
-}
-
+// Main Tab Navigator Component
 function BottomTabNavigator() {
   const getResponsiveFontSize = useResponsiveFontSize();
+  const [index, setIndex] = useState(0);
+  const [routes] = useState(
+    tabs.map(tab => ({ key: tab.key, title: tab.title }))
+  );
 
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        // Hide header for all screens
-        headerShown: false,
-        // Configure tab bar icons
-        tabBarIcon: ({ size }) => {
-          const icon = routeIconMap[route.name] || '❓';
+  // Custom Tab Bar
+  const renderTabBar = (props: any) => {
+    return (
+      <View style={styles.tabBarStyle}>
+        {props.navigationState.routes.map((route: any, idx: number) => {
+          const isFocused = index === idx;
+          const tab = tabs[idx];
 
           return (
-            <View style={[styles.iconOuter, { width: size + 16, height: size + 16 }]}>
-              <View style={[styles.iconInner, { height: size + 32 }]}>
-                <Text style={[styles.iconText, { fontSize: size }]}>{icon}</Text>
+            <TouchableOpacity
+              key={route.key}
+              onPress={() => setIndex(idx)}
+              style={styles.tabItem}
+            >
+              {/* Tab Icon */}
+              <View style={[styles.iconOuter]}>
+                <View style={[styles.iconInner]}>
+                  <Text style={[styles.iconText, { fontSize: 24 }]}>
+                    {tab.icon}
+                  </Text>
+                </View>
               </View>
-            </View>
+
+              {/* Tab Label */}
+              <Text
+                style={[
+                  styles.tabBarLabel,
+                  isFocused ? styles.tabBarLabelFocused : styles.tabBarLabelUnfocused,
+                  {
+                    fontSize: getResponsiveFontSize(12),
+                    color: isFocused
+                      ? colors.navigation.focused
+                      : colors.navigation.unfocused,
+                  },
+                ]}
+              >
+                {route.title}
+              </Text>
+            </TouchableOpacity>
           );
-        },
-        // Tab bar styling
-        tabBarStyle: styles.tabBarStyle,
-      })}
-    >
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: createTabBarLabel('Dom', getResponsiveFontSize),
-        }}
-      >
-        {() => <SwipeableScreen screenIndex={0}><Home /></SwipeableScreen>}
-      </Tab.Screen>
-      <Tab.Screen
-        name="Goal"
-        options={{
-          tabBarLabel: createTabBarLabel('Cel', getResponsiveFontSize),
-        }}
-      >
-        {() => <SwipeableScreen screenIndex={1}><Goal /></SwipeableScreen>}
-      </Tab.Screen>
-      <Tab.Screen
-        name="AddSaving"
-        options={{
-          tabBarLabel: createTabBarLabel('Dodaj', getResponsiveFontSize),
-        }}
-      >
-        {() => <SwipeableScreen screenIndex={2}><AddSaving /></SwipeableScreen>}
-      </Tab.Screen>
-      <Tab.Screen
-        name="HistoryGoals"
-        options={{
-          tabBarLabel: createTabBarLabel('Osiągnięte', getResponsiveFontSize),
-        }}
-      >
-        {() => <SwipeableScreen screenIndex={3}><HistoryGoals /></SwipeableScreen>}
-      </Tab.Screen>
-      <Tab.Screen
-        name="HistorySavings"
-        options={{
-          tabBarLabel: createTabBarLabel('Historia', getResponsiveFontSize),
-        }}
-      >
-        {() => <SwipeableScreen screenIndex={4}><HistorySavings /></SwipeableScreen>}
-      </Tab.Screen>
-      <Tab.Screen
-        name="About"
-        options={{
-          tabBarLabel: createTabBarLabel('Info', getResponsiveFontSize),
-        }}
-      >
-        {() => <SwipeableScreen screenIndex={5}><About /></SwipeableScreen>}
-      </Tab.Screen>
-    </Tab.Navigator>
+        })}
+      </View>
+    );
+  };
+
+  return (
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      renderTabBar={renderTabBar}
+      onIndexChange={setIndex}
+      initialLayout={{ width: Dimensions.get('window').width }}
+      tabBarPosition="bottom"
+      swipeEnabled={true}
+      animationEnabled={true}
+      lazy={true}
+      lazyPreloadDistance={1}
+    />
   );
 }
 
@@ -239,20 +152,6 @@ function App() {
 export default App;
 
 export const styles = StyleSheet.create({
-  iconOuter: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent',
-  },
-  iconInner: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 'auto',
-    paddingBottom: 10,
-  },
-  iconText: {
-    textAlign: 'center',
-  },
   tabBarStyle: {
     backgroundColor: 'white',
     borderTopWidth: 1,
@@ -262,6 +161,29 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     height: 80,
     paddingTop: 10,
+    paddingBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconOuter: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  iconInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 'auto',
+    paddingBottom: 5,
+  },
+  iconText: {
+    textAlign: 'center',
   },
   tabBarLabel: {
     textAlign: 'center',
@@ -274,8 +196,5 @@ export const styles = StyleSheet.create({
   },
   stackContentStyle: {
     backgroundColor: 'transparent',
-  },
-  pagerView: {
-    flex: 1,
   },
 });
