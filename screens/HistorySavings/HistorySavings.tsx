@@ -7,7 +7,6 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import Top from '../../components/Top';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import colors from '../../constants/colors';
@@ -104,7 +103,6 @@ export default function HistorySavings() {
 
   return (
     <ScrollView style={styles.view}>
-      <Top />
       <View style={styles.headerContainer}>
         <View style={styles.container}>
           <Text style={styles.title}>Historia </Text>
@@ -173,7 +171,7 @@ export default function HistorySavings() {
                     style={[
                       styles.dropdownItemText,
                       selectYear === item.value &&
-                        styles.dropdownItemTextSelected,
+                      styles.dropdownItemTextSelected,
                     ]}
                   >
                     {item.label}
@@ -199,7 +197,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     fontSize: 26,
-    marginTop: 80,
+    marginTop: 20,
     marginBottom: 10,
     marginLeft: 20,
     backgroundColor: colors.background.main,

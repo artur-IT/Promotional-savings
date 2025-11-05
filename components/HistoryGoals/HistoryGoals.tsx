@@ -4,7 +4,6 @@ import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import Button from '../Button';
 import ConfirmationModal from '../ConfirmationModal';
 import { colors } from '../../constants/colors';
-import Top from '../Top';
 
 export default function HistoryGoalsComponent() {
   const { deleteAllGoals, completeGoal } = useSavingsStore();
@@ -101,10 +100,6 @@ export default function HistoryGoalsComponent() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <Top />
-      </View>
-
       <Text style={styles.title}>Historia Osiągniętych Celów</Text>
 
       <ScrollView
@@ -142,12 +137,12 @@ export default function HistoryGoalsComponent() {
                   <Text style={styles.dateValue}>
                     {item.savings && item.savings.length > 0
                       ? formatDate(
-                          [...item.savings].sort(
-                            (a, b) =>
-                              new Date(a.date).getTime() -
-                              new Date(b.date).getTime(),
-                          )[0].date,
-                        )
+                        [...item.savings].sort(
+                          (a, b) =>
+                            new Date(a.date).getTime() -
+                            new Date(b.date).getTime(),
+                        )[0].date,
+                      )
                       : formatDate(item.startDate)}
                   </Text>
                 </Text>
@@ -196,10 +191,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  topContainer: {
-    position: 'absolute',
-    width: '100%',
-  },
   scrollView: {
     flex: 1,
     width: '100%',
@@ -211,7 +202,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 150,
+    marginTop: 40,
     marginBottom: 10,
     color: colors.text.primary,
   },

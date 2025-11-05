@@ -10,6 +10,8 @@ import Goal from './screens/Goal/Goal';
 import HistoryGoals from './screens/HistoryGoals/HistoryGoals';
 import HistorySavings from './screens/HistorySavings/HistorySavings';
 import About from './components/About';
+import Top from './components/Top';
+import useNavigationStore from './store/useNavigationStore';
 
 // Create stack navigator
 const Stack = createNativeStackNavigator();
@@ -61,7 +63,7 @@ const renderScene = SceneMap({
 // Main Tab Navigator Component
 function BottomTabNavigator() {
   const getResponsiveFontSize = useResponsiveFontSize();
-  const [index, setIndex] = useState(0);
+  const { activeTabIndex, setActiveTabIndex } = useNavigationStore();
   const [routes] = useState(
     tabs.map(tab => ({ key: tab.key, title: tab.title }))
   );
@@ -71,13 +73,13 @@ function BottomTabNavigator() {
     return (
       <View style={styles.tabBarStyle}>
         {props.navigationState.routes.map((route: any, idx: number) => {
-          const isFocused = index === idx;
+          const isFocused = activeTabIndex === idx;
           const tab = tabs[idx];
 
           return (
             <TouchableOpacity
               key={route.key}
-              onPress={() => setIndex(idx)}
+              onPress={() => setActiveTabIndex(idx)}
               style={styles.tabItem}
             >
               {/* Tab Icon */}
@@ -112,18 +114,28 @@ function BottomTabNavigator() {
   };
 
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      renderTabBar={renderTabBar}
-      onIndexChange={setIndex}
-      initialLayout={{ width: Dimensions.get('window').width }}
-      tabBarPosition="bottom"
-      swipeEnabled={true}
-      animationEnabled={true}
-      lazy={true}
-      lazyPreloadDistance={1}
-    />
+    <View style={styles.mainContainer}>
+      {/* Top component - rendered once and stays in place with absolute position */}
+      <View style={styles.topContainer}>
+        <Top />
+      </View>
+
+      {/* TabView with all screens - with padding to avoid overlap with Top */}
+      <View style={styles.contentContainer}>
+        <TabView
+          navigationState={{ index: activeTabIndex, routes }}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          onIndexChange={setActiveTabIndex}
+          initialLayout={{ width: Dimensions.get('window').width }}
+          tabBarPosition="bottom"
+          swipeEnabled={true}
+          animationEnabled={true}
+          lazy={true}
+          lazyPreloadDistance={1}
+        />
+      </View>
+    </View>
   );
 }
 
@@ -152,6 +164,21 @@ function App() {
 export default App;
 
 export const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: colors.background.main,
+  },
+  topContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1000,
+  },
+  contentContainer: {
+    flex: 1,
+    paddingTop: 100, // Height of Top component to prevent overlap
+  },
   tabBarStyle: {
     backgroundColor: 'white',
     borderTopWidth: 1,

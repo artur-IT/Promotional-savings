@@ -8,13 +8,13 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useState, forwardRef, useRef } from 'react';
 import Button from '../../components/Button';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { colors } from '../../constants/colors';
+import useNavigationStore from '../../store/useNavigationStore';
 
 LocaleConfig.locales.pl = {
   monthNames: [
@@ -71,7 +71,7 @@ const categoryOptions = [
 // Using forwardRef to enable passing reference to this component
 const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
   const { updateCurrentGoal, getActualGoal } = useSavingsStore();
-  const navigation = useNavigation();
+  const { navigateToTab } = useNavigationStore();
 
   const [promotion, setPromotion] = useState<number>();
   const [category, setSelectedCategory] = useState<string>('');
@@ -261,7 +261,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           category: category,
         });
         clearForm();
-        (navigation as any).navigate('Home');
+        navigateToTab('home');
         console.log('Aktualny cel:', getActualGoal());
       } catch (error) {
         console.error('Error while saving data:', error);
@@ -484,7 +484,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
           title="Anuluj"
           onPress={() => {
             clearForm();
-            (navigation as any).navigate('Home');
+            navigateToTab('home');
           }}
         />
       </View>

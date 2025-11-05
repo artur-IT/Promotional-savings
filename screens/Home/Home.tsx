@@ -4,7 +4,6 @@ import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Goal/GoalProgress';
-import Top from '../../components/Top';
 
 const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
@@ -15,9 +14,6 @@ export default function HomeWithGoal() {
       contentContainerStyle={styles.contentContainer}
     >
       <Image source={PlaceholderImage} style={styles.image} />
-      <View style={styles.titleContainer}>
-        <Top hideImage={true} />
-      </View>
 
       <View style={styles.year}>
         <YearSaving />
@@ -45,24 +41,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 50,
   },
-  titleContainer: {
-    alignSelf: 'center',
-    // display: 'flex',
-    flex: 1,
-    // marginBottom: 40,
-    width: '100%',
-  },
-
   image: {
     position: 'absolute',
-    top: 190,
-    width: '90%',
+    top: 120,
+    width: '100%',
     maxWidth: 370,
     height: 370,
     opacity: 0.3,
   },
   year: {
-    marginTop: 130,
+    marginTop: 60,
     alignSelf: 'flex-start',
   },
   circles: {

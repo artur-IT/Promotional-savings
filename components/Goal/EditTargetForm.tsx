@@ -1,8 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Button from '../../components/Button';
 import colors from '../../constants/colors';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
+import useNavigationStore from '../../store/useNavigationStore';
 import { useState } from 'react';
 
 interface TargetProps {
@@ -11,8 +11,8 @@ interface TargetProps {
 }
 
 export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
-  const navigation = useNavigation();
   const { getActualGoal, addNewGoal, updateCurrentGoal } = useSavingsStore();
+  const { navigateToTab } = useNavigationStore();
   const goal = getActualGoal();
   const bigName = editGoal ? goal?.goal : '';
   const goalAmount = editGoal ? goal?.targetAmount : '';
@@ -72,7 +72,7 @@ export default function EditTargetForm({ onFormClose, editGoal }: TargetProps) {
         ? updateCurrentGoal(goalName || '', parseFloat(`${targetAmount}`))
         : addNewGoal(newGoal);
 
-      (navigation as any).navigate('Home');
+      navigateToTab('home');
       onFormClose();
     }
   };

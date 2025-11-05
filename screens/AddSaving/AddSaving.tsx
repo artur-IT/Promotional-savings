@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import Top from '../../components/Top';
 import DataSavings from '../../components/AddSaving/DataSavings';
 import { colors } from '../../constants/colors';
 
@@ -16,7 +15,6 @@ export default function AddSavingScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.contentContainer}>
-        <Top />
         <View style={styles.container}>
           <Text style={styles.title}>Na czym ostatnio </Text>
           <Text style={styles.title}>zaoszczędziłem?</Text>
@@ -39,7 +37,7 @@ const styles = StyleSheet.create({
   },
   container: {
     display: 'flex',
-    marginTop: 80,
+    marginTop: 20,
     marginBottom: 30,
     marginLeft: 20,
     backgroundColor: colors.background.main,

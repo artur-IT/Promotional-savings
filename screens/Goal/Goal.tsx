@@ -1,18 +1,17 @@
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React, { useRef, useState, useMemo } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import Top from '../../components/Top';
 import EditTargetForm from '../../components/Goal/EditTargetForm';
 import GoalProgress from '../../components/Goal/GoalProgress';
 import Button from '../../components/Button';
 import colors from '../../constants/colors';
 import useSavingsStore from '../../store/useSavingsStore_Zustand';
 import { fonts } from '../../constants/fonts';
+import useNavigationStore from '../../store/useNavigationStore';
 
 export default function Goal() {
   const [showForm, setShowForm] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
+  const { navigateToTab } = useNavigationStore();
   const { getActualGoal } = useSavingsStore();
   const [editMode, setEditMode] = useState(false);
 
@@ -64,13 +63,11 @@ export default function Goal() {
   };
 
   const historylHandle = () => {
-    (navigation as any).navigate('HistoryGoals');
+    navigateToTab('historyGoals');
   };
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <Top />
-
       <View style={styles.headerContainer}>
         <View style={styles.headerContent}>
           <Text style={styles.title}>Mój Cel </Text>
@@ -78,9 +75,7 @@ export default function Goal() {
           <Button title="Historia" height={35} onPress={historylHandle} />
         </View>
 
-        <View style={styles.goal}>
-          <GoalProgress variant="goal" />
-        </View>
+        <GoalProgress variant="goal" />
       </View>
 
       {showForm && (
@@ -105,12 +100,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
     fontSize: 26,
-    marginBottom: 10,
     backgroundColor: colors.background.main,
     zIndex: 0,
   },
   headerContent: {
-    top: 70,
+    marginTop: 20,
     marginLeft: 20,
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -120,9 +114,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginBottom: 10,
     fontFamily: fonts.family.roboto,
-  },
-  goal: {
-    marginTop: 10,
   },
   showForm: {
     position: 'absolute',

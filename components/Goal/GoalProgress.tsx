@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 70,
+    marginTop: 10,
     backgroundColor: colors.background.main,
   },
   motivationalContainer: {
