@@ -4,5 +4,6 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|@react-native|@react-navigation|react-native-calendars|@react-native-async-storage|zustand)/)',
   ],
+  testPathIgnorePatterns: ['/node_modules/', '/test-utils/'],
   watchman: true,
 };

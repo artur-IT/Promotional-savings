@@ -1,10 +1,79 @@
 /**
- * Common mocks used across multiple test files
+ * Common mocks and test data used across multiple test files
  * @format
  */
 
 import React from 'react';
-import { Text, Pressable, View, Modal } from 'react-native';
+import { Text, Pressable, View, Modal, TouchableOpacity } from 'react-native';
+
+/* ========== TEST DATA FIXTURES ========== */
+
+/**
+ * Standard test goal object
+ * Use this for consistent test data across tests
+ */
+export const TEST_GOAL = {
+  id: 1,
+  goal: 'Test Goal',
+  targetAmount: 1000,
+  startDate: '2024-01-01',
+  savings: [],
+};
+
+/**
+ * Test goal with savings
+ * Use this when testing components that need existing savings
+ */
+export const TEST_GOAL_WITH_SAVINGS = {
+  id: 1,
+  goal: 'Test Goal with Savings',
+  targetAmount: 1000,
+  startDate: '2024-01-01',
+  savings: [
+    { id: 1, promotion: 100, date: '2024-01-15', category: 'Żywność' },
+    { id: 2, promotion: 200, date: '2024-01-20', category: 'Paliwo' },
+  ],
+};
+
+/**
+ * Completed test goal (has endDate)
+ * Use this when testing history or completed goals
+ */
+export const TEST_GOAL_COMPLETED = {
+  id: 1,
+  goal: 'Completed Goal',
+  targetAmount: 1000,
+  startDate: '2024-01-01',
+  endDate: '2024-02-01',
+  savings: [{ id: 1, promotion: 1000, date: '2024-01-15', category: 'Żywność' }],
+};
+
+/**
+ * Multiple goals for history testing
+ */
+export const TEST_GOALS_HISTORY = [
+  TEST_GOAL_COMPLETED,
+  {
+    id: 2,
+    goal: 'Second Goal',
+    targetAmount: 500,
+    startDate: '2024-02-01',
+    endDate: '2024-03-01',
+    savings: [{ id: 3, promotion: 500, date: '2024-02-15', category: 'Inne' }],
+  },
+];
+
+/**
+ * Test savings array
+ * Use this for testing savings-related components
+ */
+export const TEST_SAVINGS = [
+  { id: 1, promotion: 100, date: '2024-01-15', category: 'Żywność' },
+  { id: 2, promotion: 200, date: '2024-01-20', category: 'Paliwo' },
+  { id: 3, promotion: 150, date: '2024-01-25', category: 'Ubrania' },
+];
+
+/* ========== COMPONENT MOCKS ========== */
 
 /**
  * Mock Button component
@@ -19,7 +88,7 @@ export const mockButton = () => {
 };
 
 /**
- * Mock ConfirmationModal component
+ * Mock ConfirmationModal component for general use (two buttons)
  * Returns a Modal with testID for easy testing
  */
 export const mockConfirmationModal = () => {
@@ -32,7 +101,7 @@ export const mockConfirmationModal = () => {
     visible: boolean;
     message: string;
     onConfirm: () => void;
-    onCancel: () => void;
+    onCancel?: () => void;
   }) => (
     <Modal visible={visible} testID="confirmation-modal">
       <View>
@@ -40,8 +109,35 @@ export const mockConfirmationModal = () => {
         <Pressable testID="modal-confirm" onPress={onConfirm}>
           <Text>Usuń wszystkie</Text>
         </Pressable>
-        <Pressable testID="modal-cancel" onPress={onCancel}>
-          <Text>Anuluj</Text>
+        {onCancel && (
+          <Pressable testID="modal-cancel" onPress={onCancel}>
+            <Text>Anuluj</Text>
+          </Pressable>
+        )}
+      </View>
+    </Modal>
+  );
+};
+
+/**
+ * Mock ConfirmationModal component for error messages (single button)
+ * Used in DataSavings and other forms
+ */
+export const mockErrorModal = () => {
+  return ({
+    visible,
+    message,
+    onConfirm,
+  }: {
+    visible: boolean;
+    message: string;
+    onConfirm: () => void;
+  }) => (
+    <Modal visible={visible} testID="error-modal">
+      <View>
+        <Text testID="error-modal-message">{message}</Text>
+        <Pressable testID="error-modal-ok" onPress={onConfirm}>
+          <Text>OK</Text>
         </Pressable>
       </View>
     </Modal>
@@ -49,7 +145,41 @@ export const mockConfirmationModal = () => {
 };
 
 /**
- * Helper to create mock store functions
+ * Mock Calendar component from react-native-calendars
+ * Provides a simple button to simulate date selection
+ * @param customDate - optional custom date string (default: '2024-01-15')
+ */
+export const mockCalendar = (customDate: string = '2024-01-15') => {
+  return ({ onDayPress }: any) => {
+    const React = require('react');
+    const { View, TouchableOpacity, Text } = require('react-native');
+    return (
+      <View testID="calendar">
+        <TouchableOpacity
+          testID="calendar-day-button"
+          onPress={() => onDayPress({ dateString: customDate })}
+        >
+          <Text>Select Date</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+};
+
+/**
+ * Mock LocaleConfig for react-native-calendars
+ */
+export const mockCalendarLocaleConfig = {
+  locales: {},
+  defaultLocale: 'pl',
+};
+
+/* ========== STORE MOCKS ========== */
+
+/**
+ * Creates a mock Zustand store with custom data
+ * @param storeData - object containing store state and actions
+ * @returns mock function that behaves like Zustand store
  */
 export const createMockStore = (storeData: any) => {
   return jest.fn((selector) => {
@@ -58,5 +188,58 @@ export const createMockStore = (storeData: any) => {
     }
     return storeData;
   });
+};
+
+/**
+ * Creates mock functions for SavingsStore
+ * Use this to easily create mock store actions
+ * @returns object with all store action mocks
+ */
+export const createMockSavingsStore = () => ({
+  addNewGoal: jest.fn(),
+  updateCurrentGoal: jest.fn(),
+  getActualGoal: jest.fn(),
+  completeGoal: jest.fn(),
+  deleteGoal: jest.fn(),
+  deleteAllGoals: jest.fn(),
+  getAllSavings: jest.fn(),
+  deleteSaving: jest.fn(),
+  isLatestSavingFromActiveGoal: jest.fn(),
+});
+
+/**
+ * Creates mock functions for NavigationStore
+ * Use this to easily create navigation mocks
+ * @returns object with navigation store mocks
+ */
+export const createMockNavigationStore = () => ({
+  navigateToTab: jest.fn(),
+  activeTabIndex: 0,
+  setActiveTabIndex: jest.fn(),
+});
+
+/* ========== MOCK SETUP HELPERS ========== */
+
+/**
+ * Setup mock for AsyncStorage
+ * Call this in jest.mock() at the top of your test file
+ */
+export const setupAsyncStorageMock = () => {
+  return require('@react-native-async-storage/async-storage/jest/async-storage-mock');
+};
+
+/**
+ * Setup standard mocks for a test file
+ * This includes Button and common configurations
+ * @returns object with mock functions for further customization
+ */
+export const setupStandardMocks = () => {
+  const navigationMocks = createMockNavigationStore();
+  const savingsMocks = createMockSavingsStore();
+
+  return {
+    navigation: navigationMocks,
+    savings: savingsMocks,
+  };
 };
 
