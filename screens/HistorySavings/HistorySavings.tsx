@@ -282,8 +282,8 @@ const styles = StyleSheet.create({
     zIndex: 1001,
   },
   dropdownItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#F0F0F0',
   },

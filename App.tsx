@@ -42,12 +42,12 @@ const useResponsiveFontSize = () => {
 
 // Tab configuration
 const tabs = [
-  { key: 'home', title: 'Dom', icon: '🏠', component: Home },
+  { key: 'home', title: 'Start', icon: '🌞', component: Home },
   { key: 'goal', title: 'Cel', icon: '🏆', component: Goal },
-  { key: 'addSaving', title: 'Dodaj', icon: '➕', component: AddSaving },
-  { key: 'historyGoals', title: 'Osiągnięte', icon: '⏰', component: HistoryGoals },
-  { key: 'historySavings', title: 'Historia', icon: '📊', component: HistorySavings },
-  { key: 'about', title: 'Info', icon: 'ℹ️', component: About },
+  { key: 'addSaving', title: 'Dodaj', icon: '💰', component: AddSaving },
+  { key: 'historyGoals', title: 'Ukończone', icon: '🏁', component: HistoryGoals },
+  { key: 'historySavings', title: 'Historia', icon: '📋', component: HistorySavings },
+  { key: 'about', title: 'Info', icon: '❓', component: About },
 ];
 
 // Create scene map for TabView
@@ -80,16 +80,16 @@ function BottomTabNavigator() {
             <TouchableOpacity
               key={route.key}
               onPress={() => setActiveTabIndex(idx)}
-              style={styles.tabItem}
+            // style={styles.tabItem}
             >
               {/* Tab Icon */}
-              <View style={[styles.iconOuter]}>
-                <View style={[styles.iconInner]}>
-                  <Text style={[styles.iconText, { fontSize: 24 }]}>
-                    {tab.icon}
-                  </Text>
-                </View>
+              {/* <View style={[styles.iconOuter]}> */}
+              <View style={[styles.iconInner]}>
+                <Text style={[styles.iconText, { fontSize: 24 }]}>
+                  {tab.icon}
+                </Text>
               </View>
+              {/* </View> */}
 
               {/* Tab Label */}
               <Text
