@@ -26,3 +26,8 @@ Nie - usuń emulator i stwórz nowy, uruchom go.
 `npm run test:watch` - Obserwuje tylko pliki związane z ostatnimi zmianami (inteligentny tryb)
 
 `npm run test:watchAll` - Obserwuje wszystkie pliki i uruchamia wszystkie testy przy każdej zmianie. Wolniejszy, ale bardziej kompletny.
+
+
+---
+### DO POPRAWY:
+refaktor: wszędzie

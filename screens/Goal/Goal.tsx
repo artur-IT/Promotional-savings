@@ -14,11 +14,8 @@ export default function Goal() {
   const { navigateToTab } = useNavigationStore();
   const { getActualGoal } = useSavingsStore();
   const [editMode, setEditMode] = useState(false);
-
-  // Get current goal
   const currentGoal = getActualGoal();
 
-  // Memoized function checking if goal was achieved
   const isGoalAchieved = useMemo(() => {
     if (
       !currentGoal ||
@@ -36,7 +33,6 @@ export default function Goal() {
     return totalPromotionSum >= currentGoal.targetAmount;
   }, [currentGoal]);
 
-  // Determine button title and action based on goal state
   const buttonTitle = !currentGoal || isGoalAchieved ? 'Nowy' : 'Edytuj';
   const isEditMode = buttonTitle === 'Edytuj';
 
@@ -62,9 +58,7 @@ export default function Goal() {
     }
   };
 
-  const historylHandle = () => {
-    navigateToTab('historyGoals');
-  };
+  const historylHandle = () => navigateToTab('historyGoals');
 
   return (
     <ScrollView style={styles.scrollContainer}>
@@ -96,6 +90,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     backgroundColor: colors.background.main,
+    paddingTop: 50,
   },
   headerContainer: {
     width: '100%',

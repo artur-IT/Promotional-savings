@@ -248,7 +248,7 @@ const DataSavings = forwardRef<{ resetForm: () => void }>(() => {
         // Check if there's an actual goal before saving
         if (!actualGoal) {
           setErrorModalConfig({
-            message: 'Musisz najpierw utworzyć cel oszczędzania!',
+            message: 'Najpierw dodaj cel oszczędzania!',
           });
           setShowErrorModal(true);
           return;

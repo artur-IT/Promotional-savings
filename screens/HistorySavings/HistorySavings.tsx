@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   view: {
     backgroundColor: colors.background.main,
     height: '100%',
+    paddingTop: 50,
   },
   headerContainer: {
     fontSize: 26,

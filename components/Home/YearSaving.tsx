@@ -9,16 +9,13 @@ export default function YearSaving() {
   const [thisYearTotal, setThisYearTotal] = useState(0);
   const [thisYear, setThisYear] = useState(0);
 
-  // Function to calculate the sum of deposits from this year
   const calculateThisYearSavings = () => {
     const allGoals = getAllGoals();
     const currentYear = new Date().getFullYear();
     setThisYear(currentYear);
     let totalSavings = 0;
 
-    if (allGoals.length === 0) {
-      return 0;
-    }
+    if (allGoals.length === 0) return 0;
 
     // Go through each goal
     allGoals.forEach(goal => {
@@ -26,9 +23,8 @@ export default function YearSaving() {
         // Go through each saving in the goal
         goal.savings.forEach(saving => {
           const savingDate = new Date(saving.date); // Create date object from text
-          const savingYear = savingDate.getFullYear(); // Get year from date
+          const savingYear = savingDate.getFullYear();
 
-          // Check if saving is from this year
           if (savingYear === currentYear) {
             totalSavings += saving.promotion;
           }
@@ -60,37 +56,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 'auto',
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderBottomRightRadius: 20,
-    borderTopRightRadius: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
     backgroundColor: colors.background.orange,
   },
   year: {
     margin: 0,
     fontFamily: fonts.family.primary,
     color: colors.text.button_W,
-    fontSize: 20,
+    fontSize: 16,
   },
   insideText: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop: 5,
+    marginBottom: 5,
     color: colors.text.button_W,
   },
   yearValue: {
     textAlign: 'right',
     fontFamily: fonts.family.primary,
     color: colors.text.button_W,
-    fontSize: 32,
+    fontSize: 24,
   },
   infoText: {
     display: 'flex',
     margin: 0,
     fontFamily: fonts.family.primary,
     color: colors.text.button_W,
-    fontSize: 24,
+    fontSize: 16,
   },
 });

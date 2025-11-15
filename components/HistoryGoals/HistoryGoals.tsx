@@ -173,7 +173,17 @@ export default function HistoryGoalsComponent() {
       <ConfirmationModal
         visible={showAlert}
         title="⚠️ Jesteś pewien?"
-        message="Ta operacja usunie wszystkie osiągnięte cele. Nie można jej cofnąć."
+        message={
+          <>
+            <Text>Ta operacja usunie:</Text>
+            {'\n'}
+            <Text>- wszystkie osiągnięte cele</Text>
+            {'\n'}
+            <Text>- wszystkie dane dotyczące aktualnych celów</Text>
+            {'\n'}
+            <Text>- wszystkie zapisane oszczędności</Text>
+          </>
+        }
         confirmText="Usuń wszystkie"
         cancelText="Anuluj"
         onConfirm={handleConfirmDelete}

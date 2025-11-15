@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.main,
   },
   container: {
-    marginTop: 20,
+    marginTop: 70,
     padding: 20,
   },
   title: {

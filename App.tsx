@@ -166,7 +166,6 @@ export default App;
 export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: colors.background.main,
   },
   topContainer: {
     position: 'absolute',
@@ -177,7 +176,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingTop: 100, // Height of Top component to prevent overlap
+    paddingTop: 50,
   },
   tabBarStyle: {
     backgroundColor: 'white',

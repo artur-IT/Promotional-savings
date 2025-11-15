@@ -1,5 +1,4 @@
 import { Image, StyleSheet, View, ScrollView } from 'react-native';
-import { colors } from '../../constants/colors';
 import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
@@ -34,11 +33,10 @@ export default function HomeWithGoal() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.main,
+    flexGrow: 1,
+    paddingTop: 50,
   },
   contentContainer: {
-    flexGrow: 1,
-    alignItems: 'center',
     paddingBottom: 50,
   },
   image: {
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   year: {
-    marginTop: 60,
+    marginTop: 40,
     alignSelf: 'flex-start',
   },
   circles: {
@@ -61,6 +59,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   goalProgress: {
-    marginTop: 60,
+    marginTop: 40,
   },
 });

@@ -5,7 +5,7 @@ import { colors } from '../constants/colors';
 interface ConfirmationModalProps {
   visible: boolean;
   title?: string; // Made title optional
-  message: string;
+  message: string | React.ReactNode; // Allow both string and JSX
   confirmText?: string;
   cancelText?: string;
   onConfirm: () => void;
@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingTop: 25,
     paddingBottom: 25,
-    paddingHorizontal: 20, // Normal padding for regular modal
-    marginHorizontal: 10, // Normal margin
+    paddingHorizontal: 20,
+    marginHorizontal: 10,
     shadowColor: colors.shadow,
     shadowOffset: {
       width: 0,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   modalContentCompact: {
     paddingHorizontal: 10, // Reduced padding for compact modal
-    marginHorizontal: 50, // Increased margin to make modal narrower
+    marginHorizontal: 50,
     maxWidth: 250, // Smaller max width for compact modal
   },
   modalTitle: {
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   modalMessageNoTitle: {
-    marginBottom: 16, // Even less margin when no title
-    marginTop: 4, // Small top margin when no title
+    marginBottom: 16,
+    marginTop: 4,
   },
   modalButtons: {
     flexDirection: 'row',
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   modalButton: {
     display: 'flex',
     paddingVertical: 10,
-    paddingHorizontal: 24, // Increased to make button look better proportionally
+    paddingHorizontal: 24,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',

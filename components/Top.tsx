@@ -29,12 +29,11 @@ export default function Header({ hideImage = false }: TopProps) {
       </Svg>
 
       <Text style={styles.slogan}>
-        {hideImage ? 'PROMOCYJNE' : 'Promocyjne'}
+        Promocyjne
       </Text>
-      {/* Pokazuj obrazek tylko gdy hideImage nie jest true */}
-      {!hideImage && <Image source={PlaceholderImage} style={styles.image} />}
+      <Image source={PlaceholderImage} style={styles.image} />
       <Text style={styles.slogan}>
-        {hideImage ? ' OSZCZĘDNOŚCI' : 'Oszczędności'}
+        Oszczędności
       </Text>
     </View>
   );
@@ -52,7 +51,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: '100%',
-    height: 270,
     pointerEvents: 'none', // Allows touch events to pass through
   },
   slogan: {
@@ -61,6 +59,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.family.primary,
     color: '#fff',
     fontSize: 24,
+    backgroundColor: 'transparent',
   },
   image: {
     position: 'relative',

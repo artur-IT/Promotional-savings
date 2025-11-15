@@ -25,7 +25,6 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
     }, 0);
   }, []);
 
-  // Function to get motivational message based on progress
   const getMotivationalMessage = useCallback((progressPercent: number) => {
     if (progressPercent >= 100) {
       return {
@@ -116,7 +115,7 @@ export default function GoalProgress({ variant = 'goal' }: GoalProgressProps) {
       <View>
         <Text style={styles.noDataText}>
           {variant === 'home'
-            ? 'Brak zdefiniowanych celów'
+            ? 'Brak celu oszczędzania'
             : 'Musisz mieć cel oszczędzania!'}
         </Text>
       </View>
@@ -239,6 +238,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
+    paddingBottom: 150,
     backgroundColor: colors.background.main,
   },
   motivationalContainer: {
@@ -259,7 +259,6 @@ const styles = StyleSheet.create({
   homeContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 40,
   },
   homeNumbers: {
     width: 400,
@@ -281,6 +280,7 @@ const styles = StyleSheet.create({
   },
   homeGoal: {
     width: 250,
+    paddingBottom: 20,
     fontSize: 30,
     textAlign: 'left',
     fontFamily: fonts.family.roboto,
@@ -345,13 +345,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   noDataText: {
-    marginTop: 100,
-    marginBottom: 100,
     fontSize: 18,
     color: colors.text.secondary,
     textAlign: 'center',
     backgroundColor: 'transparent',
     fontFamily: fonts.family.roboto,
+    marginTop: 50,
   },
   successContainer: {
     position: 'absolute',
