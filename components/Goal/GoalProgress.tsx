@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.family.roboto,
   },
   homeContainer: {
+    marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },

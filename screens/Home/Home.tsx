@@ -3,6 +3,7 @@ import YearSaving from '../../components/Home/YearSaving';
 import MonthSaving from '../../components/Home/MonthSaving';
 import LastAdd from '../../components/Home/LastAdd';
 import GoalProgress from '../../components/Goal/GoalProgress';
+import colors from '../../constants/colors';
 
 const PlaceholderImage = require('../../assets/images/money-bag_big.png');
 
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     paddingTop: 50,
+    backgroundColor: colors.background.main,
   },
   contentContainer: {
     paddingBottom: 50,
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
     maxWidth: 370,
     height: 370,
     opacity: 0.3,
+    alignSelf: 'center',
   },
   year: {
     marginTop: 40,

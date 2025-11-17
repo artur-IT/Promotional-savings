@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.main,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    paddingBottom: 20,
   },
   scrollView: {
     flex: 1,
