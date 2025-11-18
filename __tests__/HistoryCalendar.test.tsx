@@ -93,8 +93,6 @@ describe('HistoryCalendar Component - Button Clickability Tests', () => {
 
     const deleteButton = getByTestId('button-❌');
     expect(deleteButton).toBeTruthy();
-
-    // Click the button
     fireEvent.press(deleteButton);
 
     // Button should respond to press
@@ -109,7 +107,6 @@ describe('HistoryCalendar Component - Button Clickability Tests', () => {
 
     const deleteButton = getByTestId('button-❌');
 
-    // Click delete button
     fireEvent.press(deleteButton);
 
     // Verify deleteSaving was called with the latest saving's id

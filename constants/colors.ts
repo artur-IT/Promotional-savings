@@ -15,7 +15,6 @@ export const colors = {
     secondary: '#555555',
     button_W: 'white',
     light: '#888',
-    title: '#0084CE',
   },
 
   status: {
@@ -25,11 +24,6 @@ export const colors = {
 
   border: '#DDDDDD',
   shadow: '#000000',
-
-  // Additional colors for better consistency
-  light: {
-    background: '#eee',
-  },
 
   navigation: {
     focused: '#4CAF50',

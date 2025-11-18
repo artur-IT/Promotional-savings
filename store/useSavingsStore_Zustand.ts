@@ -57,7 +57,6 @@ interface SavingsState {
   isLatestSavingFromActiveGoal: (savingId: number) => boolean;
 }
 
-// Helper function to find active goal index
 const findActiveGoalIndex = (goals: Goal[]) => {
   return goals.findIndex(goal => !goal.endDate);
 };
@@ -202,9 +201,7 @@ const useSavingsStore = create<SavingsState>()(
       deleteSaving: (savingId: number) => {
         set(state => {
           const currentGoals = [...state.allGoals];
-
           const activeGoalIndex = findActiveGoalIndex(currentGoals);
-
           if (activeGoalIndex !== -1) {
             const activeGoal = currentGoals[activeGoalIndex];
             if (activeGoal.savings) {

@@ -81,7 +81,7 @@ Works offline!
 6. Before public in Google Play change version in \app\.build.gradle
 
 After the build completes, the APK file will be at:
-`android/app/build/outputs/apk/release/app-release.apk`
+`android\app\build\outputs\apk\release\app-release.apk`
 `android\app\build\outputs\bundle\release\app-release.aab`
 
 ### 📱 Running on Device

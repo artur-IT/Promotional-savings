@@ -7,7 +7,6 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react-native';
 import DataSavings from '../components/AddSaving/DataSavings';
 
-// Import test utilities
 import {
   clickButton,
   fillInput,
@@ -17,7 +16,6 @@ import {
   selectDateFromCalendar,
 } from './test-utils/helpers';
 
-// Import test data (can be used in test bodies, not in jest.mock())
 import { TEST_GOAL } from './test-utils/mocks';
 
 /* ========== MOCK SETUP ========== */
@@ -133,11 +131,9 @@ describe('DataSavings Component', () => {
     test('displays validation errors when saving with empty fields', async () => {
       const { getByText } = renderComponent();
 
-      // Click save button without filling any fields
       const saveButton = getByText('Zapisz');
       clickButton(saveButton);
 
-      // Wait for validation errors to appear
       await waitFor(() => {
         expectTextToExist(getByText('Kwota musi być większa od zera'));
         expectTextToExist(getByText('Wybierz datę'));
@@ -150,7 +146,6 @@ describe('DataSavings Component', () => {
 
       const amountInput = getByPlaceholderText('0');
 
-      // Enter zero to trigger error
       fillInput(amountInput, '0');
       const saveButton = getByText('Zapisz');
       clickButton(saveButton);
@@ -159,7 +154,6 @@ describe('DataSavings Component', () => {
         expectTextToExist(getByText('Kwota musi być większa od zera'));
       });
 
-      // Enter valid value to clear error
       fillInput(amountInput, '50');
       await waitFor(() => {
         expectTextNotToExist(queryByText('Kwota musi być większa od zera'));
@@ -168,7 +162,6 @@ describe('DataSavings Component', () => {
 
     test('validates and filters amount input - accepts only digits', () => {
       const { getByPlaceholderText } = renderComponent();
-
       const amountInput = getByPlaceholderText('0');
 
       // Test that only digits are accepted
@@ -191,14 +184,10 @@ describe('DataSavings Component', () => {
         queryAllByText,
       } = renderComponent();
 
-      // Fill amount field
       const amountInput = getByPlaceholderText('0');
       fillInput(amountInput, '250');
-
-      // Verify amount is correctly stored
       expect(amountInput.props.value).toBe('250');
 
-      // Select date from calendar
       await selectDateFromCalendar(getByTestId, queryAllByText);
 
       // Verify date was selected and is displayed in correct format
@@ -211,10 +200,6 @@ describe('DataSavings Component', () => {
       // - Amount: 250 is correctly captured
       // - Date: 2024-01-15 is correctly selected and formatted
       // - These are the main user inputs that we're testing
-
-      // Note: Category selection involves complex dropdown animations
-      // which are difficult to test reliably. The category functionality
-      // is tested separately in UI Interactions tests.
     });
   });
 
@@ -235,7 +220,6 @@ describe('DataSavings Component', () => {
       // Should show validation errors (date and category missing)
       // Or if validation passes, should show error modal
       await waitFor(() => {
-        // The form will show validation errors for missing date and category
         // This is expected behavior when there's no goal
         expect(getByText('Wybierz datę')).toBeTruthy();
       });
@@ -253,7 +237,6 @@ describe('DataSavings Component', () => {
     test('calendar opens and closes correctly', async () => {
       const { getByTestId, queryByTestId, queryAllByText } = renderComponent();
 
-      // Open calendar
       await selectDateFromCalendar(getByTestId, queryAllByText);
 
       // Calendar should close after selection
@@ -293,7 +276,6 @@ describe('DataSavings Component', () => {
           expectTextToExist(getByText('Żywność'));
         });
 
-        // Select category
         const foodOption = getByText('Żywność');
         clickButton(foodOption);
 
@@ -316,18 +298,14 @@ describe('DataSavings Component', () => {
     test('clears form when cancel button is clicked', async () => {
       const { getByText, getByPlaceholderText } = renderComponent();
 
-      // Fill only amount field (simplify test)
       const amountInput = getByPlaceholderText('0');
       fillInput(amountInput, '100');
 
-      // Verify amount is filled
       expect(amountInput.props.value).toBe('100');
 
-      // Click cancel button
       const cancelButton = getByText('Anuluj');
       clickButton(cancelButton);
 
-      // Should navigate to home tab
       expect(mockNavigateToTab).toHaveBeenCalledWith('home');
     });
   });

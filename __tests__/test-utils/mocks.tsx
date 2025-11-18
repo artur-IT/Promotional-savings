@@ -1,5 +1,4 @@
 /**
- * Common mocks and test data used across multiple test files
  * @format
  */
 
@@ -8,10 +7,6 @@ import { Text, Pressable, View, Modal, TouchableOpacity } from 'react-native';
 
 /* ========== TEST DATA FIXTURES ========== */
 
-/**
- * Standard test goal object
- * Use this for consistent test data across tests
- */
 export const TEST_GOAL = {
   id: 1,
   goal: 'Test Goal',
@@ -20,10 +15,6 @@ export const TEST_GOAL = {
   savings: [],
 };
 
-/**
- * Test goal with savings
- * Use this when testing components that need existing savings
- */
 export const TEST_GOAL_WITH_SAVINGS = {
   id: 1,
   goal: 'Test Goal with Savings',
@@ -35,10 +26,6 @@ export const TEST_GOAL_WITH_SAVINGS = {
   ],
 };
 
-/**
- * Completed test goal (has endDate)
- * Use this when testing history or completed goals
- */
 export const TEST_GOAL_COMPLETED = {
   id: 1,
   goal: 'Completed Goal',
@@ -48,9 +35,6 @@ export const TEST_GOAL_COMPLETED = {
   savings: [{ id: 1, promotion: 1000, date: '2024-01-15', category: 'Żywność' }],
 };
 
-/**
- * Multiple goals for history testing
- */
 export const TEST_GOALS_HISTORY = [
   TEST_GOAL_COMPLETED,
   {
@@ -63,10 +47,6 @@ export const TEST_GOALS_HISTORY = [
   },
 ];
 
-/**
- * Test savings array
- * Use this for testing savings-related components
- */
 export const TEST_SAVINGS = [
   { id: 1, promotion: 100, date: '2024-01-15', category: 'Żywność' },
   { id: 2, promotion: 200, date: '2024-01-20', category: 'Paliwo' },
@@ -75,10 +55,7 @@ export const TEST_SAVINGS = [
 
 /* ========== COMPONENT MOCKS ========== */
 
-/**
- * Mock Button component
- * Returns a Pressable with testID for easy testing
- */
+/* Mock Button component - Returns a Pressable with testID for easy testing */
 export const mockButton = () => {
   return ({ title, onPress }: { title: string; onPress: () => void }) => (
     <Pressable testID={`button-${title}`} onPress={onPress}>
@@ -87,10 +64,7 @@ export const mockButton = () => {
   );
 };
 
-/**
- * Mock ConfirmationModal component for general use (two buttons)
- * Returns a Modal with testID for easy testing
- */
+/* Returns a Modal with testID for easy testing */
 export const mockConfirmationModal = () => {
   return ({
     visible,
@@ -119,10 +93,7 @@ export const mockConfirmationModal = () => {
   );
 };
 
-/**
- * Mock ConfirmationModal component for error messages (single button)
- * Used in DataSavings and other forms
- */
+/* Mock ConfirmationModal component for error messages (single button) - Used in DataSavings and other forms */
 export const mockErrorModal = () => {
   return ({
     visible,
@@ -146,7 +117,6 @@ export const mockErrorModal = () => {
 
 /**
  * Mock Calendar component from react-native-calendars
- * Provides a simple button to simulate date selection
  * @param customDate - optional custom date string (default: '2024-01-15')
  */
 export const mockCalendar = (customDate: string = '2024-01-15') => {
@@ -166,9 +136,7 @@ export const mockCalendar = (customDate: string = '2024-01-15') => {
   };
 };
 
-/**
- * Mock LocaleConfig for react-native-calendars
- */
+/* Mock LocaleConfig for react-native-calendars */
 export const mockCalendarLocaleConfig = {
   locales: {},
   defaultLocale: 'pl',
@@ -210,7 +178,7 @@ export const createMockSavingsStore = () => ({
 /**
  * Creates mock functions for NavigationStore
  * Use this to easily create navigation mocks
- * @returns object with navigation store mocks
+ * @returns
  */
 export const createMockNavigationStore = () => ({
   navigateToTab: jest.fn(),

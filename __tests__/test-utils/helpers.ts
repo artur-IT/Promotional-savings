@@ -1,5 +1,4 @@
 /**
- * Common test helper functions
  * Provides reusable utilities for testing React Native components
  * @format
  */
@@ -18,8 +17,7 @@ export const clickButton = (button: any) => {
 
 /**
  * Simulates pressing a button multiple times
- * Useful for testing rapid clicks or repeated actions
- * @param button - button element to press
+ * @param button 
  * @param times - number of times to press the button
  */
 export const clickButtonMultipleTimes = (button: any, times: number) => {
@@ -30,8 +28,8 @@ export const clickButtonMultipleTimes = (button: any, times: number) => {
 
 /**
  * Fills a text input field with a value
- * @param input - input element to fill
- * @param value - text value to enter
+ * @param input 
+ * @param value 
  */
 export const fillInput = (input: any, value: string) => {
   fireEvent.changeText(input, value);
@@ -39,7 +37,7 @@ export const fillInput = (input: any, value: string) => {
 
 /**
  * Clears a text input field
- * @param input - input element to clear
+ * @param input 
  */
 export const clearInput = (input: any) => {
   fireEvent.changeText(input, '');
@@ -49,7 +47,7 @@ export const clearInput = (input: any) => {
 
 /**
  * Verifies that an element exists on screen
- * @param element - element to check for existence
+ * @param element 
  */
 export const expectElementToExist = (element: any) => {
   expect(element).toBeTruthy();
@@ -57,7 +55,7 @@ export const expectElementToExist = (element: any) => {
 
 /**
  * Verifies that an element does not exist on screen
- * @param element - element to check for non-existence
+ * @param element 
  */
 export const expectElementNotToExist = (element: any) => {
   expect(element).toBeNull();
@@ -65,7 +63,7 @@ export const expectElementNotToExist = (element: any) => {
 
 /**
  * Verifies that text exists on screen
- * @param text - text element to verify
+ * @param text 
  */
 export const expectTextToExist = (text: any) => {
   expect(text).toBeTruthy();
@@ -73,7 +71,7 @@ export const expectTextToExist = (text: any) => {
 
 /**
  * Verifies that text does not exist on screen
- * @param text - text element to verify absence
+ * @param text
  */
 export const expectTextNotToExist = (text: any) => {
   expect(text).toBeNull();
@@ -81,7 +79,7 @@ export const expectTextNotToExist = (text: any) => {
 
 /**
  * Verifies that a mock function was called a specific number of times
- * @param mockFn - jest mock function to verify
+ * @param mockFn 
  * @param times - expected number of calls
  */
 export const expectCalledTimes = (mockFn: jest.Mock, times: number) => {
@@ -90,7 +88,7 @@ export const expectCalledTimes = (mockFn: jest.Mock, times: number) => {
 
 /**
  * Verifies that a mock function was called with specific arguments
- * @param mockFn - jest mock function to verify
+ * @param mockFn 
  * @param args - expected arguments
  */
 export const expectCalledWith = (mockFn: jest.Mock, ...args: any[]) => {
@@ -99,8 +97,8 @@ export const expectCalledWith = (mockFn: jest.Mock, ...args: any[]) => {
 
 /**
  * Verifies that a mock function was not called
- * @param mockFn - jest mock function to verify
- */
+  * @param mockFn 
+  */
 export const expectNotCalled = (mockFn: jest.Mock) => {
   expect(mockFn).not.toHaveBeenCalled();
 };
@@ -117,10 +115,9 @@ export const expectCalled = (mockFn: jest.Mock) => {
 
 /**
  * Selects a date from the calendar component
- * This helper handles the interaction with calendar picker in tests
- * @param getByTestId - function to get element by testID
- * @param queryAllByText - function to query elements by text
- * @param dateButtonIndex - index of date button (default 0 - first "Wybierz" button is for date)
+ * @param getByTestId 
+ * @param queryAllByText 
+ * @param dateButtonIndex 
  */
 export const selectDateFromCalendar = async (
   getByTestId: any,
@@ -145,9 +142,9 @@ export const selectDateFromCalendar = async (
 
 /**
  * Selects a category from the dropdown
- * @param queryAllByText - function to query elements by text
- * @param getByText - function to get element by text
- * @param category - category to select ('Żywność', 'Paliwo', 'Ubrania', 'Inne')
+ * @param queryAllByText 
+ * @param getByText 
+ * @param category 
  */
 export const selectCategory = async (
   queryAllByText: any,
@@ -178,8 +175,8 @@ export const selectCategory = async (
 /**
  * Fills the complete form in DataSavings component
  * @param renderAPI - render result from @testing-library/react-native
- * @param amount - amount to save
- * @param category - category to select
+ * @param amount 
+ * @param category 
  */
 export const fillDataSavingsForm = async (
   renderAPI: RenderAPI,
@@ -188,14 +185,10 @@ export const fillDataSavingsForm = async (
 ) => {
   const { getByPlaceholderText, getByTestId, queryAllByText, getByText } = renderAPI;
   
-  // Fill amount
   const amountInput = getByPlaceholderText('0');
   fillInput(amountInput, amount);
   
-  // Select date
   await selectDateFromCalendar(getByTestId, queryAllByText);
-  
-  // Select category
   await selectCategory(queryAllByText, getByText, category);
 };
 
@@ -203,7 +196,7 @@ export const fillDataSavingsForm = async (
 
 /**
  * Waits for an element to appear on screen
- * @param getElement - function that returns the element
+ * @param getElement 
  * @param options - waitFor options (timeout, interval, etc.)
  */
 export const waitForElement = async (
@@ -217,8 +210,8 @@ export const waitForElement = async (
 
 /**
  * Waits for an element to disappear from screen
- * @param getElement - function that returns the element
- * @param options - waitFor options (timeout, interval, etc.)
+ * @param getElement 
+ * @param options 
  */
 export const waitForElementToDisappear = async (
   getElement: () => any,

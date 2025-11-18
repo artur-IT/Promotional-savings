@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// AsyncStorage adapter to mimic MMKV interface
+// AsyncStorage adapter 
 export const storage = {
   getString: async (key: string): Promise<string | undefined> => {
     try {
