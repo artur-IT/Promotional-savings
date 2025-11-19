@@ -11,7 +11,11 @@
 
 A free mobile application for Android phones that helps users track money saved through promotions and deals. The app allows setting financial goals and monitoring progress in achieving them.
 
-Works offline!
+<a href="https://play.google.com/store/apps/details?id=com.promocyjneoszczednosci&hl=en-US&ah=dBtmZluCccWS4ceytQBYRVZX1sI">Install from Google Play Store</a>
+
+<a href="./assets/promotional_savings.apk">Download and install manually .apk file</a>
+
+App works offline! (no need internet connection)
 
 ### ✨ Main Features
 
@@ -40,6 +44,7 @@ Works offline!
 - **Goal** - Managing financial goals
 - **HistorySavings** - History of all savings
 - **HistoryGoals** - History of achieved financial goals
+- **About** - Info how it works
 
 #### State Management
 
@@ -78,10 +83,13 @@ Works offline!
 3. **Run Metro bundler** - `npx react-native run-android` (Automatically starts Metro)
 4. **compile to .aab** - in android folder run `./gradlew bundleRelease` (for Google Play Store)
 5. **Compile to APK file** - in android folder run `.\gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a`
-6. Before public in Google Play change version in \app\.build.gradle
 
-After the build completes, the APK file will be at:
+ (Before public in Google Play change version in \app\.build.gradle)
+
+After the build completes, the APK and AAB file will be at:
+
 `android\app\build\outputs\apk\release\app-release.apk`
+
 `android\app\build\outputs\bundle\release\app-release.aab`
 
 ### 📱 Running on Device
@@ -128,8 +136,6 @@ npm install`
 
 More information in the [official troubleshooting documentation](https://reactnative.dev/docs/troubleshooting).
 
-<br />
 
-## <span style="font-size: 24px">🙂</span>Do you like it?
-
-You can buy for us 💑 coffee <a href="https://buycoffee.to/artur-dev" target="_blank" rel="noopener noreferrer"><span style="font-size: 32px">☕</span></a>
+### <span style="font-size: 20px">🙂</span> Do you like it?
+You can buy for us 💑 coffee <a href="https://buycoffee.to/artur-dev" target="_blank" rel="noopener noreferrer"><span style="font-size: 20px">☕</span></a>
